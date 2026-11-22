@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { OFFICIAL_LINKS } from '../data/profileData';
 import { type ContactFormErrors, validateContactForm } from '../utils/portfolio';
-import { playUiSound } from '../utils/soundFx';
+import { playUiSound, playUiSoundSync } from '../utils/soundFx';
 
 const TOPIC_OPTIONS = [
   'Diskusi Sastra & Penulisan',
@@ -99,14 +99,13 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
   }, [loadChallenge]);
 
   const handleCopyProfileLink = async () => {
+    playUiSoundSync('copy', soundEnabled);
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopiedProfileUrl(true);
-      void playUiSound('copy', soundEnabled);
       window.setTimeout(() => setCopiedProfileUrl(false), 2500);
     } catch {
       setCopiedProfileUrl(true);
-      void playUiSound('copy', soundEnabled);
     }
   };
 
@@ -489,6 +488,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                         name="topic"
                         value={topic}
                         onChange={(e) => {
+                          playUiSoundSync('tap', soundEnabled);
                           setTopic(e.target.value);
                           if (errors.topic) setErrors((prev) => ({ ...prev, topic: undefined }));
                         }}

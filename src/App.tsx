@@ -8,7 +8,11 @@ import { ReaderModal } from './components/ReaderModal';
 import { TopBar } from './components/TopBar';
 import { WorksSection } from './components/WorksSection';
 import { WRITING_WORKS, type WritingWork } from './data/profileData';
-import { shouldBypassIntro, unlockSharedAudioContext } from './utils/introAudio';
+import {
+  getSharedAudioContext,
+  shouldBypassIntro,
+  unlockSharedAudioContextSync,
+} from './utils/introAudio';
 import { findWorkByQueryId } from './utils/portfolio';
 import {
   applyDocumentSeoMetadata,
@@ -128,16 +132,33 @@ export default function App() {
     }
 
     const ensureUnlocked = () => {
-      void unlockSharedAudioContext();
+      const ctx = getSharedAudioContext();
+      if (!ctx || ctx.state !== 'running') {
+        unlockSharedAudioContextSync();
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        ensureUnlocked();
+      }
     };
 
     window.addEventListener('pointerdown', ensureUnlocked, { capture: true, passive: true });
+    window.addEventListener('pointerup', ensureUnlocked, { capture: true, passive: true });
     window.addEventListener('touchstart', ensureUnlocked, { capture: true, passive: true });
+    window.addEventListener('touchend', ensureUnlocked, { capture: true, passive: true });
+    window.addEventListener('click', ensureUnlocked, { capture: true, passive: true });
     window.addEventListener('keydown', ensureUnlocked, { capture: true, passive: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
       window.removeEventListener('pointerdown', ensureUnlocked, { capture: true });
+      window.removeEventListener('pointerup', ensureUnlocked, { capture: true });
       window.removeEventListener('touchstart', ensureUnlocked, { capture: true });
+      window.removeEventListener('touchend', ensureUnlocked, { capture: true });
+      window.removeEventListener('click', ensureUnlocked, { capture: true });
       window.removeEventListener('keydown', ensureUnlocked, { capture: true });
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

@@ -3,7 +3,7 @@ import { ArrowUpRight, Check, Copy, X } from 'lucide-react';
 import type { WritingWork } from '../data/profileData';
 import { PROFILE_IDENTITY } from '../data/profileData';
 import { buildShareCitation } from '../utils/portfolio';
-import { playUiSound } from '../utils/soundFx';
+import { playUiSound, playUiSoundSync } from '../utils/soundFx';
 
 interface ReaderModalProps {
   work: WritingWork | null;
@@ -40,15 +40,14 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
   };
 
   const handleCopyCitation = async () => {
+    playUiSoundSync('copy', soundEnabled);
     const citation = buildShareCitation(work, PROFILE_IDENTITY.fullName);
     try {
       await navigator.clipboard.writeText(citation);
       setCopiedCitation(true);
-      void playUiSound('copy', soundEnabled);
       window.setTimeout(() => setCopiedCitation(false), 2500);
     } catch {
       setCopiedCitation(true);
-      void playUiSound('copy', soundEnabled);
     }
   };
 

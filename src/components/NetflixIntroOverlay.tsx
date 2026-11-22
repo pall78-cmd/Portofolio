@@ -3,6 +3,7 @@ import {
   INTRO_DURATION_MS,
   INTRO_FADE_MS,
   playNetflixIntroSound,
+  unlockSharedAudioContextSync,
 } from '../utils/introAudio';
 
 interface NetflixIntroOverlayProps {
@@ -31,6 +32,7 @@ const PRISM_STRIPES = [
 export function NetflixIntroOverlay({ onComplete }: NetflixIntroOverlayProps) {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const soundPlayedRef = useRef(false);
+  const attemptInFlightRef = useRef(false);
   const completedRef = useRef(false);
 
   useEffect(() => {
@@ -48,26 +50,51 @@ export function NetflixIntroOverlay({ onComplete }: NetflixIntroOverlayProps) {
       }
     }, INTRO_DURATION_MS);
 
-    void playNetflixIntroSound({ muted: false, fromUserGesture: false }).then((outcome) => {
+    const shouldAbortLateIntroSound = () =>
+      completedRef.current || Date.now() - mountedAt > 2400;
+
+    void playNetflixIntroSound({
+      muted: false,
+      fromUserGesture: false,
+      shouldAbort: shouldAbortLateIntroSound,
+    }).then((outcome) => {
       if (outcome.played) {
         soundPlayedRef.current = true;
       }
     });
 
-    const handleFirstGesture = () => {
-      if (soundPlayedRef.current) {
+    const handleGesture = () => {
+      // Always unlock shared Web Audio on any gesture so main-page SFX stay crisp
+      unlockSharedAudioContextSync();
+
+      if (soundPlayedRef.current || attemptInFlightRef.current) {
         return;
       }
-      if (Date.now() - mountedAt > INTRO_DURATION_MS - 600) {
+      if (Date.now() - mountedAt > 2200) {
         return;
       }
-      soundPlayedRef.current = true;
-      void playNetflixIntroSound({ muted: false, fromUserGesture: true });
+
+      attemptInFlightRef.current = true;
+      void playNetflixIntroSound({
+        muted: false,
+        fromUserGesture: true,
+        shouldAbort: shouldAbortLateIntroSound,
+      })
+        .then((outcome) => {
+          if (outcome.played) {
+            soundPlayedRef.current = true;
+          }
+        })
+        .finally(() => {
+          attemptInFlightRef.current = false;
+        });
     };
 
-    window.addEventListener('pointerdown', handleFirstGesture, { passive: true, once: true });
-    window.addEventListener('touchstart', handleFirstGesture, { passive: true, once: true });
-    window.addEventListener('keydown', handleFirstGesture, { passive: true, once: true });
+    window.addEventListener('pointerdown', handleGesture, { passive: true });
+    window.addEventListener('pointerup', handleGesture, { passive: true });
+    window.addEventListener('touchend', handleGesture, { passive: true });
+    window.addEventListener('click', handleGesture, { passive: true });
+    window.addEventListener('keydown', handleGesture, { passive: true });
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -76,9 +103,11 @@ export function NetflixIntroOverlay({ onComplete }: NetflixIntroOverlayProps) {
       document.body.style.overflow = previousOverflow;
       window.clearTimeout(fadeTimer);
       window.clearTimeout(doneTimer);
-      window.removeEventListener('pointerdown', handleFirstGesture);
-      window.removeEventListener('touchstart', handleFirstGesture);
-      window.removeEventListener('keydown', handleFirstGesture);
+      window.removeEventListener('pointerdown', handleGesture);
+      window.removeEventListener('pointerup', handleGesture);
+      window.removeEventListener('touchend', handleGesture);
+      window.removeEventListener('click', handleGesture);
+      window.removeEventListener('keydown', handleGesture);
     };
   }, [onComplete]);
 
