@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  HRD_ELITION_PROGRESS,
   OFFICIAL_LINKS,
   ORGANIZATION_REFERENCE,
   PROFILE_IDENTITY,
@@ -32,6 +33,17 @@ test('OFFICIAL_LINKS includes exact verified URLs from user profile and channels
   assert.equal(
     ORGANIZATION_REFERENCE.instagramUrl,
     'https://www.instagram.com/himaprosiuinsa?cnvx=MXVpbGhtcmUybmt5Mg=='
+  );
+  assert.equal(
+    HRD_ELITION_PROGRESS.driveFolderUrl,
+    'https://drive.google.com/drive/folders/1VfXHtXQw8nvk6vSkcRgyIZtvTMsVmgr0'
+  );
+  assert.equal(HRD_ELITION_PROGRESS.items.length, 5);
+  assert.ok(
+    HRD_ELITION_PROGRESS.items.some((i) => i.primaryUrl === 'https://forms.gle/QDvEjQmLQHnqDp8S7')
+  );
+  assert.ok(
+    HRD_ELITION_PROGRESS.items.some((i) => i.primaryUrl === 'https://forms.gle/R6BXieknnxzi7oSV6')
   );
 });
 

@@ -25,6 +25,14 @@ export function Footer() {
               {link.ctaLabel}
             </a>
           ))}
+          <a
+            href="/rss.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-amber-400 hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+          >
+            Feed RSS
+          </a>
         </div>
       </div>
     </footer>

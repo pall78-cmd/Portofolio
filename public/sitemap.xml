@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://naufalathallah-rosiyandi.vercel.app/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://naufalathallah-rosiyandi.vercel.app/assets/aistudio/1000199122-jpg-1759824490026_bdc54ddd.jpg</image:loc>
+      <image:title>Foto profil Naufal Athallah Rosiyandi di kawasan Halaman Kota.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://naufalathallah-rosiyandi.vercel.app/src/assets/images/writing_desk_prose_1795196265899.jpg</image:loc>
+      <image:title>Ilustrasi buku catatan naskah terbuka bersama pena tinta dan tumpukan buku di meja kerja.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://naufalathallah-rosiyandi.vercel.app/assets/aistudio/1000383664_8e63566c.jpg</image:loc>
+      <image:title>Foto bersama anggota Divisi HRD EDSA Executive 2026 HIMAPRO-SI UINSA mengenakan seragam himpunan.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://naufalathallah-rosiyandi.vercel.app/src/assets/images/campus_library_archive_1795196265483.jpg</image:loc>
+      <image:title>Keindahan yang tak utuh — Ilustrasi ruang baca dan arsip literatur.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://naufalathallah-rosiyandi.vercel.app/rss.xml</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

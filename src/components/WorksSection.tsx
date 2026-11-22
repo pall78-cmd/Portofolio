@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, Search, X } from 'lucide-react';
+import { ArrowRight, Rss, Search, X } from 'lucide-react';
 import { WRITING_WORKS, type WritingWork } from '../data/profileData';
 import {
   WORK_CATEGORIES,
@@ -43,8 +43,22 @@ export function WorksSection({ onSelectWork }: WorksSectionProps) {
             </p>
           </div>
 
-          <div className="text-xs font-medium text-slate-500 tabular-nums shrink-0">
-            Menampilkan {visibleWorks.length} dari {WRITING_WORKS.length} tulisan
+          <div className="flex flex-wrap items-center gap-4 shrink-0 text-xs font-medium text-slate-500 tabular-nums">
+            <span>
+              Menampilkan {visibleWorks.length} dari {WRITING_WORKS.length} tulisan
+            </span>
+            <span aria-hidden="true" className="text-slate-300">
+              ·
+            </span>
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-semibold text-amber-700 hover:text-amber-800 hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700"
+            >
+              <Rss className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Feed RSS</span>
+            </a>
           </div>
         </div>
 

@@ -38,6 +38,20 @@ export interface JourneyMilestone {
   description: string;
 }
 
+export interface ElitionDeliverable {
+  id: string;
+  index: string;
+  group: 'aspirasi' | 'publikasi';
+  category: string;
+  title: string;
+  scheduleOrSource: string;
+  summary: string;
+  primaryUrl: string;
+  primaryLabel: string;
+  secondaryUrl?: string;
+  secondaryLabel?: string;
+}
+
 export const VERIFIED_URLS = {
   instagramPersonal: 'https://www.instagram.com/iniipalll_?evlk=NHRpcmp5MzBjcTZt',
   karyakarsa: 'https://karyakarsa.com/ashborne',
@@ -49,6 +63,14 @@ export const VERIFIED_URLS = {
   wattpadFragmenSayap:
     'https://www.wattpad.com/story/405821242-fragmen-sayap-di-ambang-pancarona',
   himaprosiInstagram: 'https://www.instagram.com/himaprosiuinsa?cnvx=MXVpbGhtcmUybmt5Mg==',
+  elitionDriveFolder: 'https://drive.google.com/drive/folders/1VfXHtXQw8nvk6vSkcRgyIZtvTMsVmgr0',
+  elitionSpreadsheet: 'https://drive.google.com/file/d/1zzVREvUTaDO52cecB7HfLFQqr2zT2GAs/view',
+  elitionAspirasiForm: 'https://forms.gle/QDvEjQmLQHnqDp8S7',
+  elitionSifaVoteForm: 'https://forms.gle/R6BXieknnxzi7oSV6',
+  elitionBaktiBcaPoster: 'https://drive.google.com/file/d/1RHFhtfUCYPPPAZmJE5uHgTQwQuJyC4Fr/view',
+  elitionGooglePoster: 'https://drive.google.com/file/d/1b8Ceo79l7j0D3xBPi85hGyPTrVxH-B4l/view',
+  elitionGoogleQrPoster: 'https://drive.google.com/file/d/1A2w1qkoOcprNg7aOfYVenryNxNTYSULl/view',
+  elitionCakNingPoster: 'https://drive.google.com/file/d/1J7AJMf4dQbz_ofFWpe-CGHuU2mVrbP3l/view',
 } as const;
 
 export const PROFILE_IDENTITY = {
@@ -60,9 +82,8 @@ export const PROFILE_IDENTITY = {
     'Selamat datang di halaman profil resmi Naufal Athallah Rosiyandi. Saat ini aktif menempuh pendidikan di Program Studi Sastra Inggris, Fakultas Adab dan Humaniora (FAHUM) UIN Sunan Ampel Surabaya (UINSA) serta terlibat dalam kepengurusan himpunan mahasiswa HIMAPRO-SI / EDSA Executive 2026.',
   editorialNote:
     'Penulis THRONE OF ASHES (Tahkta Abu), Keindahan yang tak utuh, dan Fragmen Sayap di Ambang Pancarona di Wattpad (@NaufalAthallah), pengelola saluran Puisi, Novel(e-book) di WhatsApp, serta kreator @ashborne di Karyakarsa.',
-  heroImage: '/src/assets/images/hero_literary_portrait_1795196264825.jpg',
-  heroImageAlt:
-    'Ilustrasi editorial potret mahasiswa sastra di meja baca perpustakaan.',
+  heroImage: '/assets/aistudio/1000199122-jpg-1759824490026_bdc54ddd.jpg',
+  heroImageAlt: 'Foto profil Naufal Athallah Rosiyandi di kawasan Halaman Kota.',
   proseImage: '/src/assets/images/writing_desk_prose_1795196265899.jpg',
   proseImageAlt:
     'Ilustrasi buku catatan naskah terbuka bersama pena tinta dan tumpukan buku di meja kerja.',
@@ -209,6 +230,10 @@ export const ORGANIZATION_REFERENCE = {
     'Himpunan Mahasiswa Program Studi Sastra Inggris — Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
   instagramHandle: '@himaprosiuinsa',
   instagramUrl: VERIFIED_URLS.himaprosiInstagram,
+  hrdDivisionImage: '/assets/aistudio/1000383664_8e63566c.jpg',
+  hrdDivisionImageAlt:
+    'Foto bersama anggota Divisi HRD EDSA Executive 2026 HIMAPRO-SI UINSA mengenakan seragam himpunan.',
+  hrdDivisionCaption: 'Divisi HRD (Human Resource Development) · EDSA Executive 2026 HIMAPRO-SI UINSA.',
   summary:
     'Merujuk laman resmi UIN Sunan Ampel Surabaya (uinsa.ac.id), Program Studi Sastra Inggris berada di bawah Fakultas Adab dan Humaniora (FAHUM) UINSA dengan himpunan mahasiswa tingkat prodi HIMAPRO-SI (@himaprosiuinsa).',
   ecosystems: [
@@ -229,10 +254,10 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
   {
     index: '01',
     period: '2026',
-    role: 'Pengurus EDSA Executive 2026',
+    role: 'Pengurus EDSA Executive 2026 (Divisi HRD)',
     institution: 'HIMAPRO-SI · Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
     description:
-      'Aktif dalam kepengurusan himpunan mahasiswa Program Studi Sastra Inggris UINSA (@himaprosiuinsa).',
+      'Aktif di Divisi HRD (Human Resource Development) HIMAPRO-SI / EDSA UINSA (@himaprosiuinsa), menjalankan program ELITION (English Literature Information) untuk kurasi informasi beasiswa, program ambassador, duta wisata, serta serap aspirasi dan voting komunitas mahasiswa.',
   },
   {
     index: '02',
@@ -251,3 +276,76 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
       'Aktif menulis fiksi dan puisi di Wattpad (bergabung sejak 17 Mei 2022) dengan 3 karya terbit, mengelola saluran WhatsApp Puisi, Novel(e-book), dan laman Karyakarsa @ashborne.',
   },
 ];
+
+export const HRD_ELITION_PROGRESS = {
+  eyebrow: 'Progres Divisi HRD · Program Kerja ELITION',
+  title: 'ELITION (English Literature Information)',
+  summary:
+    'Inisiatif Divisi HRD EDSA Executive 2026 dalam menghimpun aspirasi mahasiswa, menyelenggarakan voting komunitas, serta menyebarkan informasi terkurasi mengenai beasiswa, rekrutmen relawan, dan ajang prestasi mahasiswa.',
+  driveFolderUrl: VERIFIED_URLS.elitionDriveFolder,
+  spreadsheetUrl: VERIFIED_URLS.elitionSpreadsheet,
+  items: [
+    {
+      id: 'elition-aspirasi-mahasiswa',
+      index: '01',
+      group: 'aspirasi',
+      category: 'Serap Aspirasi Mahasiswa',
+      title: 'Kuesioner Aspirasi Mahasiswa Sastra Inggris',
+      scheduleOrSource: 'Google Forms · Arsip Spreadsheet ELITION',
+      summary:
+        'Kanal resmi penjaringan masukan, kebutuhan pengembangan diri, dan evaluasi layanan kemahasiswaan bagi mahasiswa Prodi Sastra Inggris UINSA.',
+      primaryUrl: VERIFIED_URLS.elitionAspirasiForm,
+      primaryLabel: 'Buka Formulir',
+    },
+    {
+      id: 'elition-voting-sifa',
+      index: '02',
+      group: 'aspirasi',
+      category: 'Vote Komunitas',
+      title: 'Evaluasi & Voting Penggantian Komunitas SIFA',
+      scheduleOrSource: 'Google Forms · Arsip Spreadsheet ELITION',
+      summary:
+        'Jajak pendapat dan pemungutan suara mahasiswa untuk mengevaluasi serta menentukan arah pembaruan komunitas SIFA di lingkungan prodi.',
+      primaryUrl: VERIFIED_URLS.elitionSifaVoteForm,
+      primaryLabel: 'Buka Voting',
+    },
+    {
+      id: 'elition-bakti-bca',
+      index: '03',
+      group: 'publikasi',
+      category: 'Informasi Beasiswa',
+      title: 'Beasiswa Bakti BCA 2026',
+      scheduleOrSource: '3 Agustus – 30 September 2026 · bca.id/beasiswabaktibca',
+      summary:
+        'Publikasi informasi jadwal pendaftaran dan tautan resmi Program Beasiswa Bakti BCA 2026 agar mudah diakses mahasiswa Sastra Inggris.',
+      primaryUrl: VERIFIED_URLS.elitionBaktiBcaPoster,
+      primaryLabel: 'Lihat Poster',
+    },
+    {
+      id: 'elition-google-ambassador',
+      index: '04',
+      group: 'publikasi',
+      category: 'Volunteer & Ambassador',
+      title: 'Google Student Ambassador (#TeamGoogle2026)',
+      scheduleOrSource: 'Poster Informasi & QR Code Rekrutmen',
+      summary:
+        'Kurasi dua materi publikasi rekrutmen Google Student Ambassador 2026 ("Kami mencari si paling AI") lengkap dengan poster QR pendaftaran.',
+      primaryUrl: VERIFIED_URLS.elitionGooglePoster,
+      primaryLabel: 'Poster Utama',
+      secondaryUrl: VERIFIED_URLS.elitionGoogleQrPoster,
+      secondaryLabel: 'Poster QR Code',
+    },
+    {
+      id: 'elition-cak-ning-surabaya',
+      index: '05',
+      group: 'publikasi',
+      category: 'Duta Wisata',
+      title: 'Pemilihan Duta Wisata Cak & Ning Surabaya 2026',
+      scheduleOrSource: '6 Juli – 12 September 2026 · Adhigana Manggala',
+      summary:
+        'Penyebaran informasi persyaratan, lini masa seleksi (Technical Meeting hingga Grand Final 10 Oktober 2026), dan pendaftaran Cak & Ning Surabaya.',
+      primaryUrl: VERIFIED_URLS.elitionCakNingPoster,
+      primaryLabel: 'Lihat Poster',
+    },
+  ] satisfies ElitionDeliverable[],
+};

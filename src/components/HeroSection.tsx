@@ -65,7 +65,7 @@ export function HeroSection() {
               src={PROFILE_IDENTITY.heroImage}
               alt={PROFILE_IDENTITY.heroImageAlt}
               className="h-full rounded-lg border-slate-300/80 shadow-sm"
-              imgClassName="aspect-[4/3] lg:aspect-auto lg:h-full"
+              imgClassName="aspect-[4/5] object-[50%_48%] lg:aspect-auto lg:h-full"
             />
           </div>
         </div>
