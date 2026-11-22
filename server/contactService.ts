@@ -25,12 +25,20 @@ export interface ContactForwardResult {
 
 const PLACEHOLDER_RECIPIENTS = new Set(['', 'nama@contoh.com', 'email-tujuan@contoh.com']);
 
-function getSmtpConfiguration() {
-  const recipient = sanitizeHeaderValue(process.env.CONTACT_RECIPIENT_EMAIL ?? '');
-  const host = sanitizeHeaderValue(process.env.SMTP_HOST ?? '');
-  const user = sanitizeHeaderValue(process.env.SMTP_USER ?? '');
-  const pass = (process.env.SMTP_PASS ?? '').replace(/\s+/g, '');
-  const port = Number(process.env.SMTP_PORT || '465');
+export function resolveSmtpConfiguration(env: NodeJS.ProcessEnv = process.env) {
+  const rawRecipient = sanitizeHeaderValue(env.CONTACT_RECIPIENT_EMAIL ?? '');
+  const rawHost = sanitizeHeaderValue(env.SMTP_HOST ?? '');
+  const user = sanitizeHeaderValue(env.SMTP_USER ?? '');
+  const pass = (env.SMTP_PASS ?? '').replace(/\s+/g, '');
+  const port = Number(env.SMTP_PORT || '465');
+
+  const recipient = !PLACEHOLDER_RECIPIENTS.has(rawRecipient.toLowerCase())
+    ? rawRecipient
+    : user.includes('@')
+      ? user
+      : '';
+
+  const host = rawHost || (user.toLowerCase().endsWith('@gmail.com') ? 'smtp.gmail.com' : '');
 
   const isConfigured =
     Boolean(recipient) &&
@@ -42,6 +50,10 @@ function getSmtpConfiguration() {
     port > 0;
 
   return { isConfigured, recipient, host, user, pass, port };
+}
+
+function getSmtpConfiguration() {
+  return resolveSmtpConfiguration(process.env);
 }
 
 async function sendForwardedEmail(
