@@ -143,6 +143,10 @@ export function buildSitemapXml(
       loc: `${baseUrl}${ORGANIZATION_REFERENCE.hrdDivisionImage}`,
       title: ORGANIZATION_REFERENCE.hrdDivisionImageAlt,
     },
+    {
+      loc: `${baseUrl}${ORGANIZATION_REFERENCE.edsaBannerImage}`,
+      title: ORGANIZATION_REFERENCE.edsaBannerAlt,
+    },
   ];
 
   for (const work of works) {

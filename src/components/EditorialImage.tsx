@@ -8,6 +8,7 @@ interface EditorialImageProps {
   className?: string;
   imgClassName?: string;
   dark?: boolean;
+  zoomOnHover?: boolean;
 }
 
 export function EditorialImage({
@@ -17,46 +18,53 @@ export function EditorialImage({
   className = '',
   imgClassName = '',
   dark = false,
+  zoomOnHover = true,
 }: EditorialImageProps) {
   const [hasError, setHasError] = useState(false);
 
   return (
     <figure
-      className={`relative overflow-hidden border ${
-        dark ? 'border-slate-700 bg-slate-900' : 'border-slate-200 bg-slate-100'
+      className={`group relative flex flex-col overflow-hidden border ${
+        dark ? 'border-stone-800 bg-[#0C0D10]' : 'border-stone-300/90 bg-stone-100'
       } ${className}`}
     >
       {hasError ? (
         <div
-          className={`flex h-full min-h-[260px] w-full flex-col items-center justify-center p-8 text-center ${
+          className={`flex flex-1 min-h-[260px] w-full flex-col items-center justify-center p-8 text-center ${
             dark
-              ? 'bg-gradient-to-br from-slate-900 to-slate-800'
-              : 'bg-gradient-to-br from-slate-100 to-slate-200'
+              ? 'bg-gradient-to-br from-[#0C0D10] to-stone-900'
+              : 'bg-gradient-to-br from-[#FAF7F2] to-stone-200'
           }`}
         >
           <BookOpen
-            className={`h-7 w-7 mb-3 ${dark ? 'text-amber-400' : 'text-slate-500'}`}
+            className={`mb-3 h-7 w-7 ${dark ? 'text-amber-400' : 'text-stone-500'}`}
             aria-hidden="true"
           />
-          <p className={`font-serif text-base max-w-xs ${dark ? 'text-slate-200' : 'text-slate-700'}`}>
+          <p className={`max-w-xs font-serif text-base ${dark ? 'text-stone-200' : 'text-stone-700'}`}>
             {alt}
           </p>
         </div>
       ) : (
-        <img
-          src={src}
-          alt={alt}
-          referrerPolicy="no-referrer"
-          onError={() => setHasError(true)}
-          className={`block w-full h-full object-cover ${imgClassName}`}
-        />
+        <div className="flex-1 min-h-0 w-full overflow-hidden">
+          <img
+            src={src}
+            alt={alt}
+            referrerPolicy="no-referrer"
+            onError={() => setHasError(true)}
+            className={`block h-full w-full object-cover ${
+              zoomOnHover
+                ? 'transition-transform duration-500 ease-out group-hover:scale-[1.035]'
+                : ''
+            } ${imgClassName}`}
+          />
+        </div>
       )}
       {caption && (
         <figcaption
           className={`border-t px-4 py-2.5 text-xs ${
             dark
-              ? 'border-slate-800 bg-[#111B33] text-slate-300'
-              : 'border-slate-200 bg-white text-slate-600'
+              ? 'border-stone-800 bg-[#121318] text-stone-300'
+              : 'border-stone-300/80 bg-[#0C0D10] text-stone-200'
           }`}
         >
           {caption}

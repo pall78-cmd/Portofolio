@@ -76,10 +76,11 @@ export const VERIFIED_URLS = {
 export const PROFILE_IDENTITY = {
   fullName: 'Naufal Athallah Rosiyandi',
   shortName: 'Naufal Athallah',
-  subtitle: 'Mahasiswa Sastra Inggris UINSA • Pengurus EDSA Executive 2026 • Penulis',
-  kicker: 'Sastra Inggris FAHUM UINSA · HIMAPRO-SI / EDSA Executive 2026',
+  subtitle:
+    'Mahasiswa Sastra Inggris UINSA • Pengurus EDSA Executive 2026 (Kabinet Atarascent) • Penulis',
+  kicker: 'Sastra Inggris FAHUM UINSA · EDSA Executive 2026 (Kabinet Atarascent)',
   welcomeLead:
-    'Selamat datang di halaman profil resmi Naufal Athallah Rosiyandi. Saat ini aktif menempuh pendidikan di Program Studi Sastra Inggris, Fakultas Adab dan Humaniora (FAHUM) UIN Sunan Ampel Surabaya (UINSA) serta terlibat dalam kepengurusan himpunan mahasiswa HIMAPRO-SI / EDSA Executive 2026.',
+    'Selamat datang di halaman profil resmi Naufal Athallah Rosiyandi. Saat ini aktif menempuh pendidikan di Program Studi Sastra Inggris, Fakultas Adab dan Humaniora (FAHUM) UIN Sunan Ampel Surabaya (UINSA) serta terlibat dalam kepengurusan himpunan mahasiswa HIMAPRO-SI / EDSA Executive 2026 Kabinet Atarascent.',
   editorialNote:
     'Penulis THRONE OF ASHES (Tahkta Abu), Keindahan yang tak utuh, dan Fragmen Sayap di Ambang Pancarona di Wattpad (@NaufalAthallah), pengelola saluran Puisi, Novel(e-book) di WhatsApp, serta kreator @ashborne di Karyakarsa.',
   heroImage: '/assets/aistudio/1000199122-jpg-1759824490026_bdc54ddd.jpg',
@@ -98,7 +99,7 @@ export const PROFILE_HIGHLIGHTS: ProfileHighlight[] = [
   {
     label: 'Kepengurusan',
     value: 'EDSA Executive 2026',
-    detail: 'HIMAPRO-SI UINSA (@himaprosiuinsa)',
+    detail: 'Kabinet Atarascent · HIMAPRO-SI UINSA (@himaprosiuinsa)',
   },
   {
     label: 'Karya di Wattpad',
@@ -230,10 +231,14 @@ export const ORGANIZATION_REFERENCE = {
     'Himpunan Mahasiswa Program Studi Sastra Inggris — Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
   instagramHandle: '@himaprosiuinsa',
   instagramUrl: VERIFIED_URLS.himaprosiInstagram,
+  edsaBannerImage: '/assets/aistudio/EDSA_header_google_form_1600x400_9e5f9952.png',
+  edsaBannerAlt:
+    'Header resmi English Department Student Association (EDSA) Faculty of Arts and Humanities UIN Sunan Ampel Surabaya.',
   hrdDivisionImage: '/assets/aistudio/1000383664_8e63566c.jpg',
   hrdDivisionImageAlt:
-    'Foto bersama anggota Divisi HRD EDSA Executive 2026 HIMAPRO-SI UINSA mengenakan seragam himpunan.',
-  hrdDivisionCaption: 'Divisi HRD (Human Resource Development) · EDSA Executive 2026 HIMAPRO-SI UINSA.',
+    'Foto bersama anggota Divisi HRD EDSA Executive 2026 Kabinet Atarascent HIMAPRO-SI UINSA mengenakan seragam himpunan.',
+  hrdDivisionCaption:
+    'Divisi HRD (Human Resource Development) · EDSA Executive 2026 Kabinet Atarascent (HIMAPRO-SI UINSA).',
   summary:
     'Merujuk laman resmi UIN Sunan Ampel Surabaya (uinsa.ac.id), Program Studi Sastra Inggris berada di bawah Fakultas Adab dan Humaniora (FAHUM) UINSA dengan himpunan mahasiswa tingkat prodi HIMAPRO-SI (@himaprosiuinsa).',
   ecosystems: [
@@ -254,10 +259,10 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
   {
     index: '01',
     period: '2026',
-    role: 'Pengurus EDSA Executive 2026 (Divisi HRD)',
+    role: 'Pengurus EDSA Executive 2026 · Kabinet Atarascent (Divisi HRD)',
     institution: 'HIMAPRO-SI · Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
     description:
-      'Aktif di Divisi HRD (Human Resource Development) HIMAPRO-SI / EDSA UINSA (@himaprosiuinsa), menjalankan program ELITION (English Literature Information) untuk kurasi informasi beasiswa, program ambassador, duta wisata, serta serap aspirasi dan voting komunitas mahasiswa.',
+      'Aktif di Divisi HRD (Human Resource Development) Kabinet Atarascent HIMAPRO-SI / EDSA UINSA (@himaprosiuinsa), menjalankan program ELITION (English Literature Information) untuk kurasi informasi beasiswa, program ambassador, duta wisata, serta serap aspirasi dan voting komunitas mahasiswa.',
   },
   {
     index: '02',
@@ -281,7 +286,7 @@ export const HRD_ELITION_PROGRESS = {
   eyebrow: 'Progres Divisi HRD · Program Kerja ELITION',
   title: 'ELITION (English Literature Information)',
   summary:
-    'Inisiatif Divisi HRD EDSA Executive 2026 dalam menghimpun aspirasi mahasiswa, menyelenggarakan voting komunitas, serta menyebarkan informasi terkurasi mengenai beasiswa, rekrutmen relawan, dan ajang prestasi mahasiswa.',
+    'Inisiatif Divisi HRD EDSA Executive 2026 Kabinet Atarascent dalam menghimpun aspirasi mahasiswa, menyelenggarakan voting komunitas, serta menyebarkan informasi terkurasi mengenai beasiswa, rekrutmen relawan, dan ajang prestasi mahasiswa.',
   driveFolderUrl: VERIFIED_URLS.elitionDriveFolder,
   spreadsheetUrl: VERIFIED_URLS.elitionSpreadsheet,
   items: [
