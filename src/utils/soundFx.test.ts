@@ -11,14 +11,17 @@ test('UI_SOUND_PRESETS defines gentle bounded tones for all interactive UX event
     for (const tone of tones) {
       assert.ok(tone.delaySec >= 0);
       assert.ok(tone.durationSec > 0 && tone.durationSec <= 0.5);
-      assert.ok(tone.startFreqHz >= 80 && tone.endFreqHz >= 80);
-      assert.ok(tone.peakGain > 0 && tone.peakGain <= 0.1, 'UI sound gain must stay gentle');
+      assert.ok(
+        tone.startFreqHz >= 380 && tone.endFreqHz >= 380,
+        'UI sound frequencies should sit cleanly in audible speaker range'
+      );
+      assert.ok(tone.peakGain > 0 && tone.peakGain <= 0.45, 'UI sound gain must stay crisp and safe');
     }
   }
 
   assert.ok(
-    UI_SOUND_PRESETS.hover[0].peakGain <= 0.04,
-    'Hover sound effect must remain ultra-subtle'
+    UI_SOUND_PRESETS.hover[0].peakGain >= 0.15 && UI_SOUND_PRESETS.hover[0].peakGain <= 0.3,
+    'Hover sound effect must be clearly audible on laptop and phone speakers'
   );
 });
 

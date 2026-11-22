@@ -28,7 +28,7 @@ test('buildRssFeedXml includes all writing works with valid XML escaping and mat
   assert.match(xml, /THRONE OF ASHES \(Tahkta Abu\)/);
   assert.match(xml, /Keindahan yang tak utuh/);
   assert.match(xml, /Fragmen Sayap di Ambang Pancarona/);
-  assert.match(xml, /Puisi, Novel\(e-book\) — Saluran Resmi/);
+  assert.match(xml, /Puisi, Novel\(e-book\) \(Saluran WhatsApp\)/);
   assert.equal(xml.includes('&utm_medium'), false);
   assert.equal(xml.includes('&amp;utm_medium'), true);
 

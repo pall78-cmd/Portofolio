@@ -53,19 +53,20 @@ export function TopBar({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-stone-300/80 bg-[#FAF7F2]/92 backdrop-blur-md">
-      <div className="mx-auto flex h-14 md:h-16 max-w-6xl items-center justify-between gap-4 md:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-stone-800/85 bg-[#0B0C10]/94 text-stone-100 backdrop-blur-md">
+      <div className="mx-auto flex h-14 md:h-16 lg:h-[72px] max-w-7xl items-center justify-between gap-4 md:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-10">
         <a
           href="#profil"
+          onMouseEnter={() => void playUiSound('hover', soundEnabled)}
           onClick={(e) => handleAnchorClick(e, 'profil')}
-          className="font-serif text-lg sm:text-xl font-semibold tracking-tight text-stone-950 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C81E1E]"
+          className="font-serif text-lg sm:text-xl lg:text-[1.35rem] font-semibold tracking-tight text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
         >
           {PROFILE_IDENTITY.shortName}
         </a>
 
         <nav
           aria-label="Navigasi utama"
-          className="hidden md:flex items-center gap-5 lg:gap-7 text-[13px] lg:text-sm font-medium text-stone-700"
+          className="hidden md:flex items-center gap-5 lg:gap-9 text-[13px] lg:text-sm font-medium text-stone-300"
         >
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
@@ -74,11 +75,12 @@ export function TopBar({
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? 'location' : undefined}
+                onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                 onClick={(e) => handleAnchorClick(e, item.id)}
-                className={`ink-link whitespace-nowrap shrink-0 py-1 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C81E1E] ${
+                className={`ink-link whitespace-nowrap shrink-0 py-1.5 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400 ${
                   isActive
-                    ? 'font-semibold text-[#C81E1E]'
-                    : 'text-stone-700 hover:text-stone-950'
+                    ? 'font-semibold text-amber-300'
+                    : 'text-stone-300 hover:text-white'
                 }`}
               >
                 {item.label}
@@ -90,9 +92,10 @@ export function TopBar({
         <div className="flex items-center gap-3 shrink-0">
           <a
             href="#kontak"
+            onMouseEnter={() => void playUiSound('hover', soundEnabled)}
             onClick={(e) => handleAnchorClick(e, 'kontak')}
             aria-current={activeSection === 'kontak' ? 'location' : undefined}
-            className="hidden md:inline-flex items-center justify-center rounded-md bg-[#0C0D10] px-3.5 lg:px-4 py-2 text-xs font-semibold text-white hover:bg-[#C81E1E] transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+            className="hidden md:inline-flex items-center justify-center rounded-md border border-stone-700 bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#A61717] transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
           >
             Hubungi
           </a>
@@ -106,7 +109,7 @@ export function TopBar({
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
             aria-label={mobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-stone-300 bg-white text-stone-800 hover:bg-stone-100 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-700 bg-[#14161D] text-stone-100 hover:bg-stone-800 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
@@ -121,9 +124,9 @@ export function TopBar({
         <nav
           id="mobile-navigation"
           aria-label="Navigasi seluler"
-          className="border-t border-stone-300 bg-[#FAF7F2] px-4 py-4 sm:px-6 md:hidden"
+          className="border-t border-stone-800 bg-[#0B0C10] px-4 py-4 sm:px-6 md:hidden"
         >
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col divide-y divide-stone-800/80">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -132,23 +135,25 @@ export function TopBar({
                   href={item.href}
                   aria-current={isActive ? 'location' : undefined}
                   onClick={(e) => handleAnchorClick(e, item.id)}
-                  className={`min-h-11 flex items-center rounded-md px-2 text-sm transition-colors ${
+                  className={`min-h-12 flex items-center justify-between px-2 text-sm transition-colors ${
                     isActive
-                      ? 'bg-stone-200/60 font-semibold text-[#C81E1E]'
-                      : 'font-medium text-stone-800 hover:bg-stone-100 hover:text-stone-950'
+                      ? 'font-semibold text-amber-300'
+                      : 'font-medium text-stone-200 hover:text-white'
                   }`}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
                 </a>
               );
             })}
-            <a
-              href="#kontak"
-              onClick={(e) => handleAnchorClick(e, 'kontak')}
-              className="mt-2 inline-flex min-h-11 items-center justify-center rounded-md bg-[#0C0D10] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#C81E1E]"
-            >
-              Hubungi
-            </a>
+            <div className="pt-3">
+              <a
+                href="#kontak"
+                onClick={(e) => handleAnchorClick(e, 'kontak')}
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#C81E1E] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#991B1B]"
+              >
+                Hubungi
+              </a>
+            </div>
           </div>
         </nav>
       )}

@@ -50,7 +50,7 @@ export function filterWorks(
 }
 
 export function buildShareCitation(work: WritingWork, authorName: string): string {
-  return `${authorName} — "${work.title}" (${work.category}, ${work.publishedDate}). ${work.platform}.`;
+  return `${authorName}: "${work.title}" (${work.category}, ${work.publishedDate}). ${work.platform}.`;
 }
 
 export function findWorkByQueryId(

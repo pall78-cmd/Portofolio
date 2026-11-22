@@ -8,7 +8,7 @@ import { ReaderModal } from './components/ReaderModal';
 import { TopBar } from './components/TopBar';
 import { WorksSection } from './components/WorksSection';
 import { WRITING_WORKS, type WritingWork } from './data/profileData';
-import { shouldBypassIntro } from './utils/introAudio';
+import { shouldBypassIntro, unlockSharedAudioContext } from './utils/introAudio';
 import { findWorkByQueryId } from './utils/portfolio';
 import {
   applyDocumentSeoMetadata,
@@ -17,7 +17,6 @@ import {
   resolvePageMetadata,
   type SectionId,
 } from './utils/seoMetadata';
-import { playUiSound } from './utils/soundFx';
 
 export function ScrollReveal(
   sectionSelector = 'main section',
@@ -57,7 +56,12 @@ export function ScrollReveal(
 
   for (const section of sectionElements) {
     section.classList.add('reveal-stage');
-    observer.observe(section);
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.96) {
+      section.classList.add('reveal-visible');
+    } else {
+      observer.observe(section);
+    }
   }
 
   return () => observer.disconnect();
@@ -79,7 +83,7 @@ export default function App() {
     return !shouldBypassIntro(window.location.search, reducedMotion);
   });
 
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const soundEnabled = true;
 
   const [activeSection, setActiveSection] = useState<SectionId>(() => {
     if (typeof window === 'undefined') {
@@ -118,13 +122,24 @@ export default function App() {
     applyDocumentSeoMetadata(resolvePageMetadata({ activeWork, activeSection }));
   }, [activeWork, activeSection]);
 
-  const handleToggleSound = () => {
-    const next = !soundEnabled;
-    setSoundEnabled(next);
-    if (next) {
-      void playUiSound('copy', true);
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
     }
-  };
+
+    const ensureUnlocked = () => {
+      void unlockSharedAudioContext();
+    };
+
+    window.addEventListener('pointerdown', ensureUnlocked, { capture: true, passive: true });
+    window.addEventListener('touchstart', ensureUnlocked, { capture: true, passive: true });
+    window.addEventListener('keydown', ensureUnlocked, { capture: true, passive: true });
+    return () => {
+      window.removeEventListener('pointerdown', ensureUnlocked, { capture: true });
+      window.removeEventListener('touchstart', ensureUnlocked, { capture: true });
+      window.removeEventListener('keydown', ensureUnlocked, { capture: true });
+    };
+  }, []);
 
   const handleCloseWork = () => {
     setActiveWork(null);
@@ -144,7 +159,7 @@ export default function App() {
         soundEnabled={soundEnabled}
       />
       <main>
-        <HeroSection soundEnabled={soundEnabled} onToggleSound={handleToggleSound} />
+        <HeroSection soundEnabled={soundEnabled} />
         <WorksSection
           onSelectWork={(work) => setActiveWork(work)}
           soundEnabled={soundEnabled}

@@ -78,7 +78,7 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
             </div>
             <h2
               id="reader-modal-title"
-              className="mt-2 font-serif text-xl sm:text-2xl lg:text-3xl font-semibold text-white text-balance tracking-[0.01em]"
+              className="mt-2 font-serif text-xl leading-[1.28] sm:text-2xl sm:leading-[1.24] lg:text-3xl lg:leading-[1.2] font-semibold text-white text-balance tracking-[0.01em]"
             >
               {work.title}
             </h2>
@@ -97,12 +97,12 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
         <div className="p-5 sm:p-8 lg:p-10">
           <div className="space-y-4">
             <p className="text-sm font-medium text-stone-600">
-              Ditulis oleh {PROFILE_IDENTITY.fullName} — {work.platform}
+              Oleh {PROFILE_IDENTITY.fullName} · {work.platform}
             </p>
             {work.excerpt.map((paragraph, index) => (
               <p
                 key={index}
-                className="font-serif text-[15px] leading-relaxed text-stone-900 sm:text-base lg:text-[1.0625rem]"
+                className="font-serif text-[15px] leading-[1.72] text-stone-900 sm:text-base lg:text-[1.0625rem]"
               >
                 {paragraph}
               </p>
@@ -135,7 +135,11 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
               onClick={() => void playUiSound('open', soundEnabled)}
               className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
             >
-              <span>Buka di {work.platform}</span>
+              <span>
+                {work.category === 'Saluran & E-book'
+                  ? `Buka ${work.platform}`
+                  : `Baca di ${work.platform}`}
+              </span>
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>

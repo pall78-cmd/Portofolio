@@ -77,29 +77,29 @@ export const PROFILE_IDENTITY = {
   fullName: 'Naufal Athallah Rosiyandi',
   shortName: 'Naufal Athallah',
   subtitle:
-    'Mahasiswa Sastra Inggris UINSA • Pengurus EDSA Executive 2026 (Kabinet Atarascent) • Penulis',
-  kicker: 'Sastra Inggris FAHUM UINSA · EDSA Executive 2026 (Kabinet Atarascent)',
+    'Mahasiswa Sastra Inggris UINSA · Pengurus Divisi HRD EDSA 2026 (Kabinet Atarascent) · Penulis',
+  kicker: 'Sastra Inggris FAHUM UINSA · Kabinet Atarascent',
   welcomeLead:
-    'Selamat datang di halaman profil resmi Naufal Athallah Rosiyandi. Saat ini aktif menempuh pendidikan di Program Studi Sastra Inggris, Fakultas Adab dan Humaniora (FAHUM) UIN Sunan Ampel Surabaya (UINSA) serta terlibat dalam kepengurusan himpunan mahasiswa HIMAPRO-SI / EDSA Executive 2026 Kabinet Atarascent.',
+    'Kuliah di Sastra Inggris FAHUM UIN Sunan Ampel Surabaya, keseharian Naufal diisi dengan ruang kelas, kegiatan himpunan, dan menulis cerita. Di kampus, ia ikut menggerakkan Divisi HRD EDSA Executive 2026 (Kabinet Atarascent).',
   editorialNote:
-    'Penulis THRONE OF ASHES (Tahkta Abu), Keindahan yang tak utuh, dan Fragmen Sayap di Ambang Pancarona di Wattpad (@NaufalAthallah), pengelola saluran Puisi, Novel(e-book) di WhatsApp, serta kreator @ashborne di Karyakarsa.',
+    'Di waktu luang, ia menulis cerita bersambung dan puisi di Wattpad (@NaufalAthallah), termasuk THRONE OF ASHES (Tahkta Abu) dan Keindahan yang tak utuh. Tulisan lainnya juga dibagikan lewat saluran WhatsApp Puisi, Novel(e-book) dan Karyakarsa @ashborne.',
   heroImage: '/assets/aistudio/1000199122-jpg-1759824490026_bdc54ddd.jpg',
-  heroImageAlt: 'Foto profil Naufal Athallah Rosiyandi di kawasan Halaman Kota.',
+  heroImageAlt: 'Potret Naufal Athallah Rosiyandi di kawasan Halaman Kota Surabaya.',
   proseImage: '/src/assets/images/writing_desk_prose_1795196265899.jpg',
   proseImageAlt:
-    'Ilustrasi buku catatan naskah terbuka bersama pena tinta dan tumpukan buku di meja kerja.',
+    'Meja tulis dengan buku catatan terbuka, pena tinta, dan tumpukan buku.',
 };
 
 export const PROFILE_HIGHLIGHTS: ProfileHighlight[] = [
   {
-    label: 'Program Studi',
+    label: 'Jurusan',
     value: 'Sastra Inggris',
-    detail: 'FAHUM UIN Sunan Ampel Surabaya',
+    detail: 'FAHUM · UIN Sunan Ampel Surabaya',
   },
   {
-    label: 'Kepengurusan',
+    label: 'Himpunan',
     value: 'EDSA Executive 2026',
-    detail: 'Kabinet Atarascent · HIMAPRO-SI UINSA (@himaprosiuinsa)',
+    detail: 'Divisi HRD · Kabinet Atarascent (HIMAPRO-SI)',
   },
   {
     label: 'Karya di Wattpad',
@@ -107,9 +107,9 @@ export const PROFILE_HIGHLIGHTS: ProfileHighlight[] = [
     detail: 'THRONE OF ASHES, Keindahan yang tak utuh, Fragmen Sayap',
   },
   {
-    label: 'Saluran & Kanal',
+    label: 'Saluran & Laman',
     value: 'Puisi, Novel(e-book)',
-    detail: 'Saluran WhatsApp, @ashborne & @iniipalll_',
+    detail: 'Saluran WhatsApp, Karyakarsa (@ashborne) & Instagram',
   },
 ];
 
@@ -119,7 +119,7 @@ export const OFFICIAL_LINKS: OfficialLink[] = [
     platform: 'Wattpad (@NaufalAthallah)',
     handle: '@NaufalAthallah',
     description:
-      'Serial THRONE OF ASHES (Tahkta Abu) — Dark Fantasy & Misteri (5 bagian, diperbarui 15 Juni 2026) beserta dua karya lainnya.',
+      'Kumpulan cerita bersambung seperti THRONE OF ASHES (Tahkta Abu), Keindahan yang tak utuh, dan puisi di Wattpad.',
     url: VERIFIED_URLS.wattpadThroneOfAshes,
     ctaLabel: 'Wattpad: THRONE OF ASHES',
   },
@@ -128,7 +128,7 @@ export const OFFICIAL_LINKS: OfficialLink[] = [
     platform: 'Saluran WhatsApp',
     handle: 'Puisi, Novel(e-book)',
     description:
-      'Saluran "Puisi, Novel(e-book)" tempat berbagi novel-novel digital (e-book) orisinal eksklusif karya Naufal Athallah.',
+      'Tempat berbagi novel digital (e-book) dan puisi terbaru langsung lewat saluran WhatsApp.',
     url: VERIFIED_URLS.whatsappChannel,
     ctaLabel: 'Saluran WhatsApp: Puisi, Novel(e-book)',
   },
@@ -137,7 +137,7 @@ export const OFFICIAL_LINKS: OfficialLink[] = [
     platform: 'Instagram',
     handle: '@iniipalll_',
     description:
-      'Akun Instagram pribadi resmi Naufal Athallah Rosiyandi (@iniipalll_).',
+      'Keseharian, kegiatan kampus, dan kabar terbaru dari Naufal Athallah (@iniipalll_).',
     url: VERIFIED_URLS.instagramPersonal,
     ctaLabel: 'Instagram (@iniipalll_)',
   },
@@ -146,7 +146,7 @@ export const OFFICIAL_LINKS: OfficialLink[] = [
     platform: 'Karyakarsa',
     handle: '@ashborne',
     description:
-      'Laman resmi Naufal Athallah Rosiyandi (@ashborne) di platform Karyakarsa.',
+      'Laman Karyakarsa @ashborne untuk membaca dan memberi dukungan buat karya tulisan Naufal.',
     url: VERIFIED_URLS.karyakarsa,
     ctaLabel: 'Karyakarsa (@ashborne)',
   },
@@ -166,7 +166,7 @@ export const WRITING_WORKS: WritingWork[] = [
     excerpt: [
       'Di Masa Uap serta Besi, para Dewa sudah lama mati ataupun begitulah yang dikhotbahkan oleh Gereja Mesin. Dunia saat ini bergerak dengan roda gigi, diatur oleh logika dingin, serta diawasi oleh Inkuisitor yang membakar seluruh perihal berbau mistis.',
       'Di dunia di mana pengetahuan merupakan toksin, ketidaktahuan merupakan satu-satunya pelindung, serta kegilaan merupakan satu-satunya tangga mengarah takhta.',
-      'Kategori & Tag di Wattpad: Dark Fantasy, Fantasy, Paranormal, Occult & Afterlife (#action #fantasi #misteri).',
+      'Tagar di Wattpad: Dark Fantasy, Fantasy, Paranormal, Occult & Afterlife (#action #fantasi #misteri).',
     ],
     externalUrl: VERIFIED_URLS.wattpadThroneOfAshes,
     imageUrl: '/src/assets/images/writing_desk_prose_1795196265899.jpg',
@@ -185,11 +185,11 @@ export const WRITING_WORKS: WritingWork[] = [
     excerpt: [
       'Bara terobsesi menutup retakan. Keara terobsesi mengisinya dengan emas.',
       'Bara Adiwangsa adalah arsitek yang memuja presisi. Baginya, hidup harus seperti menara kaca: simetris, berkilau, dan tanpa cela. Sebaliknya, Keara, istrinya, adalah kurator seni yang percaya bahwa sejarah sebuah benda justru terletak pada cacatnya.',
-      'Pernikahan mereka berjalan di atas kompromi yang rapuh, hingga Elena masa lalu Bara yang mewakili standar kesempurnaan kembali dengan tawaran proyek impian.',
+      'Pernikahan mereka berjalan di atas kompromi yang rapuh, hingga Elena, sosok dari masa lalu Bara yang mewakili standar kesempurnaan, kembali membawa tawaran proyek impian.',
     ],
     externalUrl: VERIFIED_URLS.wattpadKeindahan,
     imageUrl: '/src/assets/images/campus_library_archive_1795196265483.jpg',
-    imageAlt: 'Ilustrasi ruang baca dan arsip literatur.',
+    imageAlt: 'Ilustrasi ruang baca dan rak buku perpustakaan.',
   },
   {
     id: 'fragmen-sayap-di-ambang-pancarona',
@@ -199,27 +199,28 @@ export const WRITING_WORKS: WritingWork[] = [
     publishedDate: '28 Des 2025',
     lengthLabel: '1 Bagian · Puisi',
     platform: 'Wattpad (@NaufalAthallah)',
-    summary: 'Puisi orisinal karya Naufal Athallah yang diterbitkan di Wattpad (#melankolis).',
+    summary:
+      'Puisi bernuansa sendu karya Naufal Athallah yang terbit di Wattpad (@NaufalAthallah).',
     excerpt: [
-      'Puisi orisinal karya Naufal Athallah.',
-      'Diterbitkan di Wattpad (@NaufalAthallah) pada 28 Desember 2025 dengan tagar #melankolis.',
+      'Sajak bernuansa sendu karya Naufal Athallah.',
+      'Terbit di Wattpad (@NaufalAthallah) pada 28 Desember 2025 dengan tagar #melankolis.',
     ],
     externalUrl: VERIFIED_URLS.wattpadFragmenSayap,
   },
   {
     id: 'saluran-puisi-novel-ebook',
     index: '04',
-    title: 'Puisi, Novel(e-book) — Saluran Resmi',
+    title: 'Puisi, Novel(e-book) (Saluran WhatsApp)',
     category: 'Saluran & E-book',
     publishedDate: 'Aktif',
     lengthLabel: '43 Pengikut · WhatsApp Channel',
     platform: 'Saluran WhatsApp',
     summary:
-      'Sudut kecil tempat ide-ide bermuara: membagikan novel-novel digital (e-book) orisinal eksklusif karya Naufal Athallah.',
+      'Sudut kecil tempat ide-ide bermuara. Saluran WhatsApp tempat Naufal berbagi novel digital (e-book) dan puisi.',
     excerpt: [
       'Selamat datang di sudut kecil tempat ide-ideku bermuara. Di sini, aku membagikan novel-novel digital yang kutulis dengan hati.',
-      'Karya Orisinal: Novel-novel digital (E-book) eksklusif karya Naufal Athallah.',
-      'Saluran ini bukan sekadar katalog, tapi rumah bagi cerita-ceritaku. Terima kasih sudah menjadi bagian dari perjalanan literasiku. Support your local independent writer.',
+      'Karya Orisinal: Novel-novel digital (e-book) eksklusif karya Naufal Athallah.',
+      'Saluran ini bukan sekadar katalog, melainkan rumah bagi cerita-ceritaku. Terima kasih sudah menjadi bagian dari perjalanan literasiku. Support your local independent writer.',
     ],
     externalUrl: VERIFIED_URLS.whatsappChannel,
   },
@@ -228,7 +229,7 @@ export const WRITING_WORKS: WritingWork[] = [
 export const ORGANIZATION_REFERENCE = {
   name: 'HIMAPRO-SI / EDSA UINSA',
   fullTitle:
-    'Himpunan Mahasiswa Program Studi Sastra Inggris — Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
+    'Himpunan Mahasiswa Program Studi Sastra Inggris, Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
   instagramHandle: '@himaprosiuinsa',
   instagramUrl: VERIFIED_URLS.himaprosiInstagram,
   edsaBannerImage: '/assets/aistudio/EDSA_header_google_form_1600x400_9e5f9952.png',
@@ -238,19 +239,19 @@ export const ORGANIZATION_REFERENCE = {
   hrdDivisionImageAlt:
     'Foto bersama anggota Divisi HRD EDSA Executive 2026 Kabinet Atarascent HIMAPRO-SI UINSA mengenakan seragam himpunan.',
   hrdDivisionCaption:
-    'Divisi HRD (Human Resource Development) · EDSA Executive 2026 Kabinet Atarascent (HIMAPRO-SI UINSA).',
+    'Divisi HRD (Human Resource Development) · EDSA Executive 2026 Kabinet Atarascent.',
   summary:
-    'Merujuk laman resmi UIN Sunan Ampel Surabaya (uinsa.ac.id), Program Studi Sastra Inggris berada di bawah Fakultas Adab dan Humaniora (FAHUM) UINSA dengan himpunan mahasiswa tingkat prodi HIMAPRO-SI (@himaprosiuinsa).',
+    'HIMAPRO-SI atau EDSA UINSA adalah himpunan mahasiswa Sastra Inggris di Fakultas Adab dan Humaniora (FAHUM) UIN Sunan Ampel Surabaya.',
   ecosystems: [
     {
       name: 'English Literary Club (ELITE)',
       detail:
-        'Komunitas mahasiswa Sastra Inggris FAHUM UINSA untuk kajian karya sastra berbahasa Inggris, bedah buku, dan penulisan kreatif.',
+        'Komunitas mahasiswa Sastra Inggris FAHUM UINSA buat bedah buku, ngobrolin karya sastra berbahasa Inggris, sampai latihan nulis kreatif bareng.',
     },
     {
       name: 'NEUSCO (National English Undergraduate Students Conference)',
       detail:
-        'Konferensi ilmiah tahunan Prodi Sastra Inggris FAHUM UINSA bagi mahasiswa untuk mempresentasikan riset bahasa, sastra, dan budaya.',
+        'Konferensi mahasiswa tahunan Prodi Sastra Inggris FAHUM UINSA untuk berbagi hasil riset seputar bahasa, sastra, dan budaya.',
     },
   ],
 };
@@ -259,18 +260,18 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
   {
     index: '01',
     period: '2026',
-    role: 'Pengurus EDSA Executive 2026 · Kabinet Atarascent (Divisi HRD)',
+    role: 'Pengurus Divisi HRD EDSA Executive 2026 · Kabinet Atarascent',
     institution: 'HIMAPRO-SI · Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya',
     description:
-      'Aktif di Divisi HRD (Human Resource Development) Kabinet Atarascent HIMAPRO-SI / EDSA UINSA (@himaprosiuinsa), menjalankan program ELITION (English Literature Information) untuk kurasi informasi beasiswa, program ambassador, duta wisata, serta serap aspirasi dan voting komunitas mahasiswa.',
+      'Ikut menggerakkan Divisi HRD (Human Resource Development) HIMAPRO-SI / EDSA UINSA (@himaprosiuinsa), termasuk menjalankan program ELITION untuk menampung suara mahasiswa serta berbagi info beasiswa, program duta, dan lomba.',
   },
   {
     index: '02',
     period: 'Aktif',
-    role: 'Mahasiswa Program Studi Sastra Inggris',
+    role: 'Mahasiswa Sastra Inggris',
     institution: 'Fakultas Adab dan Humaniora (FAHUM) · UIN Sunan Ampel Surabaya',
     description:
-      'Menempuh pendidikan sarjana pada Program Studi Sastra Inggris, Fakultas Adab dan Humaniora UIN Sunan Ampel Surabaya.',
+      'Kuliah di Jurusan Sastra Inggris, Fakultas Adab dan Humaniora (FAHUM) UIN Sunan Ampel Surabaya.',
   },
   {
     index: '03',
@@ -278,15 +279,15 @@ export const JOURNEY_MILESTONES: JourneyMilestone[] = [
     role: 'Penulis (@NaufalAthallah / @ashborne)',
     institution: 'Wattpad, Saluran WhatsApp Puisi, Novel(e-book) & Karyakarsa',
     description:
-      'Aktif menulis fiksi dan puisi di Wattpad (bergabung sejak 17 Mei 2022) dengan 3 karya terbit, mengelola saluran WhatsApp Puisi, Novel(e-book), dan laman Karyakarsa @ashborne.',
+      'Menulis cerita dan puisi di Wattpad sejak Mei 2022 dengan tiga karya yang sudah terbit, sambil aktif mengisi saluran WhatsApp Puisi, Novel(e-book) dan laman Karyakarsa @ashborne.',
   },
 ];
 
 export const HRD_ELITION_PROGRESS = {
-  eyebrow: 'Progres Divisi HRD · Program Kerja ELITION',
+  eyebrow: 'Kegiatan Divisi HRD',
   title: 'ELITION (English Literature Information)',
   summary:
-    'Inisiatif Divisi HRD EDSA Executive 2026 Kabinet Atarascent dalam menghimpun aspirasi mahasiswa, menyelenggarakan voting komunitas, serta menyebarkan informasi terkurasi mengenai beasiswa, rekrutmen relawan, dan ajang prestasi mahasiswa.',
+    'Program dari Divisi HRD EDSA Executive 2026 (Kabinet Atarascent) untuk menampung suara mahasiswa Sastra Inggris sekaligus berbagi info penting, mulai dari kuesioner prodi, voting komunitas, sampai kabar beasiswa dan lomba.',
   driveFolderUrl: VERIFIED_URLS.elitionDriveFolder,
   spreadsheetUrl: VERIFIED_URLS.elitionSpreadsheet,
   items: [
@@ -294,11 +295,11 @@ export const HRD_ELITION_PROGRESS = {
       id: 'elition-aspirasi-mahasiswa',
       index: '01',
       group: 'aspirasi',
-      category: 'Serap Aspirasi Mahasiswa',
+      category: 'Aspirasi Mahasiswa',
       title: 'Kuesioner Aspirasi Mahasiswa Sastra Inggris',
-      scheduleOrSource: 'Google Forms · Arsip Spreadsheet ELITION',
+      scheduleOrSource: 'Google Forms · Rekap Spreadsheet ELITION',
       summary:
-        'Kanal resmi penjaringan masukan, kebutuhan pengembangan diri, dan evaluasi layanan kemahasiswaan bagi mahasiswa Prodi Sastra Inggris UINSA.',
+        'Wadah terbuka buat teman-teman Sastra Inggris UINSA menyampaikan masukan, ide acara, dan kebutuhan mahasiswa.',
       primaryUrl: VERIFIED_URLS.elitionAspirasiForm,
       primaryLabel: 'Buka Formulir',
     },
@@ -308,9 +309,9 @@ export const HRD_ELITION_PROGRESS = {
       group: 'aspirasi',
       category: 'Vote Komunitas',
       title: 'Evaluasi & Voting Penggantian Komunitas SIFA',
-      scheduleOrSource: 'Google Forms · Arsip Spreadsheet ELITION',
+      scheduleOrSource: 'Google Forms · Rekap Spreadsheet ELITION',
       summary:
-        'Jajak pendapat dan pemungutan suara mahasiswa untuk mengevaluasi serta menentukan arah pembaruan komunitas SIFA di lingkungan prodi.',
+        'Voting terbuka mahasiswa untuk mengevaluasi sekaligus menentukan kelanjutan komunitas SIFA di prodi.',
       primaryUrl: VERIFIED_URLS.elitionSifaVoteForm,
       primaryLabel: 'Buka Voting',
     },
@@ -318,11 +319,11 @@ export const HRD_ELITION_PROGRESS = {
       id: 'elition-bakti-bca',
       index: '03',
       group: 'publikasi',
-      category: 'Informasi Beasiswa',
+      category: 'Info Beasiswa',
       title: 'Beasiswa Bakti BCA 2026',
-      scheduleOrSource: '3 Agustus – 30 September 2026 · bca.id/beasiswabaktibca',
+      scheduleOrSource: '3 Agustus - 30 September 2026 · bca.id/beasiswabaktibca',
       summary:
-        'Publikasi informasi jadwal pendaftaran dan tautan resmi Program Beasiswa Bakti BCA 2026 agar mudah diakses mahasiswa Sastra Inggris.',
+        'Info jadwal daftar dan tautan resmi Program Beasiswa Bakti BCA 2026 buat mahasiswa Sastra Inggris.',
       primaryUrl: VERIFIED_URLS.elitionBaktiBcaPoster,
       primaryLabel: 'Lihat Poster',
     },
@@ -330,15 +331,15 @@ export const HRD_ELITION_PROGRESS = {
       id: 'elition-google-ambassador',
       index: '04',
       group: 'publikasi',
-      category: 'Volunteer & Ambassador',
+      category: 'Volunteer & Duta',
       title: 'Google Student Ambassador (#TeamGoogle2026)',
-      scheduleOrSource: 'Poster Informasi & QR Code Rekrutmen',
+      scheduleOrSource: 'Poster Info & Kode QR Pendaftaran',
       summary:
-        'Kurasi dua materi publikasi rekrutmen Google Student Ambassador 2026 ("Kami mencari si paling AI") lengkap dengan poster QR pendaftaran.',
+        'Poster info pendaftaran Google Student Ambassador 2026 ("Kami mencari si paling AI") lengkap dengan kode QR.',
       primaryUrl: VERIFIED_URLS.elitionGooglePoster,
       primaryLabel: 'Poster Utama',
       secondaryUrl: VERIFIED_URLS.elitionGoogleQrPoster,
-      secondaryLabel: 'Poster QR Code',
+      secondaryLabel: 'Poster Kode QR',
     },
     {
       id: 'elition-cak-ning-surabaya',
@@ -346,9 +347,9 @@ export const HRD_ELITION_PROGRESS = {
       group: 'publikasi',
       category: 'Duta Wisata',
       title: 'Pemilihan Duta Wisata Cak & Ning Surabaya 2026',
-      scheduleOrSource: '6 Juli – 12 September 2026 · Adhigana Manggala',
+      scheduleOrSource: '6 Juli - 12 September 2026 · Adhigana Manggala',
       summary:
-        'Penyebaran informasi persyaratan, lini masa seleksi (Technical Meeting hingga Grand Final 10 Oktober 2026), dan pendaftaran Cak & Ning Surabaya.',
+        'Info syarat, jadwal seleksi dari Technical Meeting sampai Grand Final 10 Oktober 2026, dan cara daftar Cak & Ning Surabaya.',
       primaryUrl: VERIFIED_URLS.elitionCakNingPoster,
       primaryLabel: 'Lihat Poster',
     },

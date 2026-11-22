@@ -25,14 +25,14 @@ export function EditorialImage({
   return (
     <figure
       className={`group relative flex flex-col overflow-hidden border ${
-        dark ? 'border-stone-800 bg-[#0C0D10]' : 'border-stone-300/90 bg-stone-100'
+        dark ? 'border-stone-800/90 bg-[#0B0C10]' : 'border-stone-300/90 bg-stone-100'
       } ${className}`}
     >
       {hasError ? (
         <div
-          className={`flex flex-1 min-h-[260px] w-full flex-col items-center justify-center p-8 text-center ${
+          className={`flex flex-1 min-h-[240px] w-full flex-col items-center justify-center p-8 text-center ${
             dark
-              ? 'bg-gradient-to-br from-[#0C0D10] to-stone-900'
+              ? 'bg-gradient-to-br from-[#0B0C10] to-stone-900'
               : 'bg-gradient-to-br from-[#FAF7F2] to-stone-200'
           }`}
         >
@@ -53,7 +53,7 @@ export function EditorialImage({
             onError={() => setHasError(true)}
             className={`block h-full w-full object-cover ${
               zoomOnHover
-                ? 'transition-transform duration-500 ease-out group-hover:scale-[1.035]'
+                ? 'transition-transform duration-700 ease-out group-hover:scale-[1.03]'
                 : ''
             } ${imgClassName}`}
           />
@@ -61,10 +61,10 @@ export function EditorialImage({
       )}
       {caption && (
         <figcaption
-          className={`border-t px-4 py-2.5 text-xs ${
+          className={`border-t px-4 py-2.5 font-serif text-xs italic tracking-[0.01em] ${
             dark
-              ? 'border-stone-800 bg-[#121318] text-stone-300'
-              : 'border-stone-300/80 bg-[#0C0D10] text-stone-200'
+              ? 'border-stone-800/90 bg-[#12141B] text-stone-300'
+              : 'border-stone-300/80 bg-[#0B0C10] text-stone-200'
           }`}
         >
           {caption}

@@ -1,11 +1,10 @@
-import { ArrowUpRight, Volume2, VolumeX } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { OFFICIAL_LINKS, PROFILE_HIGHLIGHTS, PROFILE_IDENTITY } from '../data/profileData';
 import { playUiSound } from '../utils/soundFx';
 import { EditorialImage } from './EditorialImage';
 
 interface HeroSectionProps {
   soundEnabled: boolean;
-  onToggleSound: () => void;
 }
 
 const MARQUEE_PHRASES = [
@@ -17,54 +16,83 @@ const MARQUEE_PHRASES = [
   'Saluran Puisi, Novel(e-book)',
 ];
 
-export function HeroSection({ soundEnabled, onToggleSound }: HeroSectionProps) {
+export function HeroSection({ soundEnabled }: HeroSectionProps) {
   const wattpadLink = OFFICIAL_LINKS.find((item) => item.id === 'wattpad');
   const instagramLink = OFFICIAL_LINKS.find((item) => item.id === 'instagram');
 
   return (
     <section
       id="profil"
-      className="reveal-stage scroll-mt-16 border-b border-stone-800 bg-[#FAF7F2]"
+      className="reveal-stage scroll-mt-16 border-b border-stone-800 bg-[#0B0C10] text-stone-100"
     >
-      <div className="mx-auto max-w-6xl px-4 pt-6 pb-10 sm:px-6 md:pt-10 md:pb-14 lg:px-8 lg:pt-14 lg:pb-16">
-        <div className="flex flex-col gap-1.5 border-b border-stone-300/90 pb-3 text-xs font-medium text-stone-600 tabular-nums md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-4">
-          <span className="font-mono font-semibold text-[#C81E1E]">
-            Edisi 2026 · Arsip Profil &amp; Sastra
+      <div className="mx-auto max-w-7xl px-4 pt-6 pb-10 sm:px-6 md:pt-10 md:pb-14 lg:px-10 lg:pt-12 lg:pb-16">
+        {/* Editorial Masthead Rule */}
+        <div className="flex flex-col gap-1 border-b border-stone-800 pb-3.5 text-xs font-medium text-stone-400 tabular-nums md:flex-row md:items-center md:justify-between md:gap-6">
+          <span className="font-mono font-semibold tracking-wider text-amber-400">
+            Profil &amp; Karya · 2026
           </span>
-          <span className="text-stone-600">{PROFILE_IDENTITY.kicker}</span>
+          <span className="text-stone-300 md:text-right">{PROFILE_IDENTITY.kicker}</span>
         </div>
 
-        <div className="mt-6 md:mt-8 lg:mt-10 grid grid-cols-1 gap-8 md:grid-cols-12 md:items-start md:gap-8 lg:items-stretch lg:gap-12">
-          <div className="flex flex-col justify-between md:col-span-7">
+        {/* Smartphone (<768px): Cover Plate First / Stacked Book-Cover Composition; Tablet (md): 7/5 Spread; Desktop (lg): 12-Col Asymmetric Monograph */}
+        <div className="mt-6 md:mt-9 lg:mt-11 grid grid-cols-1 gap-7 md:grid-cols-12 md:items-start md:gap-8 lg:items-stretch lg:gap-12">
+          {/* Portrait Frame — renders first on Smartphone (order-1) for poster-cover impact, right column on Tablet/Desktop (md:order-2) */}
+          <div className="order-1 md:order-2 md:col-span-5 lg:h-full">
+            <EditorialImage
+              src={PROFILE_IDENTITY.heroImage}
+              alt={PROFILE_IDENTITY.heroImageAlt}
+              caption="Naufal Athallah Rosiyandi · Halaman Kota Surabaya"
+              dark
+              className="lg:h-full rounded-xl shadow-2xl shadow-black/60"
+              imgClassName="aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/5] object-[50%_42%] lg:aspect-auto lg:h-full"
+            />
+          </div>
+
+          {/* Typographic Monograph Column */}
+          <div className="order-2 md:order-1 flex flex-col justify-between md:col-span-7">
             <div>
-              <h1 className="font-serif text-[2rem] leading-[1.1] font-semibold tracking-tight text-stone-950 sm:text-4xl md:text-[2.65rem] md:leading-[1.06] lg:text-[4rem] lg:leading-[1.03] text-balance">
+              <h1 className="font-serif text-[2.15rem] leading-[1.18] font-semibold tracking-tight text-white sm:text-[2.75rem] sm:leading-[1.15] md:text-[3.05rem] md:leading-[1.13] lg:text-[4rem] lg:leading-[1.1] text-balance">
                 {PROFILE_IDENTITY.fullName}
               </h1>
 
-              <p className="mt-3 md:mt-4 text-sm font-medium text-stone-700 md:text-[15px] lg:text-base">
+              <p className="mt-3.5 md:mt-4 text-sm font-medium text-amber-300/95 md:text-[15px] lg:text-base leading-relaxed tracking-[0.01em]">
                 {PROFILE_IDENTITY.subtitle}
               </p>
 
-              <p className="mt-4 md:mt-5 lg:mt-6 max-w-2xl text-[15px] leading-relaxed text-stone-800 lg:text-[1.0625rem]">
-                {PROFILE_IDENTITY.welcomeLead}
-              </p>
+              <div className="mt-5 md:mt-6 border-t border-stone-800 pt-5 md:pt-6">
+                <p className="max-w-2xl text-[15px] font-[450] leading-[1.7] text-stone-200 lg:text-[1.0625rem] tracking-[0.01em]">
+                  {PROFILE_IDENTITY.welcomeLead}
+                </p>
 
-              <p className="mt-3 md:mt-4 max-w-2xl text-sm leading-relaxed text-stone-600">
-                {PROFILE_IDENTITY.editorialNote}
-              </p>
+                <p className="mt-4 max-w-2xl text-sm font-[450] leading-[1.7] text-stone-400 lg:text-[15px] tracking-[0.01em]">
+                  {PROFILE_IDENTITY.editorialNote}
+                </p>
+              </div>
+
+              {/* Desktop Literary Epigraph Pull-Quote (hidden on compact mobile & tablet to keep spread distinct) */}
+              <blockquote className="hidden lg:block mt-7 border-y border-stone-800/90 py-4 font-serif text-base italic leading-[1.65] text-stone-300">
+                &ldquo;Di dunia di mana pengetahuan merupakan toksin, ketidaktahuan merupakan
+                satu-satunya pelindung, serta kegilaan merupakan satu-satunya tangga mengarah
+                takhta.&rdquo;
+                <footer className="mt-2 font-sans text-xs font-[450] not-italic text-stone-400">
+                  Dari serial <span className="font-medium text-amber-300">THRONE OF ASHES (Tahkta Abu)</span>
+                </footer>
+              </blockquote>
             </div>
 
-            <div className="mt-6 md:mt-7 lg:mt-8 grid grid-cols-2 gap-2.5 border-t border-stone-300/90 pt-5 md:flex md:flex-wrap md:items-center md:pt-6">
+            {/* Distinct CTA Alignment: Full-width stack on Mobile, Horizontal row on Tablet & Desktop */}
+            <div className="mt-6 md:mt-7 lg:mt-8 grid grid-cols-1 gap-3 border-t border-stone-800 pt-5 sm:grid-cols-2 md:flex md:flex-wrap md:items-center md:gap-4 md:pt-6">
               {wattpadLink && (
                 <a
                   href={wattpadLink.url}
                   target="_blank"
                   rel="me noopener noreferrer"
+                  onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                   onClick={() => void playUiSound('open', soundEnabled)}
-                  className="col-span-2 md:col-span-1 inline-flex min-h-11 items-center justify-center md:justify-start gap-1.5 rounded-md bg-[#C81E1E] px-4 py-2.5 text-xs lg:text-sm font-semibold text-white hover:bg-[#991B1B] transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-xs lg:text-sm font-semibold text-white hover:bg-[#A61717] transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   <span>{wattpadLink.ctaLabel}</span>
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                 </a>
               )}
 
@@ -73,63 +101,53 @@ export function HeroSection({ soundEnabled, onToggleSound }: HeroSectionProps) {
                   href={instagramLink.url}
                   target="_blank"
                   rel="me noopener noreferrer"
+                  onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                   onClick={() => void playUiSound('tap', soundEnabled)}
-                  className="inline-flex min-h-11 items-center justify-center md:justify-start gap-1 rounded-md border border-stone-400 bg-white px-2.5 sm:px-4 py-2.5 text-[11px] sm:text-xs lg:text-sm font-semibold text-stone-900 hover:border-[#0C0D10] hover:bg-stone-100 transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-stone-700 bg-[#14161D] px-5 py-2.5 text-xs lg:text-sm font-semibold text-stone-100 hover:border-amber-400 hover:text-white transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   <span>{instagramLink.ctaLabel}</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-stone-500" aria-hidden="true" />
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
                 </a>
               )}
-
-              <button
-                type="button"
-                onClick={onToggleSound}
-                aria-pressed={soundEnabled}
-                className="inline-flex min-h-11 items-center justify-center md:justify-start gap-1.5 rounded-md border border-stone-300 bg-[#F3EEE4] px-2.5 sm:px-3.5 py-2.5 text-[11px] sm:text-xs font-semibold text-stone-800 hover:border-stone-500 hover:bg-stone-200/70 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
-              >
-                {soundEnabled ? (
-                  <Volume2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-[#C81E1E]" aria-hidden="true" />
-                ) : (
-                  <VolumeX className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-stone-500" aria-hidden="true" />
-                )}
-                <span>
-                  {soundEnabled ? 'Efek Suara: Aktif' : 'Efek Suara: Senyap'}
-                </span>
-              </button>
             </div>
-          </div>
-
-          <div className="md:col-span-5 lg:h-full">
-            <EditorialImage
-              src={PROFILE_IDENTITY.heroImage}
-              alt={PROFILE_IDENTITY.heroImageAlt}
-              caption="Naufal Athallah Rosiyandi · Halaman Kota Surabaya"
-              className="lg:h-full rounded-lg shadow-sm"
-              imgClassName="aspect-[5/4] sm:aspect-[4/3] md:aspect-[4/5] object-[50%_46%] lg:aspect-auto lg:h-full"
-            />
           </div>
         </div>
 
-        <div className="mt-8 md:mt-10 lg:mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-stone-800 bg-stone-800 text-stone-100 md:grid-cols-2 lg:grid-cols-4">
-          {PROFILE_HIGHLIGHTS.map((item) => (
-            <div key={item.label} className="flex flex-col bg-[#0C0D10] p-5 md:p-6">
-              <span className="text-xs font-semibold tracking-wide text-amber-400">
-                {item.label}
-              </span>
-              <span className="mt-1.5 font-serif text-lg font-semibold text-white tracking-[0.01em]">
-                {item.value}
-              </span>
-              <span className="mt-1 text-xs text-stone-300 tracking-[0.01em]">
+        {/* Distinct Highlight Strip per device:
+            - Smartphone (<768px): 2x2 compact non-stacking bento tiles (grid-cols-2 gap-2.5)
+            - Tablet (768px–1023px): 2x2 wide architectural plaques (md:grid-cols-2 md:gap-4)
+            - Desktop (>=1024px): 4-column unified folio bar with vertical hairline rules */}
+        <div className="mt-8 md:mt-11 lg:mt-14 grid grid-cols-2 gap-2.5 md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-0 lg:overflow-hidden lg:rounded-xl lg:border lg:border-stone-800 lg:divide-x lg:divide-stone-800">
+          {PROFILE_HIGHLIGHTS.map((item, idx) => (
+            <div
+              key={item.label}
+              className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-stone-800/90 bg-gradient-to-b from-[#141721] to-[#0E1016] p-3.5 sm:p-4 md:p-5 lg:rounded-none lg:border-0 lg:bg-none lg:bg-[#111319] lg:p-6 transition-colors duration-200 hover:border-amber-400/40 lg:hover:bg-[#161922]"
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C81E1E]/80 via-amber-400/60 to-transparent opacity-70 transition-opacity duration-200 group-hover:opacity-100"
+              />
+              <div>
+                <div className="flex items-center justify-between gap-2 text-[11px] sm:text-xs tabular-nums">
+                  <span className="font-semibold text-amber-400 truncate">{item.label}</span>
+                  <span className="font-mono text-stone-500 shrink-0">0{idx + 1}</span>
+                </div>
+                <p className="mt-2 font-serif text-[15px] leading-[1.32] sm:text-lg sm:leading-[1.28] lg:text-xl lg:leading-[1.26] font-semibold text-white tracking-[0.01em]">
+                  {item.value}
+                </p>
+              </div>
+              <p className="mt-1.5 md:mt-2.5 text-[11px] sm:text-xs font-[450] leading-[1.55] text-stone-400 tracking-[0.01em]">
                 {item.detail}
-              </span>
+              </p>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Literary Broadsheet Marquee Divider */}
       <div
         aria-hidden="true"
-        className="editorial-marquee-wrap overflow-hidden border-t border-stone-800 bg-[#0C0D10] py-2.5 md:py-3 text-[11px] md:text-xs font-medium tracking-wide text-stone-300"
+        className="editorial-marquee-wrap overflow-hidden border-t border-stone-800 bg-[#07080B] py-2.5 md:py-3 text-[11px] md:text-xs font-medium tracking-wider text-stone-300"
       >
         <div className="editorial-marquee-track">
           {[0, 1].map((dupIndex) => (

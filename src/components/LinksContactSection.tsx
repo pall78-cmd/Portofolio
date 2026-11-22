@@ -180,7 +180,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
       setSubmitAlert({
         type: 'error',
         message:
-          'Tidak dapat terhubung ke server penyaring pesan. Periksa koneksi Anda lalu coba lagi.',
+          'Tidak dapat terhubung ke server saat ini. Periksa koneksi Anda lalu coba lagi.',
       });
     } finally {
       setIsSubmitting(false);
@@ -202,31 +202,57 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
   };
 
   return (
-    <section id="tautan" className="reveal-stage scroll-mt-16 bg-[#FAF7F2]">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16 lg:px-8 lg:py-20">
-        <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <p className="text-xs font-semibold tracking-wide text-[#C81E1E]">
-              Verifikasi Identitas
-            </p>
-            <h2 className="mt-2 font-serif text-2xl font-semibold tracking-tight text-stone-950 sm:text-3xl lg:text-4xl text-balance">
-              Tautan Resmi
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-stone-600 sm:text-base">
-              Seluruh serial fiksi, esai sastra, pembaruan pembaca, dan aktivitas kemahasiswaan
-              terhubung melalui empat kanal resmi berikut.
-            </p>
+    <section id="tautan" className="reveal-stage scroll-mt-16 bg-[#FAF7F2] text-stone-950">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
+        <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-12 lg:items-start">
+          {/* Official Links Column: Sticky on Desktop, 2x2 Plaque Matrix on Tablet, Hairline List on Mobile */}
+          <div className="lg:sticky lg:top-24 lg:col-span-5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between lg:block">
+              <div>
+                <p className="font-mono text-xs font-semibold tracking-wider text-[#B91C1C]">
+                  Media &amp; Kanal
+                </p>
+                <h2 className="mt-2 font-serif text-3xl leading-[1.2] font-semibold tracking-tight text-stone-950 sm:text-4xl sm:leading-[1.18] lg:text-[2.6rem] lg:leading-[1.15] text-balance">
+                  Tautan Resmi
+                </h2>
+                <p className="mt-3 max-w-xl text-sm font-[450] leading-[1.7] text-stone-700 sm:text-base">
+                  Tulisan terbaru, kabar cerita, dan kegiatan sehari-hari bisa diikuti lewat empat
+                  tautan berikut.
+                </p>
+              </div>
 
-            <div className="mt-7 md:mt-8 grid grid-cols-1 divide-y divide-stone-300 border-y border-stone-300 md:grid-cols-2 md:gap-4 md:divide-y-0 md:border-y-0 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:border-y">
+              <div className="hidden md:block lg:hidden shrink-0">
+                <button
+                  type="button"
+                  onMouseEnter={() => void playUiSound('hover', soundEnabled)}
+                  onClick={handleCopyProfileLink}
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:border-[#0B0C10] hover:bg-stone-100 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                >
+                  {copiedProfileUrl ? (
+                    <>
+                      <Check className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                      <span>Tautan Tersalin</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 text-stone-500" aria-hidden="true" />
+                      <span>Salin Tautan Halaman</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-7 md:mt-8 grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-stone-300 lg:border-y lg:border-stone-300">
               {OFFICIAL_LINKS.map((link, idx) => {
                 const hoverTint =
                   link.id === 'wattpad'
-                    ? 'hover:bg-orange-50/70'
+                    ? 'hover:bg-orange-50/75'
                     : link.id === 'whatsapp'
-                      ? 'hover:bg-emerald-50/70'
+                      ? 'hover:bg-emerald-50/75'
                       : link.id === 'instagram'
-                        ? 'hover:bg-rose-50/70'
-                        : 'hover:bg-amber-50/70';
+                        ? 'hover:bg-rose-50/75'
+                        : 'hover:bg-amber-50/75';
 
                 return (
                   <a
@@ -234,25 +260,26 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                     href={link.url}
                     target="_blank"
                     rel="me noopener noreferrer"
+                    onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                     onClick={() => void playUiSound('open', soundEnabled)}
-                    className={`group flex items-start justify-between gap-3.5 px-2 py-4 sm:px-3 md:rounded-lg md:border md:border-stone-300 md:bg-white/75 md:p-5 lg:rounded-md lg:border-0 lg:bg-transparent lg:px-2 lg:py-5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${hoverTint}`}
+                    className={`group flex min-h-12 items-start justify-between gap-3.5 rounded-xl border border-stone-300/90 bg-white p-4 shadow-xs shadow-stone-900/[0.03] md:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none lg:px-2 lg:py-5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${hoverTint}`}
                   >
                     <div className="flex items-start gap-3 sm:gap-3.5">
-                      <span className="font-mono text-xs font-semibold text-stone-400 group-hover:text-[#C81E1E] pt-1 tabular-nums">
+                      <span className="font-mono text-xs font-semibold text-stone-400 group-hover:text-[#B91C1C] pt-1 tabular-nums">
                         0{idx + 1}
                       </span>
                       <div>
-                        <p className="text-xs font-semibold text-[#C81E1E]">{link.platform}</p>
-                        <p className="mt-0.5 font-serif text-base sm:text-lg font-semibold leading-snug text-stone-950 group-hover:underline underline-offset-4">
+                        <p className="text-xs font-semibold text-[#B91C1C]">{link.platform}</p>
+                        <p className="mt-0.5 font-serif text-base sm:text-lg font-semibold leading-[1.3] text-stone-950 group-hover:underline underline-offset-4">
                           {link.ctaLabel}
                         </p>
-                        <p className="mt-1.5 text-xs leading-relaxed text-stone-600">
+                        <p className="mt-1.5 text-xs font-[450] leading-[1.6] text-stone-600">
                           {link.description}
                         </p>
                       </div>
                     </div>
                     <ArrowUpRight
-                      className="mt-1 h-4 w-4 shrink-0 text-stone-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#C81E1E]"
+                      className="mt-1 h-4 w-4 shrink-0 text-stone-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#B91C1C]"
                       aria-hidden="true"
                     />
                   </a>
@@ -260,21 +287,22 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
               })}
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 md:hidden lg:block">
               <button
                 type="button"
+                onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                 onClick={handleCopyProfileLink}
-                className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:border-[#0C0D10] hover:bg-stone-100 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:border-[#0B0C10] hover:bg-stone-100 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
               >
                 {copiedProfileUrl ? (
                   <>
                     <Check className="h-4 w-4 text-emerald-700" aria-hidden="true" />
-                    <span>Tautan Profil Disalin</span>
+                    <span>Tautan Tersalin</span>
                   </>
                 ) : (
                   <>
                     <Copy className="h-4 w-4 text-stone-500" aria-hidden="true" />
-                    <span>Salin Tautan Profil</span>
+                    <span>Salin Tautan Halaman</span>
                   </>
                 )}
               </button>
@@ -282,20 +310,26 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
           </div>
 
           <div id="kontak" className="scroll-mt-20 lg:col-span-7">
-            <div className="overflow-hidden rounded-xl border border-stone-300 bg-white shadow-sm">
-              <div className="bg-[#0C0D10] px-5 py-5 sm:px-8 sm:py-7 text-stone-100">
-                <p className="text-xs font-semibold tracking-wide text-amber-400">Korespondensi</p>
-                <h2 className="mt-2 font-serif text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-[0.01em]">
-                  Kirim Pesan atau Ajakan Kolaborasi
-                </h2>
-                <p className="mt-2 text-xs sm:text-sm text-stone-300 tracking-[0.01em]">
-                  Terbuka untuk diskusi karya sastra, proyek penulisan bersama, maupun koordinasi
-                  kegiatan EDSA Executive 2026 Kabinet Atarascent. Setiap pesan disaring otomatis
-                  terhadap spam, bot, dan tautan mencurigakan sebelum diteruskan ke email pemilik.
+            <div className="overflow-hidden rounded-xl border border-stone-300 bg-white shadow-sm md:grid md:grid-cols-12 lg:block">
+              <div className="bg-[#0B0C10] px-5 py-6 sm:px-8 sm:py-7 text-stone-100 md:col-span-4 md:flex md:flex-col md:justify-between lg:block">
+                <div>
+                  <p className="font-mono text-xs font-semibold tracking-wider text-amber-400">
+                    Ngobrol &amp; Kerja Bareng
+                  </p>
+                  <h2 className="mt-2 font-serif text-xl leading-[1.26] sm:text-2xl sm:leading-[1.22] lg:text-3xl lg:leading-[1.18] font-semibold text-white tracking-[0.01em] text-balance">
+                    Kirim Pesan
+                  </h2>
+                  <p className="mt-2.5 text-xs sm:text-sm font-[450] leading-[1.68] text-stone-300 tracking-[0.01em]">
+                    Boleh banget kalau mau diskusi soal tulisan, ajak nulis bareng, atau koordinasi
+                    kegiatan EDSA Executive 2026.
+                  </p>
+                </div>
+                <p className="hidden md:block lg:hidden mt-6 border-t border-stone-800 pt-4 font-mono text-[11px] text-stone-400">
+                  Sastra Inggris UINSA · Kabinet Atarascent
                 </p>
               </div>
 
-              <div className="p-5 sm:p-7 md:p-8">
+              <div className="p-5 sm:p-7 md:col-span-8 md:p-8">
                 {submittedRecord ? (
                   <div role="status" className="pt-1">
                     <div className="flex items-center gap-2 text-sm font-semibold text-stone-950">
@@ -309,14 +343,13 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                       )}
                       <span>
                         {submittedRecord.emailDelivered
-                          ? 'Pesan lolos penyaring spam & terkirim ke email'
-                          : 'Pesan lolos penyaring spam (pengiriman email belum aktif)'}
+                          ? 'Pesanmu berhasil terkirim ke email'
+                          : 'Pesan sudah masuk (pengiriman email belum aktif)'}
                       </span>
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-stone-600">
-                      Terima kasih, <strong className="text-stone-900">{submittedRecord.name}</strong>.{' '}
-                      {submittedRecord.statusMessage} Anda juga dapat menyapa langsung melalui
-                      Instagram{' '}
+                      Makasih ya, <strong className="text-stone-900">{submittedRecord.name}</strong>.{' '}
+                      {submittedRecord.statusMessage} Kamu juga bisa langsung sapa lewat Instagram{' '}
                       <a
                         href="https://www.instagram.com/iniipalll_?evlk=NHRpcmp5MzBjcTZt"
                         target="_blank"
@@ -330,7 +363,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                     <div className="mt-4 space-y-1.5 border-t border-stone-200 pt-4 text-xs text-stone-600">
                       {submittedRecord.spamCheck && (
                         <p>
-                          Hasil Penyaringan:{' '}
+                          Catatan:{' '}
                           <strong className="text-stone-800">
                             {submittedRecord.spamCheck.category}
                           </strong>{' '}
@@ -338,7 +371,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                         </p>
                       )}
                       <p>Topik: {submittedRecord.topic}</p>
-                      <p>Email Pengirim: {submittedRecord.email}</p>
+                      <p>Email: {submittedRecord.email}</p>
                       <p>Pesan: &ldquo;{submittedRecord.message}&rdquo;</p>
                     </div>
                     <button
@@ -366,8 +399,8 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                             <p className="font-semibold">{submitAlert.message}</p>
                             {submitAlert.spamCheck && (
                               <p>
-                                Kategori: {submitAlert.spamCheck.category} —{' '}
-                                {submitAlert.spamCheck.reason}
+                                Kategori: {submitAlert.spamCheck.category} (
+                                {submitAlert.spamCheck.reason})
                               </p>
                             )}
                           </div>
@@ -394,7 +427,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           htmlFor="contact-name"
                           className="block text-xs font-semibold text-stone-800"
                         >
-                          Nama Lengkap
+                          Nama
                         </label>
                         <input
                           id="contact-name"
@@ -406,7 +439,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                             if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
                           }}
                           aria-invalid={Boolean(errors.name)}
-                          placeholder="Nama Anda"
+                          placeholder="Nama kamu"
                           className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                         />
                         {errors.name && (
@@ -421,7 +454,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           htmlFor="contact-email"
                           className="block text-xs font-semibold text-stone-800"
                         >
-                          Alamat Email
+                          Email
                         </label>
                         <input
                           id="contact-email"
@@ -433,7 +466,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                             if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
                           }}
                           aria-invalid={Boolean(errors.email)}
-                          placeholder="nama@contoh.ac.id"
+                          placeholder="nama@contoh.com"
                           className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                         />
                         {errors.email && (
@@ -449,7 +482,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                         htmlFor="contact-topic"
                         className="block text-xs font-semibold text-stone-800"
                       >
-                        Topik Pesan
+                        Topik
                       </label>
                       <select
                         id="contact-topic"
@@ -493,7 +526,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           }
                         }}
                         aria-invalid={Boolean(errors.message)}
-                        placeholder="Tuliskan pesan atau rencana kolaborasi Anda..."
+                        placeholder="Tulis pesan atau ajakan ngobrol di sini..."
                         className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                       />
                       {errors.message && (
@@ -508,7 +541,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                         htmlFor="contact-challenge"
                         className="block text-xs font-semibold text-stone-800"
                       >
-                        Verifikasi Anti-Bot:{' '}
+                        Hitungan singkat:{' '}
                         <span className="font-mono text-[#C81E1E]">
                           {challenge ? challenge.question : 'Memuat soal...'}
                         </span>
@@ -557,12 +590,13 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                       <button
                         type="submit"
                         disabled={isSubmitting}
+                        onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                         className="inline-flex min-h-11 items-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#991B1B] disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
                       >
                         {isSubmitting ? (
                           <>
                             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                            <span>Memeriksa &amp; Mengirim...</span>
+                            <span>Mengirim...</span>
                           </>
                         ) : (
                           <>

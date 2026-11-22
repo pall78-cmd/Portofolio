@@ -7,12 +7,27 @@
 }
 
 @layer base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   html {
     scroll-behavior: smooth;
     color: #0c0d10;
     background-color: #faf7f2;
     font-family: var(--font-sans);
+    font-weight: 450;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    line-height: 1.24;
   }
 
   ::selection {
@@ -25,6 +40,26 @@
   text-wrap: balance;
 }
 
+.font-body-natural {
+  font-weight: 450;
+}
+
+/* Tactile editorial plates for illustrated cards without external images */
+.editorial-paper-grid {
+  background-color: #f4ede1;
+  background-image:
+    linear-gradient(to right, rgba(28, 25, 23, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(28, 25, 23, 0.045) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.editorial-ink-plate {
+  background-color: #0d0f15;
+  background-image:
+    radial-gradient(circle at 82% 18%, rgba(200, 30, 30, 0.24) 0%, transparent 52%),
+    radial-gradient(circle at 18% 85%, rgba(245, 158, 11, 0.14) 0%, transparent 54%);
+}
+
 /* Living CSS animations (strictly compositor transform & opacity) */
 @keyframes editorialMarquee {
   0% {
@@ -33,6 +68,13 @@
   100% {
     transform: translate3d(-50%, 0, 0);
   }
+}
+
+.editorial-marquee-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  contain: layout paint;
 }
 
 .editorial-marquee-track {
@@ -106,64 +148,216 @@
   animation: sheenSweep 950ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Netflix intro animations */
-@keyframes netflixRibbonZoom {
-  0% {
-    opacity: 0;
-    transform: scale(0.76);
-  }
-  18% {
-    opacity: 1;
-    transform: scale(0.96);
-  }
-  65% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-  100% {
-    opacity: 0.92;
-    transform: scale(1.16);
-  }
-}
-
-@keyframes netflixWordmarkReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(14px) scale(0.97);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
+/* Dynamic Netflix-style 3-stage cinema intro (strictly compositor transform & opacity) */
 @keyframes netflixHaloPulse {
   0% {
     opacity: 0;
-    transform: scale(0.65);
+    transform: scale(0.55);
   }
-  30% {
+  20% {
+    opacity: 0.92;
+    transform: scale(1.02);
+  }
+  62% {
     opacity: 0.85;
-    transform: scale(1);
+    transform: scale(1.25);
+  }
+  88% {
+    opacity: 0.95;
+    transform: scale(2.8);
   }
   100% {
-    opacity: 0.45;
-    transform: scale(1.15);
+    opacity: 0;
+    transform: scale(4.2);
   }
 }
 
-.animate-netflix-ribbon {
-  animation: netflixRibbonZoom 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* Assemble the 3 parts of the 'N' early, then hold intact as one solid emblem */
+@keyframes netflixNLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 72px, 0) scaleY(0.28);
+  }
+  16%, 100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scaleY(1);
+  }
+}
+
+@keyframes netflixNDiag {
+  0%, 7% {
+    opacity: 0;
+    transform: translate3d(-24px, -74px, 0) scaleY(0.45);
+  }
+  24%, 100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scaleY(1);
+  }
+}
+
+@keyframes netflixNRight {
+  0%, 14% {
+    opacity: 0;
+    transform: translate3d(0, 72px, 0) scaleY(0.28);
+  }
+  30%, 100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scaleY(1);
+  }
+}
+
+/* Smooth dolly-in followed by accelerating forward camera zoom straight through the N */
+@keyframes netflixMonogramCamera {
+  0% {
+    opacity: 0.9;
+    transform: translate3d(0, 10px, 0) scale(0.92);
+  }
+  22% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  58% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  72% {
+    opacity: 1;
+    transform: translate3d(0, -2px, 0) scale(2.1);
+  }
+  86% {
+    opacity: 0.96;
+    transform: translate3d(0, -4px, 0) scale(9.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(24);
+  }
+}
+
+@keyframes netflixBeamSweep {
+  0%, 18% {
+    opacity: 0;
+    transform: translate3d(-160%, 0, 0) skewX(-22deg);
+  }
+  32% {
+    opacity: 0.8;
+  }
+  54% {
+    opacity: 0;
+    transform: translate3d(190%, 0, 0) skewX(-22deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(190%, 0, 0) skewX(-22deg);
+  }
+}
+
+@keyframes netflixWordmarkCinema {
+  0%, 18% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.96);
+  }
+  32% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  58% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.03);
+  }
+  72% {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -14px, 0) scale(1.16);
+  }
+}
+
+/* Light streaks expand outward and tall vertically as the camera flies inside the N ribbon */
+@keyframes netflixPrismBurst {
+  0%, 58% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scaleX(0.3) scaleY(0.2);
+  }
+  67% {
+    opacity: 0.95;
+    transform: translate3d(calc(var(--prism-tx, 0px) * 0.25), 0, 0) scaleX(1.1) scaleY(2.2);
+  }
+  86% {
+    opacity: 0.92;
+    transform: translate3d(calc(var(--prism-tx, 0px) * 1.45), 0, 0) scaleX(var(--prism-sx, 2.4)) scaleY(10);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--prism-tx, 0px) * 2.6), 0, 0) scaleX(calc(var(--prism-sx, 2.4) * 2.2)) scaleY(18);
+  }
+}
+
+.animate-netflix-halo {
+  will-change: transform, opacity;
+  animation: netflixHaloPulse 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-netflix-camera {
+  will-change: transform, opacity;
+  transform-origin: center center;
+  animation: netflixMonogramCamera 5s cubic-bezier(0.32, 0.08, 0.72, 0.24) forwards;
+}
+
+.animate-netflix-n-left {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: netflixNLeft 5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-netflix-n-diag {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: netflixNDiag 5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-netflix-n-right {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: netflixNRight 5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-netflix-beam {
+  animation: netflixBeamSweep 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-netflix-wordmark {
   opacity: 0;
-  animation: netflixWordmarkReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+  will-change: transform, opacity;
+  animation: netflixWordmarkCinema 5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.animate-netflix-halo {
-  animation: netflixHaloPulse 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-netflix-prism {
+  opacity: 0;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  animation: netflixPrismBurst 5s cubic-bezier(0.45, 0.05, 0.75, 0.35) forwards;
+  animation-delay: var(--prism-delay, 0ms);
 }
+
+.netflix-prism-stripe:nth-child(1)  { --prism-tx: -290px; --prism-sx: 1.8; --prism-delay: 50ms; }
+.netflix-prism-stripe:nth-child(2)  { --prism-tx: -245px; --prism-sx: 2.3; --prism-delay: 25ms; }
+.netflix-prism-stripe:nth-child(3)  { --prism-tx: -200px; --prism-sx: 1.9; --prism-delay: 75ms; }
+.netflix-prism-stripe:nth-child(4)  { --prism-tx: -160px; --prism-sx: 2.6; --prism-delay: 15ms; }
+.netflix-prism-stripe:nth-child(5)  { --prism-tx: -120px; --prism-sx: 2.1; --prism-delay: 55ms; }
+.netflix-prism-stripe:nth-child(6)  { --prism-tx: -84px;  --prism-sx: 2.8; --prism-delay: 0ms; }
+.netflix-prism-stripe:nth-child(7)  { --prism-tx: -48px;  --prism-sx: 2.5; --prism-delay: 40ms; }
+.netflix-prism-stripe:nth-child(8)  { --prism-tx: -16px;  --prism-sx: 2.7; --prism-delay: 20ms; }
+.netflix-prism-stripe:nth-child(9)  { --prism-tx: 16px;   --prism-sx: 2.7; --prism-delay: 35ms; }
+.netflix-prism-stripe:nth-child(10) { --prism-tx: 52px;   --prism-sx: 2.4; --prism-delay: 65ms; }
+.netflix-prism-stripe:nth-child(11) { --prism-tx: 88px;   --prism-sx: 2.6; --prism-delay: 10ms; }
+.netflix-prism-stripe:nth-child(12) { --prism-tx: 126px;  --prism-sx: 2.2; --prism-delay: 50ms; }
+.netflix-prism-stripe:nth-child(13) { --prism-tx: 164px;  --prism-sx: 2.5; --prism-delay: 80ms; }
+.netflix-prism-stripe:nth-child(14) { --prism-tx: 205px;  --prism-sx: 2.0; --prism-delay: 30ms; }
+.netflix-prism-stripe:nth-child(15) { --prism-tx: 250px;  --prism-sx: 2.3; --prism-delay: 60ms; }
+.netflix-prism-stripe:nth-child(16) { --prism-tx: 295px;  --prism-sx: 1.8; --prism-delay: 90ms; }
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -182,5 +376,19 @@
 
   .ink-link::after {
     transition: none;
+  }
+
+  .animate-netflix-halo,
+  .animate-netflix-camera,
+  .animate-netflix-n-left,
+  .animate-netflix-n-diag,
+  .animate-netflix-n-right,
+  .animate-netflix-beam,
+  .animate-netflix-wordmark,
+  .animate-netflix-prism {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }

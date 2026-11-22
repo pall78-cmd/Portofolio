@@ -91,7 +91,7 @@ export function buildRssFeedXml(
         parseIndonesianWorkDate(work.publishedDate, options?.lastBuildIso ?? '2026-11-21')
       );
       const itemUrl = `${baseUrl}/?karya=${encodeURIComponent(work.id)}`;
-      const description = `${work.summary} (${work.platform} · ${work.lengthLabel}) — Tautan asli: ${work.externalUrl}`;
+      const description = `${work.summary} (${work.platform} · ${work.lengthLabel}). Tautan asli: ${work.externalUrl}`;
 
       return [
         '    <item>',
@@ -110,7 +110,7 @@ export function buildRssFeedXml(
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
     '  <channel>',
-    `    <title>${escapeXml(`${PROFILE_IDENTITY.fullName} — Karya Tulis & Pembaruan`)}</title>`,
+    `    <title>${escapeXml(`${PROFILE_IDENTITY.fullName} · Karya Tulis & Pembaruan`)}</title>`,
     `    <link>${escapeXml(`${baseUrl}/`)}</link>`,
     `    <atom:link href="${escapeXml(`${baseUrl}/rss.xml`)}" rel="self" type="application/rss+xml" />`,
     `    <description>${escapeXml(PROFILE_IDENTITY.editorialNote)}</description>`,
@@ -153,7 +153,7 @@ export function buildSitemapXml(
     if (work.imageUrl && !imageEntries.some((entry) => entry.loc === `${baseUrl}${work.imageUrl}`)) {
       imageEntries.push({
         loc: `${baseUrl}${work.imageUrl}`,
-        title: `${work.title} — ${work.imageAlt ?? work.summary}`,
+        title: `${work.title} · ${work.imageAlt ?? work.summary}`,
       });
     }
   }

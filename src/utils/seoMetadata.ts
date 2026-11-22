@@ -87,13 +87,13 @@ const DEFAULT_IMAGE = VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.heroImage];
 
 export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
   profil: {
-    title: 'Naufal Athallah Rosiyandi — Profil & Portofolio',
+    title: 'Naufal Athallah Rosiyandi · Profil & Karya',
     description:
-      'Profil resmi Naufal Athallah Rosiyandi (@iniipalll_), mahasiswa Sastra Inggris FAHUM UIN Sunan Ampel Surabaya (UINSA), pengurus Divisi HRD EDSA Executive 2026 Kabinet Atarascent (ELITION), dan penulis.',
-    ogTitle: 'Naufal Athallah Rosiyandi — Sastra Inggris UINSA & Penulis',
+      'Profil Naufal Athallah Rosiyandi (@iniipalll_), mahasiswa Sastra Inggris FAHUM UIN Sunan Ampel Surabaya (UINSA), pengurus Divisi HRD EDSA Executive 2026 Kabinet Atarascent, sekaligus penulis.',
+    ogTitle: 'Naufal Athallah Rosiyandi · Sastra Inggris UINSA & Penulis',
     ogDescription:
-      'Jelajahi portofolio sastra, progres Divisi HRD EDSA Executive 2026 Kabinet Atarascent (ELITION), dan kanal resmi milik Naufal Athallah Rosiyandi.',
-    twitterTitle: 'Naufal Athallah Rosiyandi — Profil & Portofolio',
+      'Kumpulan cerita, aktivitas Divisi HRD EDSA Executive 2026 Kabinet Atarascent (ELITION), dan tautan resmi milik Naufal Athallah Rosiyandi.',
+    twitterTitle: 'Naufal Athallah Rosiyandi · Profil & Karya',
     twitterDescription:
       'Mahasiswa Sastra Inggris UINSA, Pengurus Divisi HRD Kabinet Atarascent EDSA 2026, & penulis THRONE OF ASHES di Wattpad (@NaufalAthallah).',
     url: `${SITE_BASE_URL}/`,
@@ -103,15 +103,15 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     imageAlt: DEFAULT_IMAGE.alt,
   },
   karya: {
-    title: 'Karya Tulis & Publikasi — Naufal Athallah Rosiyandi',
+    title: 'Karya Pilihan · Naufal Athallah Rosiyandi',
     description:
-      'Daftar novel serial, puisi, dan e-book orisinal Naufal Athallah Rosiyandi di Wattpad (@NaufalAthallah) dan Saluran WhatsApp Puisi, Novel(e-book).',
-    ogTitle: 'Karya Tulis & Arsip Pena — Naufal Athallah Rosiyandi',
+      'Daftar cerita bersambung, puisi, dan e-book Naufal Athallah Rosiyandi di Wattpad (@NaufalAthallah) dan Saluran WhatsApp Puisi, Novel(e-book).',
+    ogTitle: 'Karya Tulis & Buku · Naufal Athallah Rosiyandi',
     ogDescription:
-      'Baca ringkasan THRONE OF ASHES (Tahkta Abu), Keindahan yang tak utuh, Fragmen Sayap di Ambang Pancarona, dan e-book eksklusif.',
-    twitterTitle: 'Karya Tulis Pilihan — Naufal Athallah Rosiyandi',
+      'Baca cuplikan THRONE OF ASHES (Tahkta Abu), Keindahan yang tak utuh, Fragmen Sayap di Ambang Pancarona, dan e-book lainnya.',
+    twitterTitle: 'Karya Pilihan · Naufal Athallah Rosiyandi',
     twitterDescription:
-      'Novel serial Dark Fantasy, romansa arsitektural, puisi melankolis, hingga e-book eksklusif oleh @NaufalAthallah.',
+      'Cerita bersambung fantasi gelap, drama arsitektur, puisi sendu, hingga e-book oleh @NaufalAthallah.',
     url: `${SITE_BASE_URL}/#karya`,
     imageUrl: VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.proseImage].url,
     imageWidth: VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.proseImage].width,
@@ -119,15 +119,15 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     imageAlt: VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.proseImage].alt,
   },
   perjalanan: {
-    title: 'EDSA Executive 2026 Kabinet Atarascent & ELITION — Naufal Athallah Rosiyandi',
+    title: 'EDSA Executive 2026 Kabinet Atarascent & ELITION · Naufal Athallah Rosiyandi',
     description:
-      'Dokumentasi keaktifan di Divisi HRD EDSA Executive 2026 Kabinet Atarascent HIMAPRO-SI FAHUM UINSA dan progres program kerja ELITION (English Literature Information).',
-    ogTitle: 'Divisi HRD Kabinet Atarascent EDSA 2026 & ELITION — HIMAPRO-SI UINSA',
+      'Catatan kegiatan di Divisi HRD EDSA Executive 2026 Kabinet Atarascent HIMAPRO-SI FAHUM UINSA dan kabar program ELITION (English Literature Information).',
+    ogTitle: 'Divisi HRD Kabinet Atarascent EDSA 2026 & ELITION · HIMAPRO-SI UINSA',
     ogDescription:
-      'Lihat inisiatif ELITION Kabinet Atarascent: serap aspirasi mahasiswa, voting komunitas SIFA, kurasi Beasiswa Bakti BCA, Google Student Ambassador, dan Cak & Ning Surabaya.',
-    twitterTitle: 'Kabinet Atarascent EDSA 2026 & ELITION — Naufal Athallah',
+      'Lihat kegiatan ELITION Kabinet Atarascent: serap suara mahasiswa, voting komunitas SIFA, info Beasiswa Bakti BCA, Google Student Ambassador, dan Cak & Ning Surabaya.',
+    twitterTitle: 'Kabinet Atarascent EDSA 2026 & ELITION · Naufal Athallah',
     twitterDescription:
-      'Kurasi informasi beasiswa, program ambassador, voting komunitas SIFA, dan foto tim Divisi HRD Kabinet Atarascent HIMAPRO-SI UINSA.',
+      'Info beasiswa, volunteer ambassador, voting komunitas SIFA, dan foto tim Divisi HRD Kabinet Atarascent HIMAPRO-SI UINSA.',
     url: `${SITE_BASE_URL}/#perjalanan`,
     imageUrl: VERIFIED_IMAGE_DIMENSIONS[ORGANIZATION_REFERENCE.hrdDivisionImage].url,
     imageWidth: VERIFIED_IMAGE_DIMENSIONS[ORGANIZATION_REFERENCE.hrdDivisionImage].width,
@@ -135,13 +135,13 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     imageAlt: VERIFIED_IMAGE_DIMENSIONS[ORGANIZATION_REFERENCE.hrdDivisionImage].alt,
   },
   tautan: {
-    title: 'Tautan Resmi & Kanal Literasi — Naufal Athallah Rosiyandi',
+    title: 'Tautan Resmi · Naufal Athallah Rosiyandi',
     description:
-      'Kumpulan tautan terverifikasi menuju Wattpad (@NaufalAthallah), Instagram (@iniipalll_), Karyakarsa (@ashborne), dan Saluran WhatsApp.',
-    ogTitle: 'Tautan Resmi — Naufal Athallah Rosiyandi',
+      'Tautan langsung ke Wattpad (@NaufalAthallah), Instagram (@iniipalll_), Karyakarsa (@ashborne), dan Saluran WhatsApp.',
+    ogTitle: 'Tautan Resmi · Naufal Athallah Rosiyandi',
     ogDescription:
-      'Terhubung langsung ke seluruh akun dan saluran literasi resmi milik Naufal Athallah Rosiyandi.',
-    twitterTitle: 'Kanal Resmi Naufal Athallah Rosiyandi',
+      'Ikuti seluruh akun dan saluran tulisan milik Naufal Athallah Rosiyandi.',
+    twitterTitle: 'Tautan Resmi Naufal Athallah Rosiyandi',
     twitterDescription:
       'Wattpad @NaufalAthallah · Instagram @iniipalll_ · Karyakarsa @ashborne · WhatsApp Puisi, Novel(e-book).',
     url: `${SITE_BASE_URL}/#tautan`,
@@ -155,15 +155,15 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
       VERIFIED_IMAGE_DIMENSIONS['/src/assets/images/campus_library_archive_1795196265483.jpg'].alt,
   },
   kontak: {
-    title: 'Hubungi & Kolaborasi — Naufal Athallah Rosiyandi',
+    title: 'Kirim Pesan & Kolaborasi · Naufal Athallah Rosiyandi',
     description:
-      'Kirim pesan diskusi karya sastra, proyek penulisan bersama (@ashborne), maupun koordinasi agenda EDSA Executive 2026 UINSA.',
-    ogTitle: 'Korespondensi & Kolaborasi — Naufal Athallah Rosiyandi',
+      'Kirim pesan untuk ngobrol soal cerita, ajak nulis bareng (@ashborne), atau koordinasi kegiatan EDSA Executive 2026 UINSA.',
+    ogTitle: 'Kirim Pesan · Naufal Athallah Rosiyandi',
     ogDescription:
-      'Formulir pesan langsung dengan verifikasi keamanan anti-bot untuk kolaborasi sastra dan kegiatan mahasiswa.',
+      'Formulir pesan langsung untuk diskusi sastra, kerja sama tulisan, dan kegiatan mahasiswa.',
     twitterTitle: 'Hubungi Naufal Athallah Rosiyandi',
     twitterDescription:
-      'Terbuka untuk diskusi sastra, proyek penulisan (@ashborne), dan kolaborasi acara EDSA Executive 2026.',
+      'Terbuka untuk ngobrol sastra, nulis bareng (@ashborne), dan kegiatan EDSA Executive 2026.',
     url: `${SITE_BASE_URL}/#kontak`,
     imageUrl: DEFAULT_IMAGE.url,
     imageWidth: DEFAULT_IMAGE.width,
@@ -189,11 +189,11 @@ export function resolvePageMetadata(options: {
         : activeWork.summary;
 
     return {
-      title: `${activeWork.title} — ${PROFILE_IDENTITY.fullName}`,
+      title: `${activeWork.title} · ${PROFILE_IDENTITY.fullName}`,
       description: `${activeWork.title} (${activeWork.category}, ${activeWork.publishedDate}) di ${activeWork.platform}. ${activeWork.summary}`,
       ogTitle: `${activeWork.title} · ${activeWork.platform}`,
       ogDescription: `${activeWork.summary} (${activeWork.lengthLabel})`,
-      twitterTitle: `${activeWork.title} — ${PROFILE_IDENTITY.shortName}`,
+      twitterTitle: `${activeWork.title} · ${PROFILE_IDENTITY.shortName}`,
       twitterDescription: conciseSummary,
       url: workUrl,
       imageUrl: workImage.url,
