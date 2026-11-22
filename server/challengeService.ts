@@ -4,8 +4,24 @@ const CHALLENGE_TTL_MS = 30 * 60 * 1000;
 const MIN_HUMAN_ELAPSED_MS = 900;
 const MAX_USED_NONCES = 2000;
 
-const SIGNING_SECRET =
-  process.env.CONTACT_CHALLENGE_SECRET?.trim() || crypto.randomBytes(32).toString('hex');
+function resolveSigningSecret(): string {
+  const explicit = process.env.CONTACT_CHALLENGE_SECRET?.trim();
+  if (explicit) {
+    return explicit;
+  }
+
+  const smtpPass = process.env.SMTP_PASS?.replace(/\s+/g, '');
+  if (smtpPass) {
+    return crypto
+      .createHmac('sha256', 'portfolio-contact-challenge-v1')
+      .update(`${smtpPass}:${process.env.SMTP_USER ?? ''}:${process.env.CONTACT_RECIPIENT_EMAIL ?? ''}`)
+      .digest('hex');
+  }
+
+  return crypto.randomBytes(32).toString('hex');
+}
+
+const SIGNING_SECRET = resolveSigningSecret();
 
 const usedChallenges = new Map<string, number>();
 
