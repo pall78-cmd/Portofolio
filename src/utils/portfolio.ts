@@ -53,6 +53,21 @@ export function buildShareCitation(work: WritingWork, authorName: string): strin
   return `${authorName} — "${work.title}" (${work.category}, ${work.publishedDate}). ${work.platform}.`;
 }
 
+export function findWorkByQueryId(
+  works: WritingWork[],
+  search: string
+): WritingWork | null {
+  if (!search) {
+    return null;
+  }
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+  const karyaId = params.get('karya')?.trim();
+  if (!karyaId) {
+    return null;
+  }
+  return works.find((work) => work.id === karyaId) ?? null;
+}
+
 export function validateContactForm(input: ContactFormInput): {
   valid: boolean;
   errors: ContactFormErrors;

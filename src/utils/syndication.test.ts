@@ -32,6 +32,15 @@ test('buildRssFeedXml includes all writing works with valid XML escaping and mat
   assert.equal(xml.includes('&utm_medium'), false);
   assert.equal(xml.includes('&amp;utm_medium'), true);
 
+  const linkMatches = [...xml.matchAll(/<link>(.*?)<\/link>/g)].map((m) => m[1]);
+  assert.equal(linkMatches.length, 5);
+  for (const link of linkMatches) {
+    assert.ok(
+      link.startsWith('https://naufalathallah-rosiyandi.vercel.app/'),
+      `Expected same-origin RSS <link>, got: ${link}`
+    );
+  }
+
   const publicRss = fs.readFileSync(path.resolve(process.cwd(), 'public/rss.xml'), 'utf8');
   assert.equal(publicRss, xml);
 });

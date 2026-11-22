@@ -8,7 +8,12 @@ import {
   VERIFIED_URLS,
   WRITING_WORKS,
 } from '../data/profileData';
-import { buildShareCitation, filterWorks, validateContactForm } from './portfolio';
+import {
+  buildShareCitation,
+  filterWorks,
+  findWorkByQueryId,
+  validateContactForm,
+} from './portfolio';
 
 test('OFFICIAL_LINKS includes exact verified URLs from user profile and channels', () => {
   const ig = OFFICIAL_LINKS.find((item) => item.id === 'instagram');
@@ -76,6 +81,13 @@ test('buildShareCitation formats verified author and work citation', () => {
   assert.ok(citation.includes('Naufal Athallah Rosiyandi'));
   assert.ok(citation.includes('THRONE OF ASHES (Tahkta Abu)'));
   assert.ok(citation.includes('15 Jun 2026'));
+});
+
+test('findWorkByQueryId resolves ?karya= deep links accurately', () => {
+  const found = findWorkByQueryId(WRITING_WORKS, '?karya=throne-of-ashes-tahkta-abu');
+  assert.equal(found?.id, 'throne-of-ashes-tahkta-abu');
+  assert.equal(findWorkByQueryId(WRITING_WORKS, '?karya=tidak-ada'), null);
+  assert.equal(findWorkByQueryId(WRITING_WORKS, ''), null);
 });
 
 test('validateContactForm enforces required fields and email format', () => {

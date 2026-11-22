@@ -90,14 +90,14 @@ export function buildRssFeedXml(
       const pubDate = formatRfc822Wib(
         parseIndonesianWorkDate(work.publishedDate, options?.lastBuildIso ?? '2026-11-21')
       );
-      const description = `${work.summary} (${work.platform} · ${work.lengthLabel})`;
-      const guid = `${baseUrl}/#karya-${work.id}`;
+      const itemUrl = `${baseUrl}/?karya=${encodeURIComponent(work.id)}`;
+      const description = `${work.summary} (${work.platform} · ${work.lengthLabel}) — Tautan asli: ${work.externalUrl}`;
 
       return [
         '    <item>',
         `      <title>${escapeXml(work.title)}</title>`,
-        `      <link>${escapeXml(work.externalUrl)}</link>`,
-        `      <guid isPermaLink="false">${escapeXml(guid)}</guid>`,
+        `      <link>${escapeXml(itemUrl)}</link>`,
+        `      <guid isPermaLink="true">${escapeXml(itemUrl)}</guid>`,
         `      <pubDate>${pubDate}</pubDate>`,
         `      <category>${escapeXml(work.category)}</category>`,
         `      <description>${escapeXml(description)}</description>`,
