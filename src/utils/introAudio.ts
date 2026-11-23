@@ -227,18 +227,9 @@ export const TUDUM_NOTE_LAYERS: readonly TudumToneSpec[] = [
   },
 ] as const;
 
-export function shouldBypassIntro(search: string, prefersReducedMotion: boolean): boolean {
-  if (prefersReducedMotion) {
-    return true;
-  }
+export function shouldBypassIntro(search: string, _prefersReducedMotion: boolean): boolean {
   const params = new URLSearchParams(search.startsWith('?') ? search : `?${search}`);
-  if (params.get('autostart') === '1') {
-    return true;
-  }
-  if (params.get('karya')) {
-    return true;
-  }
-  return false;
+  return params.get('autostart') === '1';
 }
 
 export type IntroAudioOutcome = 'played' | 'muted' | 'unsupported' | 'autoplay-blocked';

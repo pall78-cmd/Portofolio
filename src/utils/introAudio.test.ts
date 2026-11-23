@@ -57,11 +57,11 @@ test('TUDUM_NOTE_LAYERS defines portal impact and brass reveal layers cleanly', 
   assert.ok(leftPanNotes.length >= 2 && rightPanNotes.length >= 2);
 });
 
-test('shouldBypassIntro respects autostart, deep links, and reduced motion preferences', () => {
+test('shouldBypassIntro only skips Play screen for ?autostart=1 and keeps Play visible for root, ?karya=, and reduced motion', () => {
   assert.equal(shouldBypassIntro('', false), false);
   assert.equal(shouldBypassIntro('?autostart=1', false), true);
-  assert.equal(shouldBypassIntro('?karya=throne-of-ashes-tahkta-abu', false), true);
-  assert.equal(shouldBypassIntro('', true), true);
+  assert.equal(shouldBypassIntro('?karya=throne-of-ashes-tahkta-abu', false), false);
+  assert.equal(shouldBypassIntro('', true), false);
 });
 
 test('intro durations leave sufficient window for fade transition', () => {

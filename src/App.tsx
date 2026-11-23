@@ -17,7 +17,6 @@ import {
   shouldBypassIntro,
   unlockSharedAudioContextSync,
 } from './utils/introAudio';
-import { findWorkByQueryId } from './utils/portfolio';
 import {
   applyDocumentSeoMetadata,
   computeActiveSection,
@@ -76,12 +75,7 @@ export function ScrollReveal(
 }
 
 export default function App() {
-  const [activeWork, setActiveWork] = useState<WritingWork | null>(() => {
-    if (typeof window === 'undefined') {
-      return null;
-    }
-    return findWorkByQueryId(WRITING_WORKS, window.location.search);
-  });
+  const [activeWork, setActiveWork] = useState<WritingWork | null>(null);
 
   const [showIntro, setShowIntro] = useState<boolean>(() => {
     if (typeof window === 'undefined') {
@@ -90,6 +84,14 @@ export default function App() {
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     return !shouldBypassIntro(window.location.search, reducedMotion);
   });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('karya=')) {
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.delete('karya');
+      window.history.replaceState(null, '', `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+    }
+  }, []);
 
   const soundEnabled = true;
   const excerptPlayerRef = useRef<ExcerptMusicPlayerHandle | null>(null);
