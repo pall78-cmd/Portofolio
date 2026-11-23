@@ -260,7 +260,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
               return (
                 <article
                   key={item.id}
-                  className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-800 bg-gradient-to-b from-[#141722] to-[#101219] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-400/50 hover:bg-[#161923] ${tabletOddSpan} ${desktopSpan}`}
+                  className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-800 bg-gradient-to-b from-[#141722] to-[#101219] p-5 sm:p-6 transition-[transform,border-color,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-amber-400/50 hover:bg-[#161923] ${tabletOddSpan} ${desktopSpan}`}
                 >
                   <span
                     aria-hidden="true"

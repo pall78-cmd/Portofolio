@@ -49,11 +49,12 @@ export function EditorialImage({
           <img
             src={src}
             alt={alt}
+            decoding="async"
             referrerPolicy="no-referrer"
             onError={() => setHasError(true)}
             className={`block h-full w-full object-cover ${
               zoomOnHover
-                ? 'transition-transform duration-700 ease-out group-hover:scale-[1.03]'
+                ? 'transform-gpu will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]'
                 : ''
             } ${imgClassName}`}
           />

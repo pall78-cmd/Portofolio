@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AcademicEdsaSection } from './components/AcademicEdsaSection';
+import {
+  ExcerptMusicPlayer,
+  type ExcerptMusicPlayerHandle,
+} from './components/ExcerptMusicPlayer';
 import { Footer } from './components/Footer';
 import { HeroSection } from './components/HeroSection';
 import { LinksContactSection } from './components/LinksContactSection';
@@ -88,6 +92,7 @@ export default function App() {
   });
 
   const soundEnabled = true;
+  const excerptPlayerRef = useRef<ExcerptMusicPlayerHandle | null>(null);
 
   const [activeSection, setActiveSection] = useState<SectionId>(() => {
     if (typeof window === 'undefined') {
@@ -102,21 +107,35 @@ export default function App() {
       return;
     }
 
-    const syncSectionFromScroll = () => {
+    let rafId = 0;
+
+    const measureSection = () => {
+      rafId = 0;
       const tops = OBSERVED_SECTIONS.flatMap((id) => {
         const el = document.getElementById(id);
         return el ? [{ id, top: el.getBoundingClientRect().top }] : [];
       });
       if (tops.length > 0) {
-        setActiveSection(computeActiveSection(tops, 140));
+        const nextSection = computeActiveSection(tops, 140);
+        setActiveSection((prev) => (prev === nextSection ? prev : nextSection));
       }
     };
 
-    window.addEventListener('scroll', syncSectionFromScroll, { passive: true });
-    window.addEventListener('resize', syncSectionFromScroll, { passive: true });
+    const scheduleSectionSync = () => {
+      if (rafId !== 0) {
+        return;
+      }
+      rafId = window.requestAnimationFrame(measureSection);
+    };
+
+    window.addEventListener('scroll', scheduleSectionSync, { passive: true });
+    window.addEventListener('resize', scheduleSectionSync, { passive: true });
     return () => {
-      window.removeEventListener('scroll', syncSectionFromScroll);
-      window.removeEventListener('resize', syncSectionFromScroll);
+      if (rafId !== 0) {
+        window.cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener('scroll', scheduleSectionSync);
+      window.removeEventListener('resize', scheduleSectionSync);
     };
   }, []);
 
@@ -173,7 +192,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-stone-950">
-      {showIntro && <NetflixIntroOverlay onComplete={() => setShowIntro(false)} />}
+      {showIntro && (
+        <NetflixIntroOverlay
+          onPlayClick={() => excerptPlayerRef.current?.primePlayback()}
+          onComplete={() => setShowIntro(false)}
+        />
+      )}
+      <ExcerptMusicPlayer ref={excerptPlayerRef} mainVisible={!showIntro} />
       <TopBar
         activeSection={activeSection}
         onNavigateSection={setActiveSection}

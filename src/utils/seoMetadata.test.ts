@@ -17,6 +17,10 @@ test('SECTION_SEO_METADATA provides unique descriptions and verified image dimen
   for (const section of sections) {
     const meta = SECTION_SEO_METADATA[section];
     assert.equal('width' in meta, false, 'Meta should use imageWidth/imageHeight');
+    assert.ok(
+      meta.description.length >= 25 && meta.description.length <= 160,
+      `Section "${section}" description must be 25-160 chars, got ${meta.description.length}`
+    );
     assert.ok(meta.imageWidth > 0 && meta.imageHeight > 0);
     assert.ok(meta.imageUrl.startsWith('https://naufalathallah-rosiyandi.vercel.app/'));
     assert.ok(meta.imageAlt.length > 10);
@@ -37,6 +41,10 @@ test('resolvePageMetadata builds unique OpenGraph/Twitter metadata and dimension
   assert.equal(
     meta.url,
     'https://naufalathallah-rosiyandi.vercel.app/?karya=throne-of-ashes-tahkta-abu'
+  );
+  assert.ok(
+    meta.description.length >= 25 && meta.description.length <= 160,
+    `Work description must be 25-160 chars, got ${meta.description.length}`
   );
   assert.ok(meta.title.includes('THRONE OF ASHES'));
   assert.ok(meta.ogDescription.includes('5 Bagian'));

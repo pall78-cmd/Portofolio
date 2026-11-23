@@ -53,7 +53,9 @@ export interface ElitionDeliverable {
 }
 
 export const VERIFIED_URLS = {
-  instagramPersonal: 'https://www.instagram.com/iniipalll_?evlk=NHRpcmp5MzBjcTZt',
+  githubProfile: 'https://github.com/pall78-cmd',
+  instagramPersonal: 'https://www.instagram.com/iniipalll_/',
+  youtubeChannel: 'https://www.youtube.com/@pallnotes',
   karyakarsa: 'https://karyakarsa.com/ashborne',
   whatsappChannel: 'https://whatsapp.com/channel/0029Vb7QRFUFMqrVXPjxoC32',
   wattpadProfile: 'https://www.wattpad.com/user/NaufalAthallah',
@@ -62,7 +64,7 @@ export const VERIFIED_URLS = {
   wattpadKeindahan: 'https://www.wattpad.com/story/405622791-keindahan-yang-tak-utuh',
   wattpadFragmenSayap:
     'https://www.wattpad.com/story/405821242-fragmen-sayap-di-ambang-pancarona',
-  himaprosiInstagram: 'https://www.instagram.com/himaprosiuinsa?cnvx=MXVpbGhtcmUybmt5Mg==',
+  himaprosiInstagram: 'https://www.instagram.com/himaprosiuinsa/',
   elitionDriveFolder: 'https://drive.google.com/drive/folders/1VfXHtXQw8nvk6vSkcRgyIZtvTMsVmgr0',
   elitionSpreadsheet: 'https://drive.google.com/file/d/1zzVREvUTaDO52cecB7HfLFQqr2zT2GAs/view',
   elitionAspirasiForm: 'https://forms.gle/QDvEjQmLQHnqDp8S7',
@@ -149,6 +151,24 @@ export const OFFICIAL_LINKS: OfficialLink[] = [
       'Laman Karyakarsa @ashborne untuk membaca dan memberi dukungan buat karya tulisan Naufal.',
     url: VERIFIED_URLS.karyakarsa,
     ctaLabel: 'Karyakarsa (@ashborne)',
+  },
+  {
+    id: 'github',
+    platform: 'GitHub',
+    handle: 'pall78-cmd',
+    description:
+      'Kumpulan proyek web, catatan kode, dan percobaan karya digital di GitHub (@pall78-cmd).',
+    url: VERIFIED_URLS.githubProfile,
+    ctaLabel: 'GitHub (pall78-cmd)',
+  },
+  {
+    id: 'youtube',
+    platform: 'YouTube',
+    handle: '@pallnotes',
+    description:
+      'Kanal YouTube @pallnotes untuk konten audiovisual, catatan visual, dan publikasi karya.',
+    url: VERIFIED_URLS.youtubeChannel,
+    ctaLabel: 'YouTube (@pallnotes)',
   },
 ];
 

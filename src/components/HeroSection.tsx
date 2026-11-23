@@ -89,7 +89,7 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
                   rel="me noopener noreferrer"
                   onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                   onClick={() => void playUiSound('open', soundEnabled)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-xs lg:text-sm font-semibold text-white hover:bg-[#A61717] transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-xs lg:text-sm font-semibold text-white hover:bg-[#A61717] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   <span>{wattpadLink.ctaLabel}</span>
                   <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />

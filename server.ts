@@ -109,7 +109,7 @@ async function startServer() {
 
     const csp =
       process.env.NODE_ENV === 'production'
-        ? "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+        ? "default-src 'self'; script-src 'self' https://www.youtube.com https://s.ytimg.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self' https://www.youtube.com https://*.googlevideo.com; object-src 'none'; base-uri 'self'; form-action 'self'"
         : "base-uri 'self'; object-src 'none'; form-action 'self'";
     res.setHeader('Content-Security-Policy', csp);
 

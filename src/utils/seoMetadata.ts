@@ -89,13 +89,13 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
   profil: {
     title: 'Naufal Athallah Rosiyandi · Profil & Karya',
     description:
-      'Profil Naufal Athallah Rosiyandi (@iniipalll_), mahasiswa Sastra Inggris FAHUM UIN Sunan Ampel Surabaya (UINSA), pengurus Divisi HRD EDSA Executive 2026 Kabinet Atarascent, sekaligus penulis.',
+      'Profil Naufal Athallah Rosiyandi, mahasiswa Sastra Inggris UINSA, HRD EDSA Executive 2026 Kabinet Atarascent, penulis, GitHub, dan YouTube.',
     ogTitle: 'Naufal Athallah Rosiyandi · Sastra Inggris UINSA & Penulis',
     ogDescription:
-      'Kumpulan cerita, aktivitas Divisi HRD EDSA Executive 2026 Kabinet Atarascent (ELITION), dan tautan resmi milik Naufal Athallah Rosiyandi.',
+      'Kumpulan cerita, aktivitas Divisi HRD EDSA Executive 2026 Kabinet Atarascent, dan profil resmi GitHub, Instagram, serta YouTube Naufal Athallah.',
     twitterTitle: 'Naufal Athallah Rosiyandi · Profil & Karya',
     twitterDescription:
-      'Mahasiswa Sastra Inggris UINSA, Pengurus Divisi HRD Kabinet Atarascent EDSA 2026, & penulis THRONE OF ASHES di Wattpad (@NaufalAthallah).',
+      'Sastra Inggris UINSA, HRD EDSA 2026, penulis Wattpad (@NaufalAthallah), GitHub (pall78-cmd), Instagram (@iniipalll_), dan YouTube (@pallnotes).',
     url: `${SITE_BASE_URL}/`,
     imageUrl: DEFAULT_IMAGE.url,
     imageWidth: DEFAULT_IMAGE.width,
@@ -121,7 +121,7 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
   perjalanan: {
     title: 'EDSA Executive 2026 Kabinet Atarascent & ELITION · Naufal Athallah Rosiyandi',
     description:
-      'Catatan kegiatan di Divisi HRD EDSA Executive 2026 Kabinet Atarascent HIMAPRO-SI FAHUM UINSA dan kabar program ELITION (English Literature Information).',
+      'Catatan kegiatan Divisi HRD EDSA Executive 2026 Kabinet Atarascent HIMAPRO-SI FAHUM UINSA serta program ELITION.',
     ogTitle: 'Divisi HRD Kabinet Atarascent EDSA 2026 & ELITION · HIMAPRO-SI UINSA',
     ogDescription:
       'Lihat kegiatan ELITION Kabinet Atarascent: serap suara mahasiswa, voting komunitas SIFA, info Beasiswa Bakti BCA, Google Student Ambassador, dan Cak & Ning Surabaya.',
@@ -137,13 +137,13 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
   tautan: {
     title: 'Tautan Resmi · Naufal Athallah Rosiyandi',
     description:
-      'Tautan langsung ke Wattpad (@NaufalAthallah), Instagram (@iniipalll_), Karyakarsa (@ashborne), dan Saluran WhatsApp.',
+      'Tautan resmi Naufal Athallah: GitHub (pall78-cmd), Instagram (@iniipalll_), YouTube (@pallnotes), Wattpad, Karyakarsa, dan WhatsApp.',
     ogTitle: 'Tautan Resmi · Naufal Athallah Rosiyandi',
     ogDescription:
-      'Ikuti seluruh akun dan saluran tulisan milik Naufal Athallah Rosiyandi.',
+      'Ikuti enam kanal resmi Naufal Athallah Rosiyandi di Wattpad, Saluran WhatsApp, Instagram, Karyakarsa, GitHub, dan YouTube.',
     twitterTitle: 'Tautan Resmi Naufal Athallah Rosiyandi',
     twitterDescription:
-      'Wattpad @NaufalAthallah · Instagram @iniipalll_ · Karyakarsa @ashborne · WhatsApp Puisi, Novel(e-book).',
+      'GitHub pall78-cmd · Instagram @iniipalll_ · YouTube @pallnotes · Wattpad @NaufalAthallah · Karyakarsa @ashborne.',
     url: `${SITE_BASE_URL}/#tautan`,
     imageUrl:
       VERIFIED_IMAGE_DIMENSIONS['/src/assets/images/campus_library_archive_1795196265483.jpg'].url,
@@ -187,10 +187,15 @@ export function resolvePageMetadata(options: {
       activeWork.summary.length > 155
         ? `${activeWork.summary.slice(0, 152).trimEnd()}...`
         : activeWork.summary;
+    const rawDescription = `${activeWork.title} (${activeWork.category}) di ${activeWork.platform}. ${activeWork.summary}`;
+    const boundedDescription =
+      rawDescription.length > 158
+        ? `${rawDescription.slice(0, 155).trimEnd()}...`
+        : rawDescription;
 
     return {
       title: `${activeWork.title} · ${PROFILE_IDENTITY.fullName}`,
-      description: `${activeWork.title} (${activeWork.category}, ${activeWork.publishedDate}) di ${activeWork.platform}. ${activeWork.summary}`,
+      description: boundedDescription,
       ogTitle: `${activeWork.title} · ${activeWork.platform}`,
       ogDescription: `${activeWork.summary} (${activeWork.lengthLabel})`,
       twitterTitle: `${activeWork.title} · ${PROFILE_IDENTITY.shortName}`,

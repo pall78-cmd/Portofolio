@@ -53,7 +53,7 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#0C0D10]/75 backdrop-blur-xs p-2 sm:p-6"
+      className="animate-modal-backdrop fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#0C0D10]/75 backdrop-blur-xs p-2 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="reader-modal-title"
@@ -63,7 +63,7 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
         }
       }}
     >
-      <div className="relative max-h-[90vh] w-full max-w-xl lg:max-w-2xl overflow-y-auto rounded-xl border border-stone-300 bg-[#FAF7F2] shadow-2xl">
+      <div className="animate-modal-sheet relative max-h-[90vh] w-full max-w-xl lg:max-w-2xl overflow-y-auto rounded-xl border border-stone-300 bg-[#FAF7F2] shadow-2xl">
         <div className="flex items-start justify-between gap-4 bg-[#0C0D10] px-5 py-5 sm:px-8 sm:py-7 lg:px-10 text-stone-100">
           <div>
             <div className="flex flex-wrap items-center gap-2 text-xs text-stone-300 tabular-nums">

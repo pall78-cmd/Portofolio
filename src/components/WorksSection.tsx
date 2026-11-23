@@ -160,7 +160,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                     void playUiSound('tap', soundEnabled);
                     setSelectedCategory(category);
                   }}
-                  className={`min-h-10 md:min-h-9 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${
+                  className={`min-h-10 md:min-h-9 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${
                     isActive
                       ? 'bg-[#0B0C10] text-white shadow-xs'
                       : 'text-stone-700 hover:bg-[#FAF7F2] hover:text-stone-950'
@@ -302,7 +302,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                         onFocus={handleHoverSound}
                         onClick={() => handleOpenWork(featuredLead)}
                         aria-label={`Baca singkat ${featuredLead.title}`}
-                        className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                        className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                       >
                         <span>Baca Singkat</span>
                         <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -341,7 +341,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                   return (
                     <article
                       key={work.id}
-                      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-300/90 bg-gradient-to-b from-white to-[#FCF9F4] p-5 sm:p-6 lg:p-7 shadow-xs shadow-stone-900/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:border-stone-500 hover:shadow-md ${spanClasses}`}
+                      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-300/90 bg-gradient-to-b from-white to-[#FCF9F4] p-5 sm:p-6 lg:p-7 shadow-xs shadow-stone-900/[0.04] transition-[transform,border-color,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-stone-500 hover:shadow-md ${spanClasses}`}
                     >
                       <span
                         aria-hidden="true"

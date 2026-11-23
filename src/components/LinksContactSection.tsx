@@ -9,7 +9,7 @@ import {
   Send,
   ShieldCheck,
 } from 'lucide-react';
-import { OFFICIAL_LINKS } from '../data/profileData';
+import { OFFICIAL_LINKS, VERIFIED_URLS } from '../data/profileData';
 import { type ContactFormErrors, validateContactForm } from '../utils/portfolio';
 import { playUiSound, playUiSoundSync } from '../utils/soundFx';
 
@@ -215,7 +215,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                   Tautan Resmi
                 </h2>
                 <p className="mt-3 max-w-xl text-sm font-[450] leading-[1.7] text-stone-700 sm:text-base">
-                  Tulisan terbaru, kabar cerita, dan kegiatan sehari-hari bisa diikuti lewat empat
+                  Tulisan terbaru, proyek digital, dan kegiatan sehari-hari bisa diikuti lewat enam
                   tautan berikut.
                 </p>
               </div>
@@ -251,7 +251,11 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                       ? 'hover:bg-emerald-50/75'
                       : link.id === 'instagram'
                         ? 'hover:bg-rose-50/75'
-                        : 'hover:bg-amber-50/75';
+                        : link.id === 'github'
+                          ? 'hover:bg-stone-100/90'
+                          : link.id === 'youtube'
+                            ? 'hover:bg-red-50/75'
+                            : 'hover:bg-amber-50/75';
 
                 return (
                   <a
@@ -350,7 +354,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                       Makasih ya, <strong className="text-stone-900">{submittedRecord.name}</strong>.{' '}
                       {submittedRecord.statusMessage} Kamu juga bisa langsung sapa lewat Instagram{' '}
                       <a
-                        href="https://www.instagram.com/iniipalll_?evlk=NHRpcmp5MzBjcTZt"
+                        href={VERIFIED_URLS.instagramPersonal}
                         target="_blank"
                         rel="me noopener noreferrer"
                         className="font-semibold text-[#C81E1E] underline underline-offset-2"

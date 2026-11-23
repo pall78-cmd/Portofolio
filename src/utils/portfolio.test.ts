@@ -20,8 +20,13 @@ test('OFFICIAL_LINKS includes exact verified URLs from user profile and channels
   const kk = OFFICIAL_LINKS.find((item) => item.id === 'karyakarsa');
   const wa = OFFICIAL_LINKS.find((item) => item.id === 'whatsapp');
   const wp = OFFICIAL_LINKS.find((item) => item.id === 'wattpad');
+  const gh = OFFICIAL_LINKS.find((item) => item.id === 'github');
+  const yt = OFFICIAL_LINKS.find((item) => item.id === 'youtube');
+
+  assert.equal(OFFICIAL_LINKS.length, 6);
 
   assert.ok(ig);
+  assert.equal(ig.url, 'https://www.instagram.com/iniipalll_/');
   assert.equal(ig.url, VERIFIED_URLS.instagramPersonal);
   assert.equal(ig.handle, '@iniipalll_');
 
@@ -35,9 +40,18 @@ test('OFFICIAL_LINKS includes exact verified URLs from user profile and channels
 
   assert.ok(wp);
   assert.ok(wp.url.includes('wattpad.com/story/405454419-throne-of-ashes-tahkta-abu'));
+
+  assert.ok(gh);
+  assert.equal(gh.url, 'https://github.com/pall78-cmd');
+  assert.equal(gh.handle, 'pall78-cmd');
+
+  assert.ok(yt);
+  assert.equal(yt.url, 'https://www.youtube.com/@pallnotes');
+  assert.equal(yt.handle, '@pallnotes');
+
   assert.equal(
     ORGANIZATION_REFERENCE.instagramUrl,
-    'https://www.instagram.com/himaprosiuinsa?cnvx=MXVpbGhtcmUybmt5Mg=='
+    'https://www.instagram.com/himaprosiuinsa/'
   );
   assert.equal(
     HRD_ELITION_PROGRESS.driveFolderUrl,

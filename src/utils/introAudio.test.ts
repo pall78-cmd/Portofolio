@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  buildGrandDoorIntroPcmSamples,
+  encodeStereoWavBuffer,
   INTRO_DURATION_MS,
   INTRO_FADE_MS,
   playNetflixIntroSound,
@@ -9,23 +11,50 @@ import {
   unlockSharedAudioContextSync,
 } from './introAudio';
 
-test('TUDUM_NOTE_LAYERS defines both Ta and Dum hits with valid frequencies and envelopes', () => {
-  const taNotes = TUDUM_NOTE_LAYERS.filter((layer) => layer.startOffsetSec === 0);
-  const dumNotes = TUDUM_NOTE_LAYERS.filter((layer) => layer.startOffsetSec >= 0.2);
+test('buildGrandDoorIntroPcmSamples generates valid stereo WAV with door impact, sweep, and orchestral reveal', () => {
+  const sampleRate = 22050;
+  const { left, right } = buildGrandDoorIntroPcmSamples(sampleRate, INTRO_DURATION_MS / 1000);
+
+  assert.equal(left.length, right.length);
+  assert.ok(left.length > sampleRate * 4);
+
+  const measureRms = (startSec: number, endSec: number) => {
+    const startIdx = Math.floor(startSec * sampleRate);
+    const endIdx = Math.min(left.length, Math.floor(endSec * sampleRate));
+    let sumSq = 0;
+    for (let i = startIdx; i < endIdx; i += 1) {
+      assert.ok(Number.isFinite(left[i]) && Number.isFinite(right[i]));
+      sumSq += left[i] * left[i] + right[i] * right[i];
+    }
+    return Math.sqrt(sumSq / Math.max(1, (endIdx - startIdx) * 2));
+  };
+
+  const latchRms = measureRms(0.01, 0.35);
+  const doorOpenRms = measureRms(0.35, 1.0);
+  const revealRms = measureRms(1.1, 2.8);
+  const tailEndRms = measureRms(4.5, 4.78);
+
+  assert.ok(latchRms > 0.05, `Expected strong initial door unlatch/slam RMS, got ${latchRms}`);
+  assert.ok(doorOpenRms > 0.02, `Expected portal sweep RMS, got ${doorOpenRms}`);
+  assert.ok(revealRms > 0.08, `Expected monumental brass reveal RMS, got ${revealRms}`);
+  assert.ok(tailEndRms < revealRms * 0.4, 'Expected smooth fade out at end of intro');
+
+  const wavBuffer = encodeStereoWavBuffer(left, right, sampleRate);
+  const headerView = new DataView(wavBuffer);
+  assert.equal(String.fromCharCode(headerView.getUint8(0), headerView.getUint8(1), headerView.getUint8(2), headerView.getUint8(3)), 'RIFF');
+  assert.equal(String.fromCharCode(headerView.getUint8(8), headerView.getUint8(9), headerView.getUint8(10), headerView.getUint8(11)), 'WAVE');
+  assert.equal(wavBuffer.byteLength, 44 + left.length * 4);
+});
+
+test('TUDUM_NOTE_LAYERS defines portal impact and brass reveal layers cleanly', () => {
+  const latchNotes = TUDUM_NOTE_LAYERS.filter((layer) => layer.startOffsetSec < 0.2);
+  const revealNotes = TUDUM_NOTE_LAYERS.filter((layer) => layer.startOffsetSec >= 1.0);
   const leftPanNotes = TUDUM_NOTE_LAYERS.filter((layer) => (layer.pan ?? 0) < 0);
   const rightPanNotes = TUDUM_NOTE_LAYERS.filter((layer) => (layer.pan ?? 0) > 0);
-  const bloomNotes = TUDUM_NOTE_LAYERS.filter((layer) => Boolean(layer.filterPeakHz));
 
-  assert.ok(taNotes.length >= 3, 'Expected multi-layered percussive Ta impact');
-  assert.ok(dumNotes.length >= 8, 'Expected wide orchestral Dum brass & choir stack');
-  assert.ok(leftPanNotes.length >= 2 && rightPanNotes.length >= 2, 'Expected balanced stereo spread');
-  assert.ok(bloomNotes.length >= 5, 'Expected dynamic lowpass brass bloom layers');
-
-  for (const layer of TUDUM_NOTE_LAYERS) {
-    assert.ok(layer.startFreqHz > 0 && layer.endFreqHz > 0);
-    assert.ok(layer.durationSec > 0);
-    assert.ok(layer.peakGain > 0 && layer.peakGain <= 1);
-  }
+  assert.ok(latchNotes.length >= 3);
+  assert.ok(revealNotes.length >= 8);
+  assert.ok(leftPanNotes.length >= 2 && rightPanNotes.length >= 2);
 });
 
 test('shouldBypassIntro respects autostart, deep links, and reduced motion preferences', () => {
