@@ -42,6 +42,14 @@ test('resolvePageMetadata builds unique OpenGraph/Twitter metadata and dimension
     meta.url,
     'https://naufalathallah-rosiyandi.vercel.app/?karya=throne-of-ashes-tahkta-abu'
   );
+  assert.equal(
+    meta.canonicalUrl,
+    'https://naufalathallah-rosiyandi.vercel.app/?karya=throne-of-ashes-tahkta-abu'
+  );
+  assert.equal(
+    SECTION_SEO_METADATA.profil.canonicalUrl,
+    'https://naufalathallah-rosiyandi.vercel.app/'
+  );
   assert.ok(
     meta.description.length >= 25 && meta.description.length <= 160,
     `Work description must be 25-160 chars, got ${meta.description.length}`

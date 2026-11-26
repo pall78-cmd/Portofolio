@@ -1,0 +1,109 @@
+@import "./styles/editorial.css";
+@import "./styles/animations.css";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --surface-void: #030406;
+  --surface-obsidian: #0b0c10;
+  --surface-parchment: #faf7f2;
+  --scrollbar-thumb: #2b2f3d;
+  --accent-crimson: #c81e1e;
+  --accent-amber: #d97706;
+}
+
+@layer base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--surface-void);
+    color: #ffffff;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color: #0c0d10;
+    background-color: var(--surface-parchment);
+    font-family: var(--font-sans);
+    font-weight: 450;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--surface-obsidian);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-serif {
+    font-family: var(--font-serif);
+    font-variation-settings: "SOFT" 45, "WONK" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.24;
+  }
+
+  a,
+  button,
+  [role="tab"],
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background-color: var(--accent-crimson);
+    color: #ffffff;
+  }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.font-body-natural {
+  font-weight: 450;
+}
+
+/* Minimalist dark-mode aesthetic scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-obsidian);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid var(--surface-obsidian);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent-crimson);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--accent-amber);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--surface-obsidian);
+}

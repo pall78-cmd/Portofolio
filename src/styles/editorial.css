@@ -1,0 +1,158 @@
+/* Monumental editorial staging & archival surfaces (pure static CSS gradients, zero paint overhead) */
+.editorial-grand-stage {
+  background-color: #0b0c10;
+  background-image:
+    radial-gradient(ellipse 68% 52% at 86% 8%, rgba(200, 30, 30, 0.14) 0%, transparent 64%),
+    radial-gradient(ellipse 56% 48% at 14% 18%, rgba(245, 158, 11, 0.085) 0%, transparent 62%),
+    radial-gradient(ellipse 80% 45% at 50% 100%, rgba(28, 25, 23, 0.5) 0%, transparent 70%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+}
+
+.editorial-archival-surface {
+  background-color: #faf7f2;
+  background-image:
+    radial-gradient(ellipse 58% 42% at 92% 6%, rgba(200, 30, 30, 0.045) 0%, transparent 68%),
+    radial-gradient(ellipse 52% 40% at 8% 88%, rgba(217, 119, 6, 0.045) 0%, transparent 66%);
+}
+
+/* Ceremonial brass-to-crimson hairline divider rules */
+.editorial-crest-rule {
+  position: relative;
+}
+
+.editorial-crest-rule::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(200, 30, 30, 0.85) 0%,
+    rgba(245, 158, 11, 0.55) 28%,
+    rgba(255, 255, 255, 0.12) 68%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+.editorial-crest-rule-light {
+  position: relative;
+}
+
+.editorial-crest-rule-light::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(185, 28, 28, 0.72) 0%,
+    rgba(217, 119, 6, 0.42) 30%,
+    rgba(120, 113, 108, 0.24) 70%,
+    rgba(120, 113, 108, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+/* Museum gravure plate & dark monograph display framing */
+.monument-frame {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 56px -18px rgba(0, 0, 0, 0.78);
+}
+
+.monograph-headline {
+  letter-spacing: -0.022em;
+  font-variation-settings: "SOFT" 35, "WONK" 1;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.editorial-epigraph {
+  position: relative;
+  border-top: 1px solid rgba(245, 158, 11, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.055) 0%,
+    rgba(255, 255, 255, 0.015) 48%,
+    transparent 100%
+  );
+}
+
+.folio-plaque-dark {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Tactile editorial plates for illustrated cards without external images */
+.editorial-paper-grid {
+  background-color: #f4ede1;
+  background-image:
+    linear-gradient(to right, rgba(28, 25, 23, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(28, 25, 23, 0.045) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.editorial-ink-plate {
+  background-color: #0d0f15;
+  background-image:
+    radial-gradient(circle at 82% 18%, rgba(200, 30, 30, 0.24) 0%, transparent 52%),
+    radial-gradient(circle at 18% 85%, rgba(245, 158, 11, 0.14) 0%, transparent 54%);
+}
+
+/* Ink underline sweep */
+.ink-link {
+  position: relative;
+}
+
+.ink-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: #c81e1e;
+  transform: scale3d(0, 1, 1);
+  transform-origin: left center;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ink-link:hover::after,
+.ink-link:focus-visible::after,
+.ink-link[aria-current="location"]::after {
+  transform: scale3d(1, 1, 1);
+}
+
+/* Subtle crimson-gold beacon indicator & brass hairline plaque finish */
+.editorial-crest-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 35%, #fbbf24 0%, #c81e1e 85%);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
+}
+
+.editorial-plaque-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(245, 158, 11, 0.14),
+    0 12px 30px -16px rgba(0, 0, 0, 0.55);
+}
+
+.editorial-input-field {
+  transition:
+    border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-input-field:focus {
+  box-shadow: 0 0 0 3px rgba(200, 30, 30, 0.1);
+}
+

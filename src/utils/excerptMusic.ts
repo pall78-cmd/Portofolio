@@ -20,7 +20,7 @@ export const EMPTY_MAGNOLIA_EXCERPT: ExcerptSpec = {
   fallbackVideoId: 'u95YOPIeOD4',
   title: 'Empty',
   artist: 'Magnolia Celebration',
-  postIntroDelayMs: 2000,
+  postIntroDelayMs: 1200,
   // Target verse [01:55.83] - [02:24.62] (+ instrumental release ending before [02:35.06])
   startSec: 115.4,
   endSec: 151.5,

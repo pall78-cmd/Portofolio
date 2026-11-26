@@ -53,9 +53,7 @@ export function EditorialImage({
             referrerPolicy="no-referrer"
             onError={() => setHasError(true)}
             className={`block h-full w-full object-cover ${
-              zoomOnHover
-                ? 'transform-gpu will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]'
-                : ''
+              zoomOnHover ? 'editorial-img-zoom transform-gpu' : ''
             } ${imgClassName}`}
           />
         </div>

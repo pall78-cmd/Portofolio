@@ -82,10 +82,11 @@ export function validateContactForm(input: ContactFormInput): {
     errors.name = 'Nama lengkap minimal terdiri dari 2 karakter.';
   }
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailPattern =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
   if (!email) {
     errors.email = 'Alamat email wajib diisi.';
-  } else if (!emailPattern.test(email)) {
+  } else if (email.length > 160 || email.includes('..') || !emailPattern.test(email)) {
     errors.email = 'Format alamat email tidak valid.';
   }
 

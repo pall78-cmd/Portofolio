@@ -23,13 +23,14 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
   return (
     <section
       id="profil"
-      className="reveal-stage scroll-mt-16 border-b border-stone-800 bg-[#0B0C10] text-stone-100"
+      className="reveal-stage editorial-grand-stage scroll-mt-16 border-b border-stone-800 text-stone-100"
     >
       <div className="mx-auto max-w-7xl px-4 pt-6 pb-10 sm:px-6 md:pt-10 md:pb-14 lg:px-10 lg:pt-12 lg:pb-16">
         {/* Editorial Masthead Rule */}
-        <div className="flex flex-col gap-1 border-b border-stone-800 pb-3.5 text-xs font-medium text-stone-400 tabular-nums md:flex-row md:items-center md:justify-between md:gap-6">
-          <span className="font-mono font-semibold tracking-wider text-amber-400">
-            Profil &amp; Karya · 2026
+        <div className="editorial-crest-rule editorial-crest-rule-animated flex flex-col gap-1 pb-4 text-xs font-medium text-stone-400 tabular-nums md:flex-row md:items-center md:justify-between md:gap-6">
+          <span className="inline-flex items-center gap-2 font-mono font-semibold tracking-wider text-amber-400">
+            <span aria-hidden="true" className="editorial-crest-dot editorial-pulse-dot" />
+            <span>Profil &amp; Karya · 2026</span>
           </span>
           <span className="text-stone-300 md:text-right">{PROFILE_IDENTITY.kicker}</span>
         </div>
@@ -37,21 +38,21 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
         {/* Smartphone (<768px): Cover Plate First / Stacked Book-Cover Composition; Tablet (md): 7/5 Spread; Desktop (lg): 12-Col Asymmetric Monograph */}
         <div className="mt-6 md:mt-9 lg:mt-11 grid grid-cols-1 gap-7 md:grid-cols-12 md:items-start md:gap-8 lg:items-stretch lg:gap-12">
           {/* Portrait Frame — renders first on Smartphone (order-1) for poster-cover impact, right column on Tablet/Desktop (md:order-2) */}
-          <div className="order-1 md:order-2 md:col-span-5 lg:h-full">
+          <div className="animate-hero-enter stagger-1 order-1 md:order-2 md:col-span-5 lg:h-full">
             <EditorialImage
               src={PROFILE_IDENTITY.heroImage}
               alt={PROFILE_IDENTITY.heroImageAlt}
               caption="Naufal Athallah Rosiyandi · Halaman Kota Surabaya"
               dark
-              className="lg:h-full rounded-xl shadow-2xl shadow-black/60"
+              className="monument-frame animate-portrait-unveil lg:h-full rounded-xl"
               imgClassName="aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/5] object-[50%_42%] lg:aspect-auto lg:h-full"
             />
           </div>
 
           {/* Typographic Monograph Column */}
-          <div className="order-2 md:order-1 flex flex-col justify-between md:col-span-7">
+          <div className="animate-hero-enter order-2 md:order-1 flex flex-col justify-between md:col-span-7">
             <div>
-              <h1 className="font-serif text-[2.15rem] leading-[1.18] font-semibold tracking-tight text-white sm:text-[2.75rem] sm:leading-[1.15] md:text-[3.05rem] md:leading-[1.13] lg:text-[4rem] lg:leading-[1.1] text-balance">
+              <h1 className="monograph-headline hero-title-glitch font-serif text-[2.15rem] leading-[1.18] font-semibold text-white sm:text-[2.75rem] sm:leading-[1.15] md:text-[3.05rem] md:leading-[1.13] lg:text-[4rem] lg:leading-[1.1] text-balance">
                 {PROFILE_IDENTITY.fullName}
               </h1>
 
@@ -70,7 +71,7 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
               </div>
 
               {/* Desktop Literary Epigraph Pull-Quote (hidden on compact mobile & tablet to keep spread distinct) */}
-              <blockquote className="hidden lg:block mt-7 border-y border-stone-800/90 py-4 font-serif text-base italic leading-[1.65] text-stone-300">
+              <blockquote className="editorial-epigraph hidden lg:block mt-7 px-4 py-4 font-serif text-base italic leading-[1.65] text-stone-200">
                 &ldquo;Di dunia di mana pengetahuan merupakan toksin, ketidaktahuan merupakan
                 satu-satunya pelindung, serta kegilaan merupakan satu-satunya tangga mengarah
                 takhta.&rdquo;
@@ -89,10 +90,10 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
                   rel="me noopener noreferrer"
                   onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                   onClick={() => void playUiSound('open', soundEnabled)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-xs lg:text-sm font-semibold text-white hover:bg-[#A61717] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                  className="group btn-press btn-monumental inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-xs lg:text-sm font-semibold text-white hover:bg-[#9E1414] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   <span>{wattpadLink.ctaLabel}</span>
-                  <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <ArrowUpRight className="arrow-glide-ne h-4 w-4 shrink-0" aria-hidden="true" />
                 </a>
               )}
 
@@ -103,10 +104,10 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
                   rel="me noopener noreferrer"
                   onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                   onClick={() => void playUiSound('tap', soundEnabled)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-stone-700 bg-[#14161D] px-5 py-2.5 text-xs lg:text-sm font-semibold text-stone-100 hover:border-amber-400 hover:text-white transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                  className="group btn-press inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-stone-700 bg-[#14161D] px-5 py-2.5 text-xs lg:text-sm font-semibold text-stone-100 hover:border-amber-400 hover:text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                 >
                   <span>{instagramLink.ctaLabel}</span>
-                  <ArrowUpRight className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
+                  <ArrowUpRight className="arrow-glide-ne h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
                 </a>
               )}
             </div>
@@ -121,11 +122,11 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
           {PROFILE_HIGHLIGHTS.map((item, idx) => (
             <div
               key={item.label}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-stone-800/90 bg-gradient-to-b from-[#141721] to-[#0E1016] p-3.5 sm:p-4 md:p-5 lg:rounded-none lg:border-0 lg:bg-none lg:bg-[#111319] lg:p-6 transition-colors duration-200 hover:border-amber-400/40 lg:hover:bg-[#161922]"
+              className={`panel-card folio-plaque-dark editorial-plaque-glow stagger-card stagger-${idx + 1} group relative flex flex-col justify-between overflow-hidden rounded-xl border border-stone-800/90 bg-gradient-to-b from-[#151823] to-[#0E1016] p-3.5 sm:p-4 md:p-5 lg:rounded-none lg:border-0 lg:bg-none lg:bg-[#111319] lg:p-6 hover:border-amber-400/45 lg:hover:bg-[#161922]`}
             >
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C81E1E]/80 via-amber-400/60 to-transparent opacity-70 transition-opacity duration-200 group-hover:opacity-100"
+                className="panel-accent-sweep pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C81E1E]/85 via-amber-400/70 to-transparent opacity-75 group-hover:opacity-100"
               />
               <div>
                 <div className="flex items-center justify-between gap-2 text-[11px] sm:text-xs tabular-nums">

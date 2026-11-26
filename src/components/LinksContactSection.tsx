@@ -134,7 +134,10 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
         signal: AbortSignal.timeout(15_000),
         body: JSON.stringify({
           name: name.trim(),
@@ -201,7 +204,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
   };
 
   return (
-    <section id="tautan" className="reveal-stage scroll-mt-16 bg-[#FAF7F2] text-stone-950">
+    <section id="tautan" className="reveal-stage editorial-archival-surface scroll-mt-16 text-stone-950">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
         <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-12 lg:items-start">
           {/* Official Links Column: Sticky on Desktop, 2x2 Plaque Matrix on Tablet, Hairline List on Mobile */}
@@ -334,7 +337,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
 
               <div className="p-5 sm:p-7 md:col-span-8 md:p-8">
                 {submittedRecord ? (
-                  <div role="status" className="pt-1">
+                  <div key="contact-sent" role="status" className="animate-panel-enter pt-1">
                     <div className="flex items-center gap-2 text-sm font-semibold text-stone-950">
                       {submittedRecord.emailDelivered ? (
                         <Check className="h-4 w-4 text-emerald-700 shrink-0" aria-hidden="true" />
@@ -380,17 +383,17 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                     <button
                       type="button"
                       onClick={handleResetForm}
-                      className="mt-5 inline-flex items-center justify-center rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:bg-stone-100 transition-colors whitespace-nowrap shrink-0"
+                      className="btn-press mt-5 inline-flex items-center justify-center rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:bg-stone-100 whitespace-nowrap shrink-0"
                     >
                       Kirim Pesan Lain
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                  <form key="contact-form" onSubmit={handleSubmit} noValidate className="animate-panel-enter space-y-4">
                     {submitAlert && (
                       <div
                         role="alert"
-                        className={`rounded-md border p-3.5 text-xs leading-relaxed ${
+                        className={`animate-panel-enter rounded-md border p-3.5 text-xs leading-relaxed ${
                           submitAlert.type === 'blocked_spam'
                             ? 'border-amber-300 bg-amber-50 text-amber-950'
                             : 'border-red-200 bg-red-50 text-red-900'
@@ -443,7 +446,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           }}
                           aria-invalid={Boolean(errors.name)}
                           placeholder="Nama kamu"
-                          className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
+                          className="editorial-input-field mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                         />
                         {errors.name && (
                           <p className="mt-1.5 text-xs font-medium text-red-700" role="alert">
@@ -470,7 +473,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           }}
                           aria-invalid={Boolean(errors.email)}
                           placeholder="nama@contoh.com"
-                          className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
+                          className="editorial-input-field mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                         />
                         {errors.email && (
                           <p className="mt-1.5 text-xs font-medium text-red-700" role="alert">
@@ -496,7 +499,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           setTopic(e.target.value);
                           if (errors.topic) setErrors((prev) => ({ ...prev, topic: undefined }));
                         }}
-                        className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
+                        className="editorial-input-field mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                       >
                         {TOPIC_OPTIONS.map((option) => (
                           <option key={option} value={option}>
@@ -531,7 +534,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                         }}
                         aria-invalid={Boolean(errors.message)}
                         placeholder="Tulis pesan atau ajakan ngobrol di sini..."
-                        className="mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
+                        className="editorial-input-field mt-1.5 w-full rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                       />
                       {errors.message && (
                         <p className="mt-1.5 text-xs font-medium text-red-700" role="alert">
@@ -565,7 +568,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                           }}
                           aria-invalid={Boolean(errors.challengeAnswer)}
                           placeholder="Angka"
-                          className="w-28 rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
+                          className="editorial-input-field w-28 rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2 text-sm text-stone-900 placeholder:text-stone-400 focus:border-[#C81E1E] focus:bg-white focus:outline-none"
                         />
                         <button
                           type="button"
@@ -595,7 +598,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                         type="submit"
                         disabled={isSubmitting}
                         onMouseEnter={() => void playUiSound('hover', soundEnabled)}
-                        className="inline-flex min-h-11 items-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#991B1B] disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                        className="btn-press btn-monumental inline-flex min-h-11 items-center gap-2 rounded-md bg-[#C81E1E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#991B1B] disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
                       >
                         {isSubmitting ? (
                           <>

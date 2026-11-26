@@ -1,7 +1,18 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { verifyMathChallenge } from '../server/challengeService.ts';
 import { screenAndForwardContact } from '../server/contactService.ts';
-import { isOriginAllowed, sanitizeJsonBodyObject } from '../server/requestSecurity.ts';
+import {
+  checkContactRateLimit,
+  checkGlobalApiRateLimit,
+  checkSenderEmailQuota,
+  isDuplicateContactSubmission,
+  resolveClientIpKey,
+} from '../server/rateLimitService.ts';
+import {
+  applyApiSecurityHeaders,
+  isOriginAllowed,
+  sanitizeJsonBodyObject,
+} from '../server/requestSecurity.ts';
 import { validateServerContactPayload } from '../src/utils/contactFilter.ts';
 
 const MAX_BODY_BYTES = 16 * 1024;
@@ -11,8 +22,8 @@ type VercelRequest = IncomingMessage & {
 };
 
 function sendJson(res: ServerResponse, statusCode: number, payload: unknown): void {
+  applyApiSecurityHeaders(res);
   res.statusCode = statusCode;
-  res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.end(JSON.stringify(payload));
 }
@@ -37,7 +48,15 @@ async function readJsonBody(req: VercelRequest): Promise<{ ok: true; data: unkno
         return { ok: false, status: 400 };
       }
     }
-    return { ok: true, data: req.body };
+    try {
+      const serialized = JSON.stringify(req.body);
+      if (typeof serialized !== 'string' || Buffer.byteLength(serialized, 'utf8') > MAX_BODY_BYTES) {
+        return { ok: false, status: 413 };
+      }
+      return { ok: true, data: req.body };
+    } catch {
+      return { ok: false, status: 400 };
+    }
   }
 
   return new Promise((resolve) => {
@@ -86,18 +105,36 @@ export default async function handler(req: VercelRequest, res: ServerResponse): 
     return;
   }
 
+  const clientIp = resolveClientIpKey(req.headers, req.socket?.remoteAddress);
+  const globalRate = checkGlobalApiRateLimit(clientIp);
+  if (globalRate.limited) {
+    res.setHeader('Retry-After', String(globalRate.retryAfterSec));
+    sendJson(res, 429, {
+      ok: false,
+      status: 'error',
+      emailDelivered: false,
+      message: 'Terlalu banyak permintaan API. Silakan tunggu beberapa saat.',
+    });
+    return;
+  }
+
   if (
     !isOriginAllowed(
       getHeader(req, 'origin'),
       getHeader(req, 'host'),
-      getHeader(req, 'x-forwarded-host')
+      getHeader(req, 'x-forwarded-host'),
+      {
+        refererHeader: getHeader(req, 'referer'),
+        secFetchSiteHeader: getHeader(req, 'sec-fetch-site'),
+        requireOriginOnPost: true,
+      }
     )
   ) {
     sendJson(res, 403, {
       ok: false,
       status: 'error',
       emailDelivered: false,
-      message: 'Permintaan lintas asal tidak diizinkan.',
+      message: 'Permintaan lintas asal atau tanpa asal yang sah tidak diizinkan.',
     });
     return;
   }
@@ -109,6 +146,18 @@ export default async function handler(req: VercelRequest, res: ServerResponse): 
       status: 'error',
       emailDelivered: false,
       message: 'Format Content-Type harus application/json.',
+    });
+    return;
+  }
+
+  const contactRate = checkContactRateLimit(clientIp);
+  if (contactRate.limited) {
+    res.setHeader('Retry-After', String(contactRate.retryAfterSec));
+    sendJson(res, 429, {
+      ok: false,
+      status: 'error',
+      emailDelivered: false,
+      message: 'Terlalu banyak percobaan pengiriman pesan. Coba lagi dalam beberapa menit.',
     });
     return;
   }
@@ -155,6 +204,28 @@ export default async function handler(req: VercelRequest, res: ServerResponse): 
       emailDelivered: false,
       fieldErrors: { challengeAnswer: challengeCheck.message },
       message: challengeCheck.message,
+    });
+    return;
+  }
+
+  const emailQuota = checkSenderEmailQuota(validation.data.email);
+  if (emailQuota.limited) {
+    res.setHeader('Retry-After', String(emailQuota.retryAfterSec));
+    sendJson(res, 429, {
+      ok: false,
+      status: 'error',
+      emailDelivered: false,
+      message: 'Batas pengiriman dari alamat email tersebut tercapai. Coba lagi nanti.',
+    });
+    return;
+  }
+
+  if (isDuplicateContactSubmission(clientIp, validation.data.email, validation.data.message)) {
+    sendJson(res, 429, {
+      ok: false,
+      status: 'error',
+      emailDelivered: false,
+      message: 'Pesan yang sama baru saja dikirim. Tunggu beberapa menit sebelum mengirim ulang.',
     });
     return;
   }

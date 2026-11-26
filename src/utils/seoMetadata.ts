@@ -44,6 +44,7 @@ export interface PageSeoMetadata {
   twitterTitle: string;
   twitterDescription: string;
   url: string;
+  canonicalUrl: string;
   imageUrl: string;
   imageWidth: number;
   imageHeight: number;
@@ -97,6 +98,7 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     twitterDescription:
       'Sastra Inggris UINSA, HRD EDSA 2026, penulis Wattpad (@NaufalAthallah), GitHub (pall78-cmd), Instagram (@iniipalll_), dan YouTube (@pallnotes).',
     url: `${SITE_BASE_URL}/`,
+    canonicalUrl: `${SITE_BASE_URL}/`,
     imageUrl: DEFAULT_IMAGE.url,
     imageWidth: DEFAULT_IMAGE.width,
     imageHeight: DEFAULT_IMAGE.height,
@@ -113,6 +115,7 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     twitterDescription:
       'Cerita bersambung fantasi gelap, drama arsitektur, puisi sendu, hingga e-book oleh @NaufalAthallah.',
     url: `${SITE_BASE_URL}/#karya`,
+    canonicalUrl: `${SITE_BASE_URL}/`,
     imageUrl: VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.proseImage].url,
     imageWidth: VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.proseImage].width,
     imageHeight: VERIFIED_IMAGE_DIMENSIONS[PROFILE_IDENTITY.proseImage].height,
@@ -129,6 +132,7 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     twitterDescription:
       'Info beasiswa, volunteer ambassador, voting komunitas SIFA, dan foto tim Divisi HRD Kabinet Atarascent HIMAPRO-SI UINSA.',
     url: `${SITE_BASE_URL}/#perjalanan`,
+    canonicalUrl: `${SITE_BASE_URL}/`,
     imageUrl: VERIFIED_IMAGE_DIMENSIONS[ORGANIZATION_REFERENCE.hrdDivisionImage].url,
     imageWidth: VERIFIED_IMAGE_DIMENSIONS[ORGANIZATION_REFERENCE.hrdDivisionImage].width,
     imageHeight: VERIFIED_IMAGE_DIMENSIONS[ORGANIZATION_REFERENCE.hrdDivisionImage].height,
@@ -145,6 +149,7 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     twitterDescription:
       'GitHub pall78-cmd · Instagram @iniipalll_ · YouTube @pallnotes · Wattpad @NaufalAthallah · Karyakarsa @ashborne.',
     url: `${SITE_BASE_URL}/#tautan`,
+    canonicalUrl: `${SITE_BASE_URL}/`,
     imageUrl:
       VERIFIED_IMAGE_DIMENSIONS['/src/assets/images/campus_library_archive_1795196265483.jpg'].url,
     imageWidth:
@@ -165,6 +170,7 @@ export const SECTION_SEO_METADATA: Record<SectionId, PageSeoMetadata> = {
     twitterDescription:
       'Terbuka untuk ngobrol sastra, nulis bareng (@ashborne), dan kegiatan EDSA Executive 2026.',
     url: `${SITE_BASE_URL}/#kontak`,
+    canonicalUrl: `${SITE_BASE_URL}/`,
     imageUrl: DEFAULT_IMAGE.url,
     imageWidth: DEFAULT_IMAGE.width,
     imageHeight: DEFAULT_IMAGE.height,
@@ -201,6 +207,7 @@ export function resolvePageMetadata(options: {
       twitterTitle: `${activeWork.title} · ${PROFILE_IDENTITY.shortName}`,
       twitterDescription: conciseSummary,
       url: workUrl,
+      canonicalUrl: workUrl,
       imageUrl: workImage.url,
       imageWidth: workImage.width,
       imageHeight: workImage.height,
@@ -209,6 +216,19 @@ export function resolvePageMetadata(options: {
   }
 
   return SECTION_SEO_METADATA[activeSection] ?? SECTION_SEO_METADATA.profil;
+}
+
+function setCanonicalHref(href: string): void {
+  if (typeof document === 'undefined') {
+    return;
+  }
+  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
 }
 
 function setMetaContent(
@@ -235,6 +255,7 @@ export function applyDocumentSeoMetadata(metadata: PageSeoMetadata): void {
   }
 
   document.title = metadata.title;
+  setCanonicalHref(metadata.canonicalUrl);
 
   setMetaContent('meta[name="description"]', 'name', 'description', metadata.description);
   setMetaContent('meta[property="og:title"]', 'property', 'og:title', metadata.ogTitle);

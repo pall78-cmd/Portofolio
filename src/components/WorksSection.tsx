@@ -116,10 +116,10 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
   return (
     <section
       id="karya"
-      className="reveal-stage scroll-mt-16 border-b border-stone-300 bg-[#FAF7F2] text-stone-950"
+      className="reveal-stage editorial-archival-surface scroll-mt-16 border-b border-stone-300 text-stone-950"
     >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
-        <div className="flex flex-col gap-4 border-b border-stone-300/90 pb-6 md:flex-row md:items-end md:justify-between md:gap-8">
+        <div className="editorial-crest-rule-light editorial-crest-rule-animated flex flex-col gap-4 pb-6 md:flex-row md:items-end md:justify-between md:gap-8">
           <div className="max-w-2xl">
             <p className="font-mono text-xs font-semibold tracking-wider text-[#B91C1C]">
               Tulisan &amp; Buku
@@ -160,7 +160,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                     void playUiSound('tap', soundEnabled);
                     setSelectedCategory(category);
                   }}
-                  className={`min-h-10 md:min-h-9 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${
+                  className={`btn-press min-h-10 md:min-h-9 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${
                     isActive
                       ? 'bg-[#0B0C10] text-white shadow-xs'
                       : 'text-stone-700 hover:bg-[#FAF7F2] hover:text-stone-950'
@@ -196,7 +196,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                   setSearchQuery('');
                 }}
                 aria-label="Hapus kata kunci pencarian"
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-stone-400 hover:text-stone-700"
+                className="btn-press absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-stone-400 hover:text-stone-700"
               >
                 <X className="h-3.5 w-3.5" aria-hidden="true" />
               </button>
@@ -205,7 +205,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
         </div>
 
         {visibleWorks.length === 0 ? (
-          <div className="mt-10 rounded-xl border border-stone-300 bg-white px-6 py-14 text-center">
+          <div key={`empty-${selectedCategory}`} className="animate-panel-enter mt-10 rounded-xl border border-stone-300 bg-white px-6 py-14 text-center">
             <p className="font-serif text-xl font-medium text-stone-900">
               Belum ada tulisan yang cocok dengan pencarianmu.
             </p>
@@ -216,16 +216,16 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
               type="button"
               onMouseEnter={handleHoverSound}
               onClick={handleResetFilters}
-              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[#0B0C10] px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#C81E1E] transition-colors whitespace-nowrap shrink-0"
+              className="btn-press mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[#0B0C10] px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#C81E1E] whitespace-nowrap shrink-0"
             >
               Tampilkan Semua
             </button>
           </div>
         ) : (
-          <div className="mt-8 md:mt-10 space-y-8 lg:space-y-10">
+          <div key={selectedCategory} className="animate-panel-enter mt-8 md:mt-10 space-y-8 lg:space-y-10">
             {/* Tier 1: Flagship Literary Lead Spread */}
             {featuredLead && (
-              <article className="group relative overflow-hidden rounded-xl border border-stone-800 bg-[#0B0C10] text-stone-100 shadow-xl shadow-stone-950/10">
+              <article className="panel-card monument-frame folio-plaque-dark group relative overflow-hidden rounded-xl border border-stone-800 bg-[#0B0C10] text-stone-100">
                 <div
                   aria-hidden="true"
                   className="editorial-sheen-layer absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white to-transparent"
@@ -294,7 +294,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                         className="inline-flex min-h-10 items-center gap-1.5 text-xs font-medium text-amber-300 hover:text-amber-200 hover:underline underline-offset-4 transition-colors"
                       >
                         <span>Baca di {featuredLead.platform}</span>
-                        <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                        <ArrowUpRight className="arrow-glide-ne h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       </a>
                       <button
                         type="button"
@@ -302,10 +302,10 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                         onFocus={handleHoverSound}
                         onClick={() => handleOpenWork(featuredLead)}
                         aria-label={`Baca singkat ${featuredLead.title}`}
-                        className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                        className="btn-press btn-monumental inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
                       >
                         <span>Baca Singkat</span>
-                        <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                        <ArrowRight className="arrow-glide-e h-3.5 w-3.5" aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -337,15 +337,16 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
 
                   const splitInterior = isLeadIllustrated || (folioRows.length === 1 && Boolean(work.imageUrl));
                   const isWideFolioCard = isLeadIllustrated || isTwoItemLayout || folioRows.length === 1;
+                  const staggerClass = `stagger-${Math.min(idx + 1, 5)}`;
 
                   return (
                     <article
                       key={work.id}
-                      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-300/90 bg-gradient-to-b from-white to-[#FCF9F4] p-5 sm:p-6 lg:p-7 shadow-xs shadow-stone-900/[0.04] transition-[transform,border-color,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-stone-500 hover:shadow-md ${spanClasses}`}
+                      className={`panel-card stagger-card ${staggerClass} group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-300/90 bg-gradient-to-b from-white to-[#FCF9F4] p-5 sm:p-6 lg:p-7 shadow-xs shadow-stone-900/[0.04] hover:border-stone-500 hover:shadow-md ${spanClasses}`}
                     >
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C81E1E] via-stone-400/60 to-transparent opacity-65 transition-opacity duration-200 group-hover:opacity-100"
+                        className="panel-accent-sweep pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C81E1E] via-stone-400/60 to-transparent opacity-65 group-hover:opacity-100"
                       />
 
                       <div
@@ -408,7 +409,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                           onFocus={handleHoverSound}
                           onClick={() => void playUiSound('open', soundEnabled)}
                           aria-label={`Buka ${work.title} di ${work.platform}`}
-                          className="inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-1.5 rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2 text-xs font-semibold text-stone-800 hover:border-[#C81E1E] hover:text-[#C81E1E] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                          className="btn-press inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-1.5 rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2 text-xs font-semibold text-stone-800 hover:border-[#C81E1E] hover:text-[#C81E1E] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
                         >
                           <span className="truncate max-w-[190px]">{work.platform}</span>
                           <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
@@ -419,7 +420,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                           onFocus={handleHoverSound}
                           onClick={() => handleOpenWork(work)}
                           aria-label={`Baca singkat ${work.title}`}
-                          className="inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-2 rounded-md bg-[#0B0C10] px-4 py-2 text-xs font-semibold text-white hover:bg-[#C81E1E] group-hover:bg-[#C81E1E] transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+                          className="btn-press inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-2 rounded-md bg-[#0B0C10] px-4 py-2 text-xs font-semibold text-white hover:bg-[#C81E1E] group-hover:bg-[#C81E1E] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
                         >
                           <span>Baca Singkat</span>
                           <ArrowRight

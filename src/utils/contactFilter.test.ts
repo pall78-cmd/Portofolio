@@ -39,6 +39,22 @@ test('validateServerContactPayload accepts valid allowed topic and rejects inval
     message: 'Pesan yang cukup panjang untuk diuji.',
   });
   assert.equal(badTopic.ok, false);
+
+  const smuggledEmails = [
+    '"evil, victim"@example.com',
+    'a,b@example.com',
+    'test..bad@example.com',
+    'bad;bcc:evil@example.com',
+  ];
+  for (const maliciousEmail of smuggledEmails) {
+    const rejected = validateServerContactPayload({
+      name: 'Raka',
+      email: maliciousEmail,
+      topic: 'Diskusi Sastra & Penulisan',
+      message: 'Pesan yang cukup panjang untuk diuji.',
+    });
+    assert.equal(rejected.ok, false, `Expected strict email filter to reject ${maliciousEmail}`);
+  }
 });
 
 test('evaluateManualSpamFilter blocks honeypot, HTML/script injection, disposable email, shortener URLs, and spam while allowing valid correspondence', () => {

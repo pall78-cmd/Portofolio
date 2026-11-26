@@ -55,3 +55,24 @@ test('verifyMathChallenge rejects tampered and expired tokens', () => {
     assert.equal(expired.reason, 'expired');
   }
 });
+
+test('verifyMathChallenge preserves recent nonce replay protection when store exceeds 2000 nonces', () => {
+  const t0 = 1_800_000_000_000;
+  for (let i = 0; i < 2010; i += 1) {
+    const ch = issueMathChallenge(t0);
+    const ans = extractExpectedSum(ch.question);
+    const ok = verifyMathChallenge(ch.token, ans, { now: t0 + 2500 });
+    assert.equal(ok.ok, true);
+  }
+
+  const recentChallenge = issueMathChallenge(t0);
+  const recentAnswer = extractExpectedSum(recentChallenge.question);
+  const firstUse = verifyMathChallenge(recentChallenge.token, recentAnswer, { now: t0 + 3000 });
+  assert.equal(firstUse.ok, true);
+
+  const replayAttempt = verifyMathChallenge(recentChallenge.token, recentAnswer, { now: t0 + 3500 });
+  assert.equal(replayAttempt.ok, false);
+  if (!replayAttempt.ok) {
+    assert.equal(replayAttempt.reason, 'reused');
+  }
+});

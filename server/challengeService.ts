@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 
 const CHALLENGE_TTL_MS = 30 * 60 * 1000;
-const MIN_HUMAN_ELAPSED_MS = 900;
+const MIN_HUMAN_ELAPSED_MS = 1500;
 const MAX_USED_NONCES = 2000;
 
 function resolveSigningSecret(): string {
@@ -54,8 +54,13 @@ function cleanupExpiredNonces(now: number): void {
       usedChallenges.delete(id);
     }
   }
-  if (usedChallenges.size > MAX_USED_NONCES) {
-    usedChallenges.clear();
+  // Evict only oldest nonces in FIFO order so active recent nonces remain protected against replay
+  while (usedChallenges.size > MAX_USED_NONCES) {
+    const oldestKey = usedChallenges.keys().next().value;
+    if (oldestKey === undefined) {
+      break;
+    }
+    usedChallenges.delete(oldestKey);
   }
 }
 

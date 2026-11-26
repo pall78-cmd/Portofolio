@@ -53,7 +53,7 @@ export function TopBar({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-stone-800/85 bg-[#0B0C10]/94 text-stone-100 backdrop-blur-md">
+    <header className="editorial-crest-rule sticky top-0 z-40 bg-[#0B0C10]/94 text-stone-100 backdrop-blur-md">
       <div className="mx-auto flex h-14 md:h-16 lg:h-[72px] max-w-7xl items-center justify-between gap-4 md:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-10">
         <a
           href="#profil"
@@ -95,7 +95,7 @@ export function TopBar({
             onMouseEnter={() => void playUiSound('hover', soundEnabled)}
             onClick={(e) => handleAnchorClick(e, 'kontak')}
             aria-current={activeSection === 'kontak' ? 'location' : undefined}
-            className="hidden md:inline-flex items-center justify-center rounded-md border border-stone-700 bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#A61717] transition-colors duration-200 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+            className="btn-press btn-monumental hidden md:inline-flex items-center justify-center rounded-md border border-white/10 bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#9E1414] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
           >
             Hubungi
           </a>
@@ -109,7 +109,7 @@ export function TopBar({
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
             aria-label={mobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-700 bg-[#14161D] text-stone-100 hover:bg-stone-800 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+            className="btn-press inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-700 bg-[#14161D] text-stone-100 hover:bg-stone-800 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
@@ -124,10 +124,10 @@ export function TopBar({
         <nav
           id="mobile-navigation"
           aria-label="Navigasi seluler"
-          className="border-t border-stone-800 bg-[#0B0C10] px-4 py-4 sm:px-6 md:hidden"
+          className="animate-drawer-enter border-t border-stone-800 bg-[#0B0C10] px-4 py-4 sm:px-6 md:hidden"
         >
           <div className="flex flex-col divide-y divide-stone-800/80">
-            {NAV_ITEMS.map((item) => {
+            {NAV_ITEMS.map((item, idx) => {
               const isActive = activeSection === item.id;
               return (
                 <a
@@ -135,7 +135,7 @@ export function TopBar({
                   href={item.href}
                   aria-current={isActive ? 'location' : undefined}
                   onClick={(e) => handleAnchorClick(e, item.id)}
-                  className={`min-h-12 flex items-center justify-between px-2 text-sm transition-colors ${
+                  className={`stagger-card stagger-${idx + 1} min-h-12 flex items-center justify-between px-2 text-sm transition-colors ${
                     isActive
                       ? 'font-semibold text-amber-300'
                       : 'font-medium text-stone-200 hover:text-white'
@@ -145,11 +145,11 @@ export function TopBar({
                 </a>
               );
             })}
-            <div className="pt-3">
+            <div className="stagger-card stagger-5 pt-3">
               <a
                 href="#kontak"
                 onClick={(e) => handleAnchorClick(e, 'kontak')}
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#C81E1E] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#991B1B]"
+                className="btn-press inline-flex min-h-11 w-full items-center justify-center rounded-md bg-[#C81E1E] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#991B1B]"
               >
                 Hubungi
               </a>

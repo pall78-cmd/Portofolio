@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import crypto from 'node:crypto';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -8,6 +7,15 @@ import { validateServerContactPayload } from './src/utils/contactFilter.ts';
 import { issueMathChallenge, verifyMathChallenge } from './server/challengeService.ts';
 import { screenAndForwardContact } from './server/contactService.ts';
 import {
+  checkChallengeRateLimit,
+  checkContactRateLimit,
+  checkGlobalApiRateLimit,
+  checkSenderEmailQuota,
+  isDuplicateContactSubmission,
+  resolveClientIpKey,
+} from './server/rateLimitService.ts';
+import {
+  applyApiSecurityHeaders,
   isBlockedSensitivePath,
   isOriginAllowed,
   redactSensitiveLogText,
@@ -15,82 +23,18 @@ import {
 } from './server/requestSecurity.ts';
 
 const PORT = Number(process.env.PORT || 3000);
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const CONTACT_RATE_LIMIT_MAX = 6;
-const CHALLENGE_RATE_LIMIT_MAX = 30;
-const GLOBAL_API_RATE_LIMIT_MAX = 60;
-const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
-
-interface RateEntry {
-  count: number;
-  resetAt: number;
-}
-
-const contactBuckets = new Map<string, RateEntry>();
-const challengeBuckets = new Map<string, RateEntry>();
-const globalApiBuckets = new Map<string, RateEntry>();
-const recentMessageHashes = new Map<string, number>();
-
-function checkRateLimit(
-  buckets: Map<string, RateEntry>,
-  ipKey: string,
-  maxRequests: number
-): { limited: boolean; retryAfterSec: number } {
-  const now = Date.now();
-  if (buckets.size > 500) {
-    for (const [key, entry] of buckets.entries()) {
-      if (entry.resetAt <= now) {
-        buckets.delete(key);
-      }
-    }
-  }
-
-  const current = buckets.get(ipKey);
-  if (!current || current.resetAt <= now) {
-    buckets.set(ipKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return { limited: false, retryAfterSec: 0 };
-  }
-
-  if (current.count >= maxRequests) {
-    const retryAfterSec = Math.max(1, Math.ceil((current.resetAt - now) / 1000));
-    return { limited: true, retryAfterSec };
-  }
-
-  current.count += 1;
-  return { limited: false, retryAfterSec: 0 };
-}
-
-function isDuplicateSubmission(ipKey: string, email: string, message: string): boolean {
-  const now = Date.now();
-  if (recentMessageHashes.size > 500) {
-    for (const [hash, expiresAt] of recentMessageHashes.entries()) {
-      if (expiresAt <= now) {
-        recentMessageHashes.delete(hash);
-      }
-    }
-  }
-
-  const fingerprint = crypto
-    .createHash('sha256')
-    .update(`${ipKey}|${email.toLowerCase()}|${message.trim().toLowerCase()}`)
-    .digest('hex');
-
-  const existingExpiry = recentMessageHashes.get(fingerprint);
-  if (existingExpiry && existingExpiry > now) {
-    return true;
-  }
-
-  recentMessageHashes.set(fingerprint, now + DUPLICATE_WINDOW_MS);
-  return false;
-}
 
 async function startServer() {
   const app = express();
   app.disable('x-powered-by');
-  app.set('trust proxy', true);
+  app.set('trust proxy', 1);
 
   app.use((req, res, next) => {
-    if (isBlockedSensitivePath(req.originalUrl)) {
+    if (
+      isBlockedSensitivePath(req.originalUrl, {
+        allowDevViteModules: process.env.NODE_ENV !== 'production',
+      })
+    ) {
       res.status(403).type('text/plain').send('Forbidden');
       return;
     }
@@ -102,23 +46,28 @@ async function startServer() {
       'camera=(), microphone=(), geolocation=(), payment=(), usb=()'
     );
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
 
     if (req.secure || req.get('x-forwarded-proto') === 'https') {
       res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
     }
 
+    const allowedFrameAncestors =
+      "frame-ancestors 'self' https://aistudio.google.com https://*.google.com https://*.googleusercontent.com";
+
     const csp =
       process.env.NODE_ENV === 'production'
-        ? "default-src 'self'; script-src 'self' https://www.youtube.com https://s.ytimg.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self' https://www.youtube.com https://*.googlevideo.com; object-src 'none'; base-uri 'self'; form-action 'self'"
-        : "base-uri 'self'; object-src 'none'; form-action 'self'";
+        ? `default-src 'self'; script-src 'self' https://www.youtube.com https://s.ytimg.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self' https://www.youtube.com https://*.googlevideo.com; object-src 'none'; base-uri 'self'; form-action 'self'; ${allowedFrameAncestors}`
+        : `base-uri 'self'; object-src 'none'; form-action 'self'; ${allowedFrameAncestors}`;
     res.setHeader('Content-Security-Policy', csp);
 
     next();
   });
 
   app.use('/api', (req, res, next) => {
-    const clientIp = req.ip || req.socket.remoteAddress || 'unknown';
-    const rate = checkRateLimit(globalApiBuckets, clientIp, GLOBAL_API_RATE_LIMIT_MAX);
+    applyApiSecurityHeaders(res);
+    const clientIp = resolveClientIpKey(req.headers, req.socket.remoteAddress);
+    const rate = checkGlobalApiRateLimit(clientIp);
     if (rate.limited) {
       res.setHeader('Retry-After', String(rate.retryAfterSec));
       res.status(429).json({
@@ -139,8 +88,16 @@ async function startServer() {
   });
 
   app.get('/api/contact/challenge', (req, res) => {
-    const clientIp = req.ip || req.socket.remoteAddress || 'unknown';
-    const rate = checkRateLimit(challengeBuckets, clientIp, CHALLENGE_RATE_LIMIT_MAX);
+    if (req.get('sec-fetch-site')?.trim().toLowerCase() === 'cross-site') {
+      res.status(403).json({
+        ok: false,
+        message: 'Permintaan lintas asal tidak diizinkan.',
+      });
+      return;
+    }
+
+    const clientIp = resolveClientIpKey(req.headers, req.socket.remoteAddress);
+    const rate = checkChallengeRateLimit(clientIp);
     if (rate.limited) {
       res.setHeader('Retry-After', String(rate.retryAfterSec));
       res.status(429).json({
@@ -150,17 +107,22 @@ async function startServer() {
       return;
     }
 
-    res.setHeader('Cache-Control', 'no-store');
     res.json(issueMathChallenge());
   });
 
   app.post('/api/contact', async (req, res) => {
-    if (!isOriginAllowed(req.get('origin'), req.get('host'), req.get('x-forwarded-host'))) {
+    if (
+      !isOriginAllowed(req.get('origin'), req.get('host'), req.get('x-forwarded-host'), {
+        refererHeader: req.get('referer'),
+        secFetchSiteHeader: req.get('sec-fetch-site'),
+        requireOriginOnPost: true,
+      })
+    ) {
       res.status(403).json({
         ok: false,
         status: 'error',
         emailDelivered: false,
-        message: 'Permintaan lintas asal tidak diizinkan.',
+        message: 'Permintaan lintas asal atau tanpa asal yang sah tidak diizinkan.',
       });
       return;
     }
@@ -175,19 +137,8 @@ async function startServer() {
       return;
     }
 
-    const safeBody = sanitizeJsonBodyObject(req.body);
-    if (!safeBody) {
-      res.status(400).json({
-        ok: false,
-        status: 'error',
-        emailDelivered: false,
-        message: 'Format data permintaan tidak valid.',
-      });
-      return;
-    }
-
-    const clientIp = req.ip || req.socket.remoteAddress || 'unknown';
-    const rate = checkRateLimit(contactBuckets, clientIp, CONTACT_RATE_LIMIT_MAX);
+    const clientIp = resolveClientIpKey(req.headers, req.socket.remoteAddress);
+    const rate = checkContactRateLimit(clientIp);
     if (rate.limited) {
       res.setHeader('Retry-After', String(rate.retryAfterSec));
       res.status(429).json({
@@ -195,6 +146,17 @@ async function startServer() {
         status: 'error',
         emailDelivered: false,
         message: 'Terlalu banyak percobaan pengiriman pesan. Coba lagi dalam beberapa menit.',
+      });
+      return;
+    }
+
+    const safeBody = sanitizeJsonBodyObject(req.body);
+    if (!safeBody) {
+      res.status(400).json({
+        ok: false,
+        status: 'error',
+        emailDelivered: false,
+        message: 'Format data permintaan tidak valid.',
       });
       return;
     }
@@ -226,7 +188,19 @@ async function startServer() {
       return;
     }
 
-    if (isDuplicateSubmission(clientIp, validation.data.email, validation.data.message)) {
+    const emailQuota = checkSenderEmailQuota(validation.data.email);
+    if (emailQuota.limited) {
+      res.setHeader('Retry-After', String(emailQuota.retryAfterSec));
+      res.status(429).json({
+        ok: false,
+        status: 'error',
+        emailDelivered: false,
+        message: 'Batas pengiriman dari alamat email tersebut tercapai. Coba lagi nanti.',
+      });
+      return;
+    }
+
+    if (isDuplicateContactSubmission(clientIp, validation.data.email, validation.data.message)) {
       res.status(429).json({
         ok: false,
         status: 'error',

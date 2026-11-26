@@ -28,11 +28,11 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
   return (
     <section
       id="perjalanan"
-      className="reveal-stage scroll-mt-16 border-b border-stone-800 bg-[#0B0C10] text-stone-100"
+      className="reveal-stage editorial-grand-stage scroll-mt-16 border-b border-stone-800 text-stone-100"
     >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
         {/* Framed Official EDSA Exhibition Header */}
-        <div className="overflow-hidden rounded-xl border border-stone-700/80 bg-white shadow-xl shadow-black/40">
+        <div className="monument-frame overflow-hidden rounded-xl border border-stone-700/80 bg-white">
           <div className="px-4 py-4 sm:px-8 sm:py-5 lg:px-12 lg:py-6">
             <img
               src={ORGANIZATION_REFERENCE.edsaBannerImage}
@@ -74,7 +74,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
                   src={ORGANIZATION_REFERENCE.hrdDivisionImage}
                   alt={ORGANIZATION_REFERENCE.hrdDivisionImageAlt}
                   caption={ORGANIZATION_REFERENCE.hrdDivisionCaption}
-                  className="rounded-xl shadow-lg shadow-black/40"
+                  className="monument-frame rounded-xl"
                   imgClassName="aspect-[16/10] sm:aspect-[4/3] object-[50%_75%]"
                   dark
                 />
@@ -88,7 +88,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
               {JOURNEY_MILESTONES.map((item, idx) => (
                 <div
                   key={item.index}
-                  className={`group py-6 first:pt-5 last:pb-5 md:rounded-xl md:border md:border-stone-800 md:bg-[#111319] md:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:py-7 lg:px-0 lg:first:pt-6 lg:last:pb-6 transition-colors ${
+                  className={`milestone-row-glide group py-6 first:pt-5 last:pb-5 md:rounded-xl md:border md:border-stone-800 md:bg-[#111319] md:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:py-7 lg:px-0 lg:first:pt-6 lg:last:pb-6 transition-colors ${
                     idx === 0 ? 'md:col-span-2 lg:col-span-1' : ''
                   }`}
                 >
@@ -117,7 +117,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
             </div>
 
             {/* Institutional Organization Reference Plate */}
-            <div className="mt-8 rounded-xl border border-stone-800 bg-[#12141C] p-5 sm:p-7">
+            <div className="folio-plaque-dark mt-8 rounded-xl border border-stone-800 bg-[#12141C] p-5 sm:p-7">
               <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-4">
                 <div>
                   <p className="font-mono text-xs font-semibold tracking-wider text-amber-400">
@@ -204,7 +204,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
                 rel="noopener noreferrer"
                 onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                 onClick={() => void playUiSound('open', soundEnabled)}
-                className="inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-1.5 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] transition-colors whitespace-nowrap shrink-0"
+                className="btn-press btn-monumental inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-1.5 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] whitespace-nowrap shrink-0"
               >
                 <FolderOpen className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                 <span>Buka Drive ELITION</span>
@@ -235,7 +235,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
                     void playUiSound('tap', soundEnabled);
                     setElitionTab(tab.id);
                   }}
-                  className={`min-h-10 sm:min-h-9 rounded-md px-3 sm:px-4 py-1.5 text-xs font-semibold transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 ${
+                  className={`btn-press min-h-10 sm:min-h-9 rounded-md px-3 sm:px-4 py-1.5 text-xs font-semibold whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 ${
                     active
                       ? 'bg-[#C81E1E] text-white'
                       : 'text-stone-300 hover:bg-stone-800 hover:text-white'
@@ -251,20 +251,24 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
               - Mobile: 1-col stack
               - Tablet (md): 2-col bento (first odd item spans 2 cols cleanly)
               - Desktop (lg): 6-col Asymmetric Catalog (2 'aspirasi' cards col-span-3 top + 3 'publikasi' cards col-span-2 bottom) */}
-          <div className="mt-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">
+          <div
+            key={elitionTab}
+            className="animate-panel-enter mt-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
+          >
             {filteredDeliverables.map((item, idx) => {
               const tabletOddSpan =
                 filteredDeliverables.length % 2 === 1 && idx === 0 ? 'md:col-span-2' : 'md:col-span-1';
               const desktopSpan = item.group === 'aspirasi' ? 'lg:col-span-3' : 'lg:col-span-2';
+              const staggerClass = `stagger-${Math.min(idx + 1, 5)}`;
 
               return (
                 <article
                   key={item.id}
-                  className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-800 bg-gradient-to-b from-[#141722] to-[#101219] p-5 sm:p-6 transition-[transform,border-color,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-amber-400/50 hover:bg-[#161923] ${tabletOddSpan} ${desktopSpan}`}
+                  className={`panel-card folio-plaque-dark editorial-plaque-glow stagger-card ${staggerClass} group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-800 bg-gradient-to-b from-[#141722] to-[#101219] p-5 sm:p-6 hover:border-amber-400/50 hover:bg-[#161923] ${tabletOddSpan} ${desktopSpan}`}
                 >
                   <span
                     aria-hidden="true"
-                    className={`pointer-events-none absolute inset-x-0 top-0 h-[2px] ${
+                    className={`panel-accent-sweep pointer-events-none absolute inset-x-0 top-0 h-[2px] ${
                       item.group === 'aspirasi'
                         ? 'bg-gradient-to-r from-emerald-400/75 via-emerald-300/30 to-transparent'
                         : 'bg-gradient-to-r from-amber-400/75 via-[#C81E1E]/60 to-transparent'

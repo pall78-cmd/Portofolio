@@ -451,15 +451,34 @@ export const ExcerptMusicPlayer = forwardRef<ExcerptMusicPlayerHandle, ExcerptMu
 
       setStatus('waiting');
 
-      delayTimerRef.current = window.setTimeout(() => {
-        delayTimerRef.current = null;
-        hasPlayedOnceRef.current = true;
-        if (!userPausedRef.current) {
-          beginExcerptPlaybackRef.current(false);
-        }
-      }, EMPTY_MAGNOLIA_EXCERPT.postIntroDelayMs);
+      let rafOuter = 0;
+      let rafInner = 0;
+      let cancelled = false;
+
+      // Wait until the main layout finishes its initial render/paint before counting 1.2s
+      rafOuter = window.requestAnimationFrame(() => {
+        rafInner = window.requestAnimationFrame(() => {
+          if (cancelled || userPausedRef.current) {
+            return;
+          }
+          delayTimerRef.current = window.setTimeout(() => {
+            delayTimerRef.current = null;
+            hasPlayedOnceRef.current = true;
+            if (!userPausedRef.current) {
+              beginExcerptPlaybackRef.current(false);
+            }
+          }, EMPTY_MAGNOLIA_EXCERPT.postIntroDelayMs);
+        });
+      });
 
       return () => {
+        cancelled = true;
+        if (rafOuter !== 0) {
+          window.cancelAnimationFrame(rafOuter);
+        }
+        if (rafInner !== 0) {
+          window.cancelAnimationFrame(rafInner);
+        }
         if (delayTimerRef.current !== null) {
           window.clearTimeout(delayTimerRef.current);
           delayTimerRef.current = null;

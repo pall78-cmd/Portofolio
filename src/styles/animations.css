@@ -1,0 +1,610 @@
+/* Living CSS animations (strictly GPU compositor transform & opacity) */
+@keyframes editorialMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.editorial-marquee-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  contain: layout paint;
+}
+
+.editorial-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: editorialMarquee 36s linear infinite;
+}
+
+.editorial-marquee-wrap:hover .editorial-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Elegant, legible chromatic micro-glitch on H1 hover */
+@keyframes subtleTitleGlitch {
+  0% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+  20% {
+    transform: translate3d(-1.5px, 0, 0);
+    text-shadow:
+      -2px 0 0 rgba(200, 30, 30, 0.58),
+      2px 0 0 rgba(245, 158, 11, 0.48),
+      0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+  42% {
+    transform: translate3d(1.5px, -0.5px, 0);
+    text-shadow:
+      1.5px 0 0 rgba(200, 30, 30, 0.5),
+      -1.5px 0 0 rgba(245, 158, 11, 0.45),
+      0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+  65% {
+    transform: translate3d(-0.75px, 0.5px, 0);
+    text-shadow:
+      -1px 0 0 rgba(200, 30, 30, 0.35),
+      1px 0 0 rgba(245, 158, 11, 0.32),
+      0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+  84% {
+    transform: translate3d(0.5px, 0, 0);
+    text-shadow:
+      0.5px 0 0 rgba(200, 30, 30, 0.2),
+      -0.5px 0 0 rgba(245, 158, 11, 0.18),
+      0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Scroll-triggered reveal */
+.reveal-stage {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-stage.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Smooth lightweight tab / panel entrance across mobile, tablet & desktop */
+@keyframes panelEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes drawerEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-panel-enter {
+  backface-visibility: hidden;
+  animation: panelEnter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-drawer-enter {
+  backface-visibility: hidden;
+  animation: drawerEnter 210ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-hero-enter {
+  backface-visibility: hidden;
+  animation: heroRise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--stagger-idx, 0) * 65ms);
+}
+
+.stagger-card {
+  backface-visibility: hidden;
+  animation: panelEnter 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(min(var(--stagger-idx, 0), 5) * 45ms);
+}
+
+/* Lightweight GPU-only portrait unveil, gold crest beacon & hairline rule draw */
+@keyframes portraitUnveil {
+  from {
+    opacity: 0;
+    transform: scale3d(1.028, 1.028, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes crestBeacon {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale3d(1.22, 1.22, 1);
+  }
+}
+
+@keyframes crestRuleDraw {
+  from {
+    opacity: 0.35;
+    transform: scale3d(0.22, 1, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.animate-portrait-unveil {
+  backface-visibility: hidden;
+  animation: portraitUnveil 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.editorial-pulse-dot {
+  will-change: transform, opacity;
+  animation: crestBeacon 3.4s ease-in-out infinite;
+}
+
+.editorial-crest-rule-animated::after {
+  transform-origin: left center;
+  animation: crestRuleDraw 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.arrow-glide-ne,
+.arrow-glide-e {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.milestone-row-glide {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Tactile card & button micro-motion calibrated per input device */
+.panel-card {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panel-accent-sweep {
+  transform-origin: left center;
+  transform: scale3d(0.42, 1, 1);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease;
+}
+
+.group:hover .panel-accent-sweep,
+.group:focus-within .panel-accent-sweep {
+  transform: scale3d(1, 1, 1);
+}
+
+.btn-press {
+  transition:
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.btn-press:active {
+  transform: scale3d(0.975, 0.975, 1);
+}
+
+/* Monumental primary CTA bevel sheen & satin hover sweep */
+.btn-monumental {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 10px 24px -10px rgba(200, 30, 30, 0.55);
+}
+
+.btn-monumental::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 48%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: translate3d(-160%, 0, 0) skewX(-20deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.editorial-img-zoom {
+  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-title-glitch {
+    cursor: default;
+  }
+
+  .hero-title-glitch:hover {
+    animation: subtleTitleGlitch 440ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+  }
+
+  .panel-card:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+
+  .btn-press:hover {
+    transform: translate3d(0, -1px, 0);
+  }
+
+  .btn-press:active {
+    transform: translate3d(0, 0, 0) scale3d(0.98, 0.98, 1);
+  }
+
+  .btn-monumental:hover::after {
+    opacity: 1;
+    transform: translate3d(290%, 0, 0) skewX(-20deg);
+    transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+  }
+
+  .group:hover .editorial-img-zoom {
+    transform: scale3d(1.028, 1.028, 1);
+  }
+
+  .group:hover .arrow-glide-ne {
+    transform: translate3d(2px, -2px, 0);
+  }
+
+  .group:hover .arrow-glide-e {
+    transform: translate3d(3px, 0, 0);
+  }
+
+  .milestone-row-glide:hover {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@media (hover: none) {
+  .panel-card:active {
+    transform: scale3d(0.992, 0.992, 1);
+  }
+}
+
+/* Modal sheet reveal */
+@keyframes modalBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSheetIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale3d(0.985, 0.985, 1);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+}
+
+.animate-modal-backdrop {
+  animation: modalBackdropIn 200ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-modal-sheet {
+  backface-visibility: hidden;
+  animation: modalSheetIn 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Subtle diagonal sheen sweep on editorial dark spread */
+@keyframes sheenSweep {
+  0% {
+    transform: translate3d(-120%, 0, 0) skewX(-18deg);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.16;
+  }
+  100% {
+    transform: translate3d(220%, 0, 0) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.editorial-sheen-layer {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.group:hover .editorial-sheen-layer {
+  animation: sheenSweep 950ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Monumental cinema portal-door opening & unified volumetric bloom */
+@keyframes portalDoorLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  38%, 100% {
+    transform: translate3d(-103%, 0, 0);
+  }
+}
+
+@keyframes portalDoorRight {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  38%, 100% {
+    transform: translate3d(103%, 0, 0);
+  }
+}
+
+@keyframes portalSeamFlash {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.35, 0.2, 1);
+  }
+  9% {
+    opacity: 0.92;
+    transform: scale3d(1, 1, 1);
+  }
+  26% {
+    opacity: 0.28;
+    transform: scale3d(8, 1.08, 1);
+  }
+  38%, 100% {
+    opacity: 0;
+    transform: scale3d(14, 1.12, 1);
+  }
+}
+
+@keyframes cinemaVolumetricHalo {
+  0%, 4% {
+    opacity: 0;
+    transform: scale3d(0.45, 0.45, 1);
+  }
+  24% {
+    opacity: 0.84;
+    transform: scale3d(0.92, 0.92, 1);
+  }
+  62% {
+    opacity: 0.92;
+    transform: scale3d(1.16, 1.16, 1);
+  }
+  88% {
+    opacity: 0.56;
+    transform: scale3d(1.78, 1.78, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(2.25, 2.25, 1);
+  }
+}
+
+@keyframes cinemaUnifiedMonogram {
+  0%, 7% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale3d(0.86, 0.86, 1);
+  }
+  24% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1.06, 1.06, 1);
+  }
+  84% {
+    opacity: 0.82;
+    transform: translate3d(0, -2px, 0) scale3d(1.82, 1.82, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -4px, 0) scale3d(2.85, 2.85, 1);
+  }
+}
+
+@keyframes cinemaSheenSweep {
+  0%, 22% {
+    opacity: 0;
+    transform: translate3d(-150%, 0, 0) skewX(-20deg);
+  }
+  38% {
+    opacity: 0.6;
+  }
+  58%, 100% {
+    opacity: 0;
+    transform: translate3d(185%, 0, 0) skewX(-20deg);
+  }
+}
+
+@keyframes cinemaWordmarkReveal {
+  0%, 16% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  30% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  62%, 100% {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+}
+
+.animate-portal-door-left {
+  will-change: transform;
+  backface-visibility: hidden;
+  contain: layout paint;
+  animation: portalDoorLeft 4.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-portal-door-right {
+  will-change: transform;
+  backface-visibility: hidden;
+  contain: layout paint;
+  animation: portalDoorRight 4.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-portal-seam {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  animation: portalSeamFlash 4.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-cinema-halo {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  animation: cinemaVolumetricHalo 4.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-cinema-monogram {
+  opacity: 0;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center center;
+  animation: cinemaUnifiedMonogram 4.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-cinema-sheen {
+  will-change: transform, opacity;
+  animation: cinemaSheenSweep 4.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-cinema-wordmark {
+  opacity: 0;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  animation: cinemaWordmarkReveal 4.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.stagger-1 {
+  animation-delay: 45ms;
+}
+
+.stagger-2 {
+  animation-delay: 90ms;
+}
+
+.stagger-3 {
+  animation-delay: 135ms;
+}
+
+.stagger-4 {
+  animation-delay: 180ms;
+}
+
+.stagger-5 {
+  animation-delay: 225ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .editorial-marquee-track {
+    animation: none;
+  }
+
+  .hero-title-glitch:hover {
+    animation: none !important;
+  }
+
+  .reveal-stage {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .ink-link::after,
+  .panel-card,
+  .panel-accent-sweep,
+  .btn-press,
+  .btn-monumental::after,
+  .editorial-img-zoom {
+    transition: none !important;
+  }
+
+  .animate-panel-enter,
+  .animate-drawer-enter,
+  .animate-hero-enter,
+  .animate-portrait-unveil,
+  .stagger-card,
+  .animate-modal-backdrop,
+  .animate-modal-sheet,
+  .editorial-pulse-dot,
+  .editorial-crest-rule-animated::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .arrow-glide-ne,
+  .arrow-glide-e,
+  .milestone-row-glide {
+    transition: none !important;
+  }
+
+  .animate-portal-door-left,
+  .animate-portal-door-right,
+  .animate-portal-seam,
+  .animate-cinema-halo,
+  .animate-cinema-monogram,
+  .animate-cinema-sheen,
+  .animate-cinema-wordmark {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

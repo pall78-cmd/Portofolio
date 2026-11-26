@@ -76,7 +76,7 @@ export function validateServerContactPayload(raw: unknown):
   const name = sanitizeHeaderValue(rawName);
   const email = sanitizeHeaderValue(rawEmail).toLowerCase();
   const topic = sanitizeHeaderValue(rawTopic);
-  const message = rawMessage.replace(/\u0000/g, '').trim();
+  const message = rawMessage.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '').trim();
   const website = rawWebsite.trim();
 
   const fieldErrors: Record<string, string> = {};
@@ -87,13 +87,14 @@ export function validateServerContactPayload(raw: unknown):
     fieldErrors.name = `Nama maksimal ${CONTACT_LIMITS.MAX_NAME} karakter.`;
   }
 
-  const emailPattern = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
+  const strictEmailPattern =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
   if (!email) {
     fieldErrors.email = 'Alamat email wajib diisi.';
   } else if (
     email.length > CONTACT_LIMITS.MAX_EMAIL ||
     email.includes('..') ||
-    !emailPattern.test(email)
+    !strictEmailPattern.test(email)
   ) {
     fieldErrors.email = 'Format alamat email tidak valid.';
   }

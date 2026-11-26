@@ -20,9 +20,9 @@ test('extractYouTubeVideoId parses YouTube Music watch URL and direct IDs accura
   assert.equal(extractYouTubeVideoId('invalid'), null);
 });
 
-test('EMPTY_MAGNOLIA_EXCERPT matches exact 2s delay and 6-line lyric window', () => {
+test('EMPTY_MAGNOLIA_EXCERPT matches exact 1.2s delay and 6-line lyric window', () => {
   assert.equal(EMPTY_MAGNOLIA_EXCERPT.videoId, 'pCmID52lk6Y');
-  assert.equal(EMPTY_MAGNOLIA_EXCERPT.postIntroDelayMs, 2000);
+  assert.equal(EMPTY_MAGNOLIA_EXCERPT.postIntroDelayMs, 1200);
   assert.equal(EMPTY_MAGNOLIA_EXCERPT.lyricLines.length, 6);
   // Begins right before [01:55.83] and ends well before [02:35.06] ("Now I got nothing on my mind")
   assert.ok(EMPTY_MAGNOLIA_EXCERPT.startSec >= 115 && EMPTY_MAGNOLIA_EXCERPT.startSec < 116);

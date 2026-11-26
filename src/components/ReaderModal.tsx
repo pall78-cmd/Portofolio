@@ -93,7 +93,7 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
           </button>
         </div>
 
-        <div className="p-5 sm:p-8 lg:p-10">
+        <div className="animate-panel-enter p-5 sm:p-8 lg:p-10">
           <div className="space-y-4">
             <p className="text-sm font-medium text-stone-600">
               Oleh {PROFILE_IDENTITY.fullName} · {work.platform}
@@ -112,7 +112,7 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
             <button
               type="button"
               onClick={handleCopyCitation}
-              className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:bg-stone-100 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+              className="btn-press inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2 text-xs font-semibold text-stone-800 hover:bg-stone-100 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
             >
               {copiedCitation ? (
                 <>
@@ -132,7 +132,7 @@ export function ReaderModal({ work, onClose, soundEnabled = true }: ReaderModalP
               target="_blank"
               rel="me noopener noreferrer"
               onClick={() => void playUiSound('open', soundEnabled)}
-              className="inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
+              className="btn-press btn-monumental inline-flex min-h-11 sm:min-h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#C81E1E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#991B1B] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
             >
               <span>
                 {work.category === 'Saluran & E-book'

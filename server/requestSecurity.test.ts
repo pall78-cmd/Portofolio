@@ -7,14 +7,22 @@ import {
   sanitizeJsonBodyObject,
 } from './requestSecurity';
 
-test('isBlockedSensitivePath blocks dotfiles, traversal, null bytes, and server source paths while allowing app paths', () => {
+test('isBlockedSensitivePath blocks dotfiles, traversal, null bytes, config/lock files, and server source paths while allowing app paths', () => {
   assert.equal(isBlockedSensitivePath('/.env'), true);
   assert.equal(isBlockedSensitivePath('/.env.example'), true);
   assert.equal(isBlockedSensitivePath('/%252eenv'), true);
   assert.equal(isBlockedSensitivePath('/.git/config'), true);
+  assert.equal(isBlockedSensitivePath('/.github/workflows/deploy.yml'), true);
   assert.equal(isBlockedSensitivePath('/server.ts'), true);
   assert.equal(isBlockedSensitivePath('/server/contactService.ts'), true);
   assert.equal(isBlockedSensitivePath('/package.json'), true);
+  assert.equal(isBlockedSensitivePath('/bun.lock'), true);
+  assert.equal(isBlockedSensitivePath('/vercel.json'), true);
+  assert.equal(isBlockedSensitivePath('/walkthrough.md'), true);
+  assert.equal(isBlockedSensitivePath('/node_modules/dotenv/package.json'), true);
+  assert.equal(isBlockedSensitivePath('/node_modules/dotenv/package.json', { allowDevViteModules: true }), true);
+  assert.equal(isBlockedSensitivePath('/node_modules/.vite/deps/react.js'), true);
+  assert.equal(isBlockedSensitivePath('/node_modules/.vite/deps/react.js', { allowDevViteModules: true }), false);
   assert.equal(isBlockedSensitivePath('/backup.sql'), true);
   assert.equal(isBlockedSensitivePath('/debug.log'), true);
   assert.equal(isBlockedSensitivePath('/../../etc/passwd'), true);
@@ -23,7 +31,9 @@ test('isBlockedSensitivePath blocks dotfiles, traversal, null bytes, and server 
   assert.equal(isBlockedSensitivePath('/index.html%00.png'), true);
 
   assert.equal(isBlockedSensitivePath('/'), false);
+  assert.equal(isBlockedSensitivePath('/api/health'), false);
   assert.equal(isBlockedSensitivePath('/api/contact'), false);
+  assert.equal(isBlockedSensitivePath('/api/contact/challenge'), false);
   assert.equal(isBlockedSensitivePath('/src/main.tsx'), false);
 });
 
@@ -39,17 +49,41 @@ test('redactSensitiveLogText masks email addresses and explicit secret values', 
   assert.match(emailOnly, /\[EMAIL_REDACTED\]/);
 });
 
-test('sanitizeJsonBodyObject strips prototype pollution keys', () => {
-  const malicious = JSON.parse('{"name":"Naufal","__proto__":{"polluted":true},"constructor":"bad"}');
+test('sanitizeJsonBodyObject strips top-level and nested prototype pollution keys', () => {
+  const malicious = JSON.parse(
+    '{"name":"Naufal","__proto__":{"polluted":true},"constructor":"bad","nested":{"__proto__":{"evil":1},"ok":"yes"}}'
+  );
   const cleaned = sanitizeJsonBodyObject(malicious);
   assert.ok(cleaned);
   assert.equal(cleaned.name, 'Naufal');
   assert.equal(Object.prototype.hasOwnProperty.call(cleaned, '__proto__'), false);
   assert.equal(Object.prototype.hasOwnProperty.call(cleaned, 'constructor'), false);
+  const nested = cleaned.nested as Record<string, unknown>;
+  assert.equal(nested.ok, 'yes');
+  assert.equal(Object.prototype.hasOwnProperty.call(nested, '__proto__'), false);
 });
 
-test('isOriginAllowed matches host and forwarded host strictly', () => {
+test('isOriginAllowed matches host, referer fallback, sec-fetch-site, and strict POST origin enforcement', () => {
   assert.equal(isOriginAllowed(undefined, 'localhost:3000', undefined), true);
+  assert.equal(
+    isOriginAllowed(undefined, 'localhost:3000', undefined, { requireOriginOnPost: true }),
+    false
+  );
+  assert.equal(
+    isOriginAllowed(undefined, 'naufalathallah-rosiyandi.vercel.app', undefined, {
+      refererHeader: 'https://naufalathallah-rosiyandi.vercel.app/',
+      secFetchSiteHeader: 'same-origin',
+      requireOriginOnPost: true,
+    }),
+    true
+  );
+  assert.equal(
+    isOriginAllowed('https://naufalathallah-rosiyandi.vercel.app', 'naufalathallah-rosiyandi.vercel.app', undefined, {
+      secFetchSiteHeader: 'cross-site',
+      requireOriginOnPost: true,
+    }),
+    false
+  );
   assert.equal(isOriginAllowed('http://localhost:3000', 'localhost:3000', undefined), true);
   assert.equal(
     isOriginAllowed('https://my-app.run.app', '127.0.0.1:3000', 'my-app.run.app'),
