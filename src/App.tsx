@@ -27,10 +27,10 @@ import {
 import { findWorkByQueryId } from './utils/portfolio';
 
 export function ScrollReveal(
-  sectionSelector = 'main section',
+  sectionSelector = '[data-reveal]',
   observerOptions: IntersectionObserverInit = {
-    threshold: 0.04,
-    rootMargin: '0px 0px -32px 0px',
+    threshold: 0.01,
+    rootMargin: '80px 0px -12px 0px',
   }
 ): () => void {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -92,6 +92,7 @@ export default function App() {
   });
 
   const soundEnabled = true;
+  const mainVisible = !showIntro;
   const excerptPlayerRef = useRef<ExcerptMusicPlayerHandle | null>(null);
 
   const [activeSection, setActiveSection] = useState<SectionId>(() => {
@@ -111,6 +112,10 @@ export default function App() {
 
     const measureSection = () => {
       rafId = 0;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+      document.documentElement.style.setProperty('--page-scroll-progress', progress.toFixed(4));
+
       const tops = OBSERVED_SECTIONS.flatMap((id) => {
         const el = document.getElementById(id);
         return el ? [{ id, top: el.getBoundingClientRect().top }] : [];
@@ -128,6 +133,7 @@ export default function App() {
       rafId = window.requestAnimationFrame(measureSection);
     };
 
+    scheduleSectionSync();
     window.addEventListener('scroll', scheduleSectionSync, { passive: true });
     window.addEventListener('resize', scheduleSectionSync, { passive: true });
     return () => {
@@ -139,7 +145,12 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => ScrollReveal(), []);
+  useEffect(() => {
+    if (!mainVisible) {
+      return;
+    }
+    return ScrollReveal();
+  }, [mainVisible]);
 
   useEffect(() => {
     applyDocumentSeoMetadata(resolvePageMetadata({ activeWork, activeSection }));
@@ -191,20 +202,20 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-stone-950">
+    <div className="min-h-screen bg-[#0B0C10] text-stone-100">
       {showIntro && (
         <NetflixIntroOverlay
           onPlayClick={() => excerptPlayerRef.current?.primePlayback()}
           onComplete={() => setShowIntro(false)}
         />
       )}
-      <ExcerptMusicPlayer ref={excerptPlayerRef} mainVisible={!showIntro} />
+      <ExcerptMusicPlayer ref={excerptPlayerRef} mainVisible={mainVisible} />
       <TopBar
         activeSection={activeSection}
         onNavigateSection={setActiveSection}
         soundEnabled={soundEnabled}
       />
-      <main>
+      <main data-main-ready={mainVisible ? 'true' : 'false'}>
         <HeroSection soundEnabled={soundEnabled} />
         <WorksSection
           onSelectWork={(work) => setActiveWork(work)}

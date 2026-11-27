@@ -116,10 +116,13 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
   return (
     <section
       id="karya"
-      className="reveal-stage editorial-archival-surface scroll-mt-16 border-b border-stone-300 text-stone-950"
+      className="editorial-archival-surface scroll-mt-16 border-b border-stone-300 text-stone-950"
     >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
-        <div className="editorial-crest-rule-light editorial-crest-rule-animated flex flex-col gap-4 pb-6 md:flex-row md:items-end md:justify-between md:gap-8">
+        <div
+          data-reveal
+          className="editorial-crest-rule-light editorial-crest-rule-animated flex flex-col gap-4 pb-6 md:flex-row md:items-end md:justify-between md:gap-8"
+        >
           <div className="max-w-2xl">
             <p className="font-mono text-xs font-semibold tracking-wider text-[#B91C1C]">
               Tulisan &amp; Buku
@@ -204,28 +207,32 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
           </div>
         </div>
 
-        {visibleWorks.length === 0 ? (
-          <div key={`empty-${selectedCategory}`} className="animate-panel-enter mt-10 rounded-xl border border-stone-300 bg-white px-6 py-14 text-center">
-            <p className="font-serif text-xl font-medium text-stone-900">
-              Belum ada tulisan yang cocok dengan pencarianmu.
-            </p>
-            <p className="mt-2 text-sm text-stone-600">
-              Coba kata kunci lain atau buka lagi semua kategori.
-            </p>
-            <button
-              type="button"
-              onMouseEnter={handleHoverSound}
-              onClick={handleResetFilters}
-              className="btn-press mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[#0B0C10] px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#C81E1E] whitespace-nowrap shrink-0"
+        <div data-reveal>
+          {visibleWorks.length === 0 ? (
+            <div key={`empty-${selectedCategory}`} className="animate-panel-enter mt-10 rounded-xl border border-stone-300 bg-white px-6 py-14 text-center">
+              <p className="font-serif text-xl font-medium text-stone-900">
+                Belum ada tulisan yang cocok dengan pencarianmu.
+              </p>
+              <p className="mt-2 text-sm text-stone-600">
+                Coba kata kunci lain atau buka lagi semua kategori.
+              </p>
+              <button
+                type="button"
+                onMouseEnter={handleHoverSound}
+                onClick={handleResetFilters}
+                className="btn-press mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[#0B0C10] px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#C81E1E] whitespace-nowrap shrink-0"
+              >
+                Tampilkan Semua
+              </button>
+            </div>
+          ) : (
+            <div
+              key={selectedCategory}
+              className="animate-panel-enter mt-8 md:mt-10 space-y-8 lg:space-y-10"
             >
-              Tampilkan Semua
-            </button>
-          </div>
-        ) : (
-          <div key={selectedCategory} className="animate-panel-enter mt-8 md:mt-10 space-y-8 lg:space-y-10">
             {/* Tier 1: Flagship Literary Lead Spread */}
             {featuredLead && (
-              <article className="panel-card monument-frame folio-plaque-dark group relative overflow-hidden rounded-xl border border-stone-800 bg-[#0B0C10] text-stone-100">
+              <article className="panel-card stagger-card stagger-1 monument-frame folio-plaque-dark group relative overflow-hidden rounded-xl border border-stone-800 bg-[#0B0C10] text-stone-100">
                 <div
                   aria-hidden="true"
                   className="editorial-sheen-layer absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white to-transparent"
@@ -337,13 +344,17 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
 
                   const splitInterior = isLeadIllustrated || (folioRows.length === 1 && Boolean(work.imageUrl));
                   const isWideFolioCard = isLeadIllustrated || isTwoItemLayout || folioRows.length === 1;
-                  const staggerClass = `stagger-${Math.min(idx + 1, 5)}`;
+                  const staggerClass = `stagger-${Math.min(idx + 2, 6)}`;
 
                   return (
                     <article
                       key={work.id}
                       className={`panel-card stagger-card ${staggerClass} group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-stone-300/90 bg-gradient-to-b from-white to-[#FCF9F4] p-5 sm:p-6 lg:p-7 shadow-xs shadow-stone-900/[0.04] hover:border-stone-500 hover:shadow-md ${spanClasses}`}
                     >
+                      <div
+                        aria-hidden="true"
+                        className="editorial-sheen-layer absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-amber-200/45 to-transparent"
+                      />
                       <span
                         aria-hidden="true"
                         className="panel-accent-sweep pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#C81E1E] via-stone-400/60 to-transparent opacity-65 group-hover:opacity-100"
@@ -412,7 +423,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                           className="btn-press inline-flex min-h-11 sm:min-h-10 items-center justify-center gap-1.5 rounded-md border border-stone-300 bg-[#FAF7F2] px-3.5 py-2 text-xs font-semibold text-stone-800 hover:border-[#C81E1E] hover:text-[#C81E1E] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E]"
                         >
                           <span className="truncate max-w-[190px]">{work.platform}</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                          <ArrowUpRight className="arrow-glide-ne h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                         </a>
                         <button
                           type="button"
@@ -424,7 +435,7 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                         >
                           <span>Baca Singkat</span>
                           <ArrowRight
-                            className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                            className="arrow-glide-e h-3.5 w-3.5 shrink-0"
                             aria-hidden="true"
                           />
                         </button>
@@ -434,8 +445,9 @@ export function WorksSection({ onSelectWork, soundEnabled = true }: WorksSection
                 })}
               </div>
             )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

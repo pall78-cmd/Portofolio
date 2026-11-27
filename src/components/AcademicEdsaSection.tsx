@@ -28,11 +28,14 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
   return (
     <section
       id="perjalanan"
-      className="reveal-stage editorial-grand-stage scroll-mt-16 border-b border-stone-800 text-stone-100"
+      className="editorial-grand-stage scroll-mt-16 border-b border-stone-800 text-stone-100"
     >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
         {/* Framed Official EDSA Exhibition Header */}
-        <div className="monument-frame overflow-hidden rounded-xl border border-stone-700/80 bg-white">
+        <div
+          data-reveal
+          className="monument-frame overflow-hidden rounded-xl border border-stone-700/80 bg-white"
+        >
           <div className="px-4 py-4 sm:px-8 sm:py-5 lg:px-12 lg:py-6">
             <img
               src={ORGANIZATION_REFERENCE.edsaBannerImage}
@@ -54,7 +57,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
             - Tablet (md): 2-col balanced header+photo row -> 3-col horizontal milestone grid -> 2-col HIMAPRO-SI card
             - Desktop (lg): 12-col Sticky Exhibition Left Rail + Vertical Milestone Ledger & HIMAPRO-SI Right */}
         <div className="mt-10 md:mt-14 lg:mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12 lg:items-start">
-          <div className="lg:sticky lg:top-24 lg:col-span-5">
+          <div data-reveal className="lg:sticky lg:top-24 lg:col-span-5">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-center md:gap-8 lg:block">
               <div className="md:col-span-6 lg:col-span-12">
                 <p className="font-mono text-xs font-semibold tracking-wider text-amber-400">
@@ -82,7 +85,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
             </div>
           </div>
 
-          <div className="lg:col-span-7">
+          <div data-reveal className="lg:col-span-7">
             {/* Milestones: 1-col divide on Mobile, 2-col featured Tablet Matrix (lead spans 2 cols), 1-col Ledger on Desktop */}
             <div className="grid grid-cols-1 divide-y divide-stone-800 border-y border-stone-800 md:grid-cols-2 md:gap-5 md:divide-y-0 md:border-y-0 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:border-y">
               {JOURNEY_MILESTONES.map((item, idx) => (
@@ -173,7 +176,10 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
 
         {/* ELITION Work Program Catalog */}
         <div className="mt-14 md:mt-16 lg:mt-20 border-t border-stone-800 pt-10 md:pt-14">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div
+            data-reveal
+            className="editorial-crest-rule editorial-crest-rule-animated flex flex-col gap-5 pb-6 lg:flex-row lg:items-end lg:justify-between"
+          >
             <div className="max-w-3xl">
               <p className="font-mono text-xs font-semibold tracking-wider text-amber-400">
                 {HRD_ELITION_PROGRESS.eyebrow}
@@ -251,10 +257,11 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
               - Mobile: 1-col stack
               - Tablet (md): 2-col bento (first odd item spans 2 cols cleanly)
               - Desktop (lg): 6-col Asymmetric Catalog (2 'aspirasi' cards col-span-3 top + 3 'publikasi' cards col-span-2 bottom) */}
-          <div
-            key={elitionTab}
-            className="animate-panel-enter mt-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
-          >
+          <div data-reveal>
+            <div
+              key={elitionTab}
+              className="animate-panel-enter mt-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
+            >
             {filteredDeliverables.map((item, idx) => {
               const tabletOddSpan =
                 filteredDeliverables.length % 2 === 1 && idx === 0 ? 'md:col-span-2' : 'md:col-span-1';
@@ -332,6 +339,7 @@ export function AcademicEdsaSection({ soundEnabled = true }: AcademicEdsaSection
                 </article>
               );
             })}
+            </div>
           </div>
         </div>
       </div>

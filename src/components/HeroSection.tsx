@@ -23,9 +23,18 @@ export function HeroSection({ soundEnabled }: HeroSectionProps) {
   return (
     <section
       id="profil"
-      className="reveal-stage editorial-grand-stage scroll-mt-16 border-b border-stone-800 text-stone-100"
+      className="editorial-grand-stage relative overflow-hidden scroll-mt-16 border-b border-stone-800 text-stone-100"
     >
-      <div className="mx-auto max-w-7xl px-4 pt-6 pb-10 sm:px-6 md:pt-10 md:pb-14 lg:px-10 lg:pt-12 lg:pb-16">
+      <div
+        aria-hidden="true"
+        className="editorial-ambient-glow-crimson absolute -top-28 -right-24 h-[420px] w-[420px] rounded-full"
+      />
+      <div
+        aria-hidden="true"
+        className="editorial-ambient-glow-amber absolute top-12 -left-24 h-[380px] w-[380px] rounded-full"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 pt-6 pb-10 sm:px-6 md:pt-10 md:pb-14 lg:px-10 lg:pt-12 lg:pb-16">
         {/* Editorial Masthead Rule */}
         <div className="editorial-crest-rule editorial-crest-rule-animated flex flex-col gap-1 pb-4 text-xs font-medium text-stone-400 tabular-nums md:flex-row md:items-center md:justify-between md:gap-6">
           <span className="inline-flex items-center gap-2 font-mono font-semibold tracking-wider text-amber-400">

@@ -25,58 +25,88 @@ function UnifiedMonogramSvg({ className }: { className: string }) {
     <svg viewBox="0 0 128 156" className={className} aria-hidden="true">
       <defs>
         <linearGradient id="nStemLeft" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#DC1422" />
-          <stop offset="55%" stopColor="#9E0B15" />
+          <stop offset="0%" stopColor="#E11D2E" />
+          <stop offset="55%" stopColor="#A60C16" />
           <stop offset="100%" stopColor="#6E060C" />
         </linearGradient>
         <linearGradient id="nStemRight" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#DC1422" />
-          <stop offset="55%" stopColor="#A60C16" />
+          <stop offset="0%" stopColor="#E11D2E" />
+          <stop offset="55%" stopColor="#AD0D18" />
           <stop offset="100%" stopColor="#72070E" />
         </linearGradient>
         <linearGradient id="nDiagRibbon" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FF3342" />
+          <stop offset="0%" stopColor="#FF3B4B" />
           <stop offset="52%" stopColor="#E50914" />
           <stop offset="100%" stopColor="#B80C17" />
         </linearGradient>
         <linearGradient id="nDiagonalShadow" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#000000" stopOpacity="0.42" />
+          <stop offset="0%" stopColor="#000000" stopOpacity="0.46" />
           <stop offset="100%" stopColor="#000000" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="nRimHighlight" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.28" />
+          <stop offset="0%" stopColor="#FDE68A" stopOpacity="0.42" />
+          <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.22" />
           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="nGlassSheen" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
-          <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.34" />
+          <stop offset="35%" stopColor="#F59E0B" stopOpacity="0.16" />
+          <stop offset="52%" stopColor="#FFFFFF" stopOpacity="0.38" />
+          <stop offset="68%" stopColor="#F59E0B" stopOpacity="0.14" />
           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
         </linearGradient>
+        <clipPath id="nStemLeftClip">
+          <path d="M22 14 H48 V144 H22 Z" />
+        </clipPath>
+        <clipPath id="nDiagClip">
+          <path d="M22 14 H48 L106 144 H80 Z" />
+        </clipPath>
+        <clipPath id="nStemRightClip">
+          <path d="M80 14 H106 V144 H80 Z" />
+        </clipPath>
         <clipPath id="nUnifiedClip">
           <path d="M22 14 H48 V144 H22 Z M80 14 H106 V144 H80 Z M22 14 H48 L106 144 H80 Z" />
         </clipPath>
       </defs>
 
-      {/* Subtle architectural drop-shadow beneath the left and right stems from the diagonal fold */}
-      <path d="M22 14 H48 V144 L22 144 Z" fill="url(#nStemLeft)" />
-      <path d="M80 14 H106 V144 H80 Z" fill="url(#nStemRight)" />
+      {/* Stroke 1: Left pillar sweeps upward inside its exact architectural clip */}
+      <g clipPath="url(#nStemLeftClip)">
+        <path
+          d="M22 14 H48 V144 H22 Z"
+          fill="url(#nStemLeft)"
+          className="animate-n-stem-left"
+        />
+      </g>
 
-      {/* Soft fold shadow cast onto stems where diagonal crosses */}
-      <path d="M48 44 L61 72 L48 80 Z" fill="url(#nDiagonalShadow)" />
-      <path d="M80 78 L68 106 L80 116 Z" fill="url(#nDiagonalShadow)" />
+      {/* Stroke 3: Right pillar rises seamlessly as diagonal lands */}
+      <g clipPath="url(#nStemRightClip)">
+        <path
+          d="M80 14 H106 V144 H80 Z"
+          fill="url(#nStemRight)"
+          className="animate-n-stem-right"
+        />
+      </g>
 
-      {/* Seamless overlapping diagonal ribbon anchored squarely inside outer corner geometry */}
-      <path d="M22 14 H48 L106 144 H80 Z" fill="url(#nDiagRibbon)" />
+      {/* Soft fold shadow cast onto stems where diagonal ribbon crosses */}
+      <g className="animate-n-depth-shadow">
+        <path d="M48 44 L61 72 L48 80 Z" fill="url(#nDiagonalShadow)" />
+        <path d="M80 78 L68 106 L80 116 Z" fill="url(#nDiagonalShadow)" />
+      </g>
 
-      {/* Subtle beveled glass rim highlight on the leading top-left edge */}
-      <path d="M22 14 H48 L106 144 H102 L46 16 H22 Z" fill="url(#nRimHighlight)" />
+      {/* Stroke 2: Diagonal crimson-gold ribbon glides cleanly along its spine */}
+      <g clipPath="url(#nDiagClip)">
+        <g className="animate-n-diag">
+          <path d="M22 14 H48 L106 144 H80 Z" fill="url(#nDiagRibbon)" />
+          <path d="M22 14 H48 L106 144 H102 L46 16 H22 Z" fill="url(#nRimHighlight)" />
+        </g>
+      </g>
 
-      {/* Glossy diagonal sheen strictly clipped to the N silhouette */}
+      {/* Warm gold-and-crystal diagonal sheen clipped strictly to the N silhouette */}
       <g clipPath="url(#nUnifiedClip)">
         <rect
           x="0"
           y="-20"
-          width="54"
+          width="58"
           height="196"
           fill="url(#nGlassSheen)"
           className="animate-cinema-sheen"

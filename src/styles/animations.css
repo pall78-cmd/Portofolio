@@ -27,53 +27,53 @@
   animation-play-state: paused;
 }
 
-/* Elegant, legible chromatic micro-glitch on H1 hover */
+/* Elegant, crisp chromatic glitch on H1 hover (returns cleanly to 100% legible text) */
 @keyframes subtleTitleGlitch {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) skewX(0deg);
     text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
   }
-  20% {
-    transform: translate3d(-1.5px, 0, 0);
+  18% {
+    transform: translate3d(-2.5px, 0.5px, 0) skewX(-2deg);
     text-shadow:
-      -2px 0 0 rgba(200, 30, 30, 0.58),
-      2px 0 0 rgba(245, 158, 11, 0.48),
+      -3px 0 0 rgba(200, 30, 30, 0.78),
+      3px 0 0 rgba(245, 158, 11, 0.65),
       0 2px 18px rgba(0, 0, 0, 0.45);
   }
-  42% {
-    transform: translate3d(1.5px, -0.5px, 0);
+  38% {
+    transform: translate3d(2.5px, -0.5px, 0) skewX(1.6deg);
     text-shadow:
-      1.5px 0 0 rgba(200, 30, 30, 0.5),
-      -1.5px 0 0 rgba(245, 158, 11, 0.45),
+      2.5px 0 0 rgba(200, 30, 30, 0.7),
+      -2.5px 0 0 rgba(245, 158, 11, 0.62),
       0 2px 18px rgba(0, 0, 0, 0.45);
   }
-  65% {
-    transform: translate3d(-0.75px, 0.5px, 0);
+  58% {
+    transform: translate3d(-1.5px, 0.5px, 0) skewX(-0.8deg);
     text-shadow:
-      -1px 0 0 rgba(200, 30, 30, 0.35),
-      1px 0 0 rgba(245, 158, 11, 0.32),
+      -1.5px 0 0 rgba(200, 30, 30, 0.48),
+      1.5px 0 0 rgba(245, 158, 11, 0.44),
       0 2px 18px rgba(0, 0, 0, 0.45);
   }
-  84% {
-    transform: translate3d(0.5px, 0, 0);
+  80% {
+    transform: translate3d(1px, 0, 0) skewX(0deg);
     text-shadow:
-      0.5px 0 0 rgba(200, 30, 30, 0.2),
-      -0.5px 0 0 rgba(245, 158, 11, 0.18),
+      1px 0 0 rgba(200, 30, 30, 0.28),
+      -1px 0 0 rgba(245, 158, 11, 0.24),
       0 2px 18px rgba(0, 0, 0, 0.45);
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) skewX(0deg);
     text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
   }
 }
 
-/* Scroll-triggered reveal */
+/* Scroll-triggered reveal on focused inner blocks (never hides full section canvases) */
 .reveal-stage {
   opacity: 0;
-  transform: translate3d(0, 14px, 0);
+  transform: translate3d(0, 22px, 0);
   transition:
-    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-stage.reveal-visible {
@@ -85,7 +85,7 @@
 @keyframes panelEnter {
   from {
     opacity: 0;
-    transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 18px, 0);
   }
   to {
     opacity: 1;
@@ -96,7 +96,7 @@
 @keyframes drawerEnter {
   from {
     opacity: 0;
-    transform: translate3d(0, -8px, 0);
+    transform: translate3d(0, -10px, 0);
   }
   to {
     opacity: 1;
@@ -107,7 +107,7 @@
 @keyframes heroRise {
   from {
     opacity: 0;
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 28px, 0);
   }
   to {
     opacity: 1;
@@ -115,56 +115,33 @@
   }
 }
 
-.animate-panel-enter {
-  backface-visibility: hidden;
-  animation: panelEnter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.animate-drawer-enter {
-  backface-visibility: hidden;
-  animation: drawerEnter 210ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.animate-hero-enter {
-  backface-visibility: hidden;
-  animation: heroRise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--stagger-idx, 0) * 65ms);
-}
-
-.stagger-card {
-  backface-visibility: hidden;
-  animation: panelEnter 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(min(var(--stagger-idx, 0), 5) * 45ms);
-}
-
-/* Lightweight GPU-only portrait unveil, gold crest beacon & hairline rule draw */
 @keyframes portraitUnveil {
   from {
     opacity: 0;
-    transform: scale3d(1.028, 1.028, 1);
+    transform: translate3d(0, 20px, 0) scale3d(1.055, 1.055, 1);
   }
   to {
     opacity: 1;
-    transform: scale3d(1, 1, 1);
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   }
 }
 
 @keyframes crestBeacon {
   0%,
   100% {
-    opacity: 0.72;
-    transform: scale3d(1, 1, 1);
+    opacity: 0.65;
+    transform: scale3d(0.95, 0.95, 1);
   }
   50% {
     opacity: 1;
-    transform: scale3d(1.22, 1.22, 1);
+    transform: scale3d(1.42, 1.42, 1);
   }
 }
 
 @keyframes crestRuleDraw {
   from {
-    opacity: 0.35;
-    transform: scale3d(0.22, 1, 1);
+    opacity: 0;
+    transform: scale3d(0, 1, 1);
   }
   to {
     opacity: 1;
@@ -172,19 +149,103 @@
   }
 }
 
-.animate-portrait-unveil {
+/* Slow, zero-layout atmospheric drift for Hero crimson & amber light accents */
+@keyframes ambientStageDrift {
+  0% {
+    transform: translate3d(-2.5%, -1.5%, 0) scale3d(1, 1, 1);
+  }
+  100% {
+    transform: translate3d(3.5%, 3%, 0) scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes ambientStageDriftAlt {
+  0% {
+    transform: translate3d(2.5%, 2%, 0) scale3d(1.05, 1.05, 1);
+  }
+  100% {
+    transform: translate3d(-3.5%, -2.5%, 0) scale3d(0.95, 0.95, 1);
+  }
+}
+
+.editorial-ambient-glow-crimson {
+  will-change: transform;
   backface-visibility: hidden;
-  animation: portraitUnveil 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(200, 30, 30, 0.22) 0%, transparent 66%);
+  animation: ambientStageDrift 12s ease-in-out infinite alternate;
+}
+
+.editorial-ambient-glow-amber {
+  will-change: transform;
+  backface-visibility: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 66%);
+  animation: ambientStageDriftAlt 16s ease-in-out infinite alternate;
+}
+
+.animate-panel-enter {
+  backface-visibility: hidden;
+  animation: panelEnter 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-drawer-enter {
+  backface-visibility: hidden;
+  animation: drawerEnter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hold Hero & Scroll-reveal entrance animations until intro closes & block enters view */
+[data-main-ready="false"] .animate-hero-enter,
+[data-main-ready="false"] .animate-portrait-unveil,
+[data-main-ready="false"] #profil .stagger-card,
+.reveal-stage:not(.reveal-visible) .stagger-card {
+  opacity: 0;
+  animation: none;
+}
+
+[data-main-ready="false"] .editorial-crest-rule-animated::after,
+.reveal-stage:not(.reveal-visible) .editorial-crest-rule-animated::after {
+  opacity: 0;
+  transform: scale3d(0, 1, 1);
+  animation: none;
+}
+
+[data-main-ready="true"] .animate-hero-enter {
+  backface-visibility: hidden;
+  animation: heroRise 660ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--stagger-idx, 0) * 95ms);
+}
+
+[data-main-ready="true"] .animate-portrait-unveil {
+  backface-visibility: hidden;
+  animation: portraitUnveil 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 80ms;
+}
+
+[data-main-ready="true"] #profil .editorial-crest-rule-animated::after,
+[data-main-ready="true"] .reveal-visible .editorial-crest-rule-animated::after,
+.reveal-stage.reveal-visible .editorial-crest-rule-animated::after {
+  transform-origin: left center;
+  animation: crestRuleDraw 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+[data-main-ready="true"] #profil .stagger-card,
+[data-main-ready="true"] .reveal-visible .stagger-card,
+.reveal-stage.reveal-visible .stagger-card {
+  backface-visibility: hidden;
+  animation: panelEnter 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(min(var(--stagger-idx, 0), 6) * 75ms);
 }
 
 .editorial-pulse-dot {
   will-change: transform, opacity;
-  animation: crestBeacon 3.4s ease-in-out infinite;
+  animation: crestBeacon 2.8s ease-in-out infinite;
 }
 
-.editorial-crest-rule-animated::after {
+.top-scroll-progress {
+  transform: scale3d(var(--page-scroll-progress, 0), 1, 1);
   transform-origin: left center;
-  animation: crestRuleDraw 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
 }
 
 .arrow-glide-ne,
@@ -266,11 +327,11 @@
   }
 
   .hero-title-glitch:hover {
-    animation: subtleTitleGlitch 440ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+    animation: subtleTitleGlitch 500ms cubic-bezier(0.22, 1, 0.36, 1) 1 both;
   }
 
   .panel-card:hover {
-    transform: translate3d(0, -3px, 0);
+    transform: translate3d(0, -5px, 0);
   }
 
   .btn-press:hover {
@@ -425,59 +486,90 @@
   }
 }
 
-@keyframes cinemaUnifiedMonogram {
-  0%, 7% {
+@keyframes nStemSweepUp {
+  from {
+    transform: translate3d(0, 138px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes nDiagSweep {
+  from {
+    transform: translate3d(-86px, -132px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes nDepthShadowIn {
+  from {
     opacity: 0;
-    transform: translate3d(0, 12px, 0) scale3d(0.86, 0.86, 1);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cinemaUnifiedMonogram {
+  0%, 5% {
+    opacity: 0;
+    transform: perspective(900px) translate3d(0, 18px, 0) scale3d(0.84, 0.84, 1) rotateX(10deg) rotateY(-7deg);
   }
   24% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    transform: perspective(900px) translate3d(0, -2px, 0) scale3d(1.015, 1.015, 1) rotateX(0deg) rotateY(2.5deg);
   }
-  60% {
+  44% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale3d(1.06, 1.06, 1);
+    transform: perspective(900px) translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(-1.5deg) rotateY(0deg);
   }
-  84% {
-    opacity: 0.82;
-    transform: translate3d(0, -2px, 0) scale3d(1.82, 1.82, 1);
+  62% {
+    opacity: 1;
+    transform: perspective(900px) translate3d(0, 0, 0) scale3d(1.06, 1.06, 1) rotateX(0deg) rotateY(0deg);
+  }
+  85% {
+    opacity: 0.78;
+    transform: perspective(900px) translate3d(0, -4px, 0) scale3d(1.98, 1.98, 1);
   }
   100% {
     opacity: 0;
-    transform: translate3d(0, -4px, 0) scale3d(2.85, 2.85, 1);
+    transform: perspective(900px) translate3d(0, -8px, 0) scale3d(3.15, 3.15, 1);
   }
 }
 
 @keyframes cinemaSheenSweep {
-  0%, 22% {
+  0%, 24% {
     opacity: 0;
     transform: translate3d(-150%, 0, 0) skewX(-20deg);
   }
-  38% {
-    opacity: 0.6;
+  40% {
+    opacity: 0.68;
   }
-  58%, 100% {
+  60%, 100% {
     opacity: 0;
     transform: translate3d(185%, 0, 0) skewX(-20deg);
   }
 }
 
 @keyframes cinemaWordmarkReveal {
-  0%, 16% {
+  0%, 18% {
     opacity: 0;
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 14px, 0) scale3d(0.97, 0.97, 1);
   }
-  30% {
+  32% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   }
-  50% {
+  52% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   }
-  62%, 100% {
+  64%, 100% {
     opacity: 0;
-    transform: translate3d(0, 6px, 0);
+    transform: translate3d(0, 8px, 0) scale3d(0.985, 0.985, 1);
   }
 }
 
@@ -515,6 +607,25 @@
   animation: cinemaUnifiedMonogram 4.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.animate-n-stem-left {
+  will-change: transform;
+  animation: nStemSweepUp 480ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+}
+
+.animate-n-diag {
+  will-change: transform;
+  animation: nDiagSweep 560ms cubic-bezier(0.16, 1, 0.3, 1) 460ms both;
+}
+
+.animate-n-stem-right {
+  will-change: transform;
+  animation: nStemSweepUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 760ms both;
+}
+
+.animate-n-depth-shadow {
+  animation: nDepthShadowIn 460ms ease-out 1000ms both;
+}
+
 .animate-cinema-sheen {
   will-change: transform, opacity;
   animation: cinemaSheenSweep 4.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -528,23 +639,27 @@
 }
 
 .stagger-1 {
-  animation-delay: 45ms;
+  --stagger-idx: 1;
 }
 
 .stagger-2 {
-  animation-delay: 90ms;
+  --stagger-idx: 2;
 }
 
 .stagger-3 {
-  animation-delay: 135ms;
+  --stagger-idx: 3;
 }
 
 .stagger-4 {
-  animation-delay: 180ms;
+  --stagger-idx: 4;
 }
 
 .stagger-5 {
-  animation-delay: 225ms;
+  --stagger-idx: 5;
+}
+
+.stagger-6 {
+  --stagger-idx: 6;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -583,6 +698,8 @@
   .animate-modal-backdrop,
   .animate-modal-sheet,
   .editorial-pulse-dot,
+  .editorial-ambient-glow-crimson,
+  .editorial-ambient-glow-amber,
   .editorial-crest-rule-animated::after {
     animation: none !important;
     opacity: 1 !important;
@@ -600,6 +717,10 @@
   .animate-portal-seam,
   .animate-cinema-halo,
   .animate-cinema-monogram,
+  .animate-n-stem-left,
+  .animate-n-diag,
+  .animate-n-stem-right,
+  .animate-n-depth-shadow,
   .animate-cinema-sheen,
   .animate-cinema-wordmark {
     animation: none !important;

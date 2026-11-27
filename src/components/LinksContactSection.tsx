@@ -204,11 +204,11 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
   };
 
   return (
-    <section id="tautan" className="reveal-stage editorial-archival-surface scroll-mt-16 text-stone-950">
+    <section id="tautan" className="editorial-archival-surface scroll-mt-16 text-stone-950">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10 lg:py-22">
         <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-12 lg:items-start">
           {/* Official Links Column: Sticky on Desktop, 2x2 Plaque Matrix on Tablet, Hairline List on Mobile */}
-          <div className="lg:sticky lg:top-24 lg:col-span-5">
+          <div data-reveal className="lg:sticky lg:top-24 lg:col-span-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between lg:block">
               <div>
                 <p className="font-mono text-xs font-semibold tracking-wider text-[#B91C1C]">
@@ -268,7 +268,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
                     rel="me noopener noreferrer"
                     onMouseEnter={() => void playUiSound('hover', soundEnabled)}
                     onClick={() => void playUiSound('open', soundEnabled)}
-                    className={`group flex min-h-12 items-start justify-between gap-3.5 rounded-xl border border-stone-300/90 bg-white p-4 shadow-xs shadow-stone-900/[0.03] md:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none lg:px-2 lg:py-5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${hoverTint}`}
+                    className={`stagger-card stagger-${Math.min(idx + 1, 6)} group flex min-h-12 items-start justify-between gap-3.5 rounded-xl border border-stone-300/90 bg-white p-4 shadow-xs shadow-stone-900/[0.03] md:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none lg:px-2 lg:py-5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C81E1E] ${hoverTint}`}
                   >
                     <div className="flex items-start gap-3 sm:gap-3.5">
                       <span className="font-mono text-xs font-semibold text-stone-400 group-hover:text-[#B91C1C] pt-1 tabular-nums">
@@ -315,7 +315,7 @@ export function LinksContactSection({ soundEnabled = true }: LinksContactSection
             </div>
           </div>
 
-          <div id="kontak" className="scroll-mt-20 lg:col-span-7">
+          <div id="kontak" data-reveal className="scroll-mt-20 lg:col-span-7">
             <div className="overflow-hidden rounded-xl border border-stone-300 bg-white shadow-sm md:grid md:grid-cols-12 lg:block">
               <div className="bg-[#0B0C10] px-5 py-6 sm:px-8 sm:py-7 text-stone-100 md:col-span-4 md:flex md:flex-col md:justify-between lg:block">
                 <div>

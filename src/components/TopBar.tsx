@@ -157,6 +157,10 @@ export function TopBar({
           </div>
         </nav>
       )}
+      <span
+        aria-hidden="true"
+        className="top-scroll-progress pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#C81E1E] via-amber-400 to-[#C81E1E]"
+      />
     </header>
   );
 }
